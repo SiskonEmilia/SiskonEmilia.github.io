@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Comment on Github Page with Gitment | Coding.Siskon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Last time, I added visitor statics system to my github page with Busuanzi. But a blog without a comment system is still not good enough. After hours of searching and testing, I finally implement it wi">
+<meta name="keywords" content="Github Pages,Gitment">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Comment on Github Page with Gitment">
+<meta property="og:url" content="https://siskonemilia.github.io/2017/12/31/Comment-on-Github-Page-with-Gitment/index.html">
+<meta property="og:site_name" content="Coding.Siskon">
+<meta property="og:description" content="Last time, I added visitor statics system to my github page with Busuanzi. But a blog without a comment system is still not good enough. After hours of searching and testing, I finally implement it wi">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2017-12-31T04:50:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Comment on Github Page with Gitment">
+<meta name="twitter:description" content="Last time, I added visitor statics system to my github page with Busuanzi. But a blog without a comment system is still not good enough. After hours of searching and testing, I finally implement it wi">
+  
+    <link rel="alternate" href="/atom.xml" title="Coding.Siskon" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Coding.Siskon</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Simple Blog of SiskonEmilia</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://siskonemilia.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Comment-on-Github-Page-with-Gitment" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/31/Comment-on-Github-Page-with-Gitment/" class="article-date">
+  <time datetime="2017-12-31T04:19:31.000Z" itemprop="datePublished">2017-12-31</time>
+  
+    <span id="busuanzi_container_page_pv">
+        | Views: <span id="busuanzi_value_page_pv">loading...</span>
+    </span>
+  
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Comment on Github Page with Gitment
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Last time, I added visitor statics system to my github page with <a href="http://busuanzi.ibruce.info" target="_blank" rel="noopener">Busuanzi</a>. But a blog without a comment system is still not good enough. After hours of searching and testing, I finally implement it with a tool called <a href="https://github.com/imsun/gitment" target="_blank" rel="noopener">Gitment</a>. And if it works, you will be able to see a comment box below after you enter an article. (I didn’t set one on the home page.) And this article is an addition to the official guide, which might be more easy to understand and practice.</p>
+<h2 id="What-is-Gitment"><a href="#What-is-Gitment" class="headerlink" title="What is Gitment"></a>What is Gitment</h2><p>According to the official document:</p>
+<blockquote>
+<p>Gitment is a comment system based on GitHub Issues, which can be used in the frontend without any server-side implementation.</p>
+</blockquote>
+<p>Actually, it create a issue for every article in your blog, and then every comment you add to the article will be added into the issue as well. And the OAuth mentioned in the official guide is used to get the access permission of your repository.</p>
+<h2 id="Get-Started-with-Hexo"><a href="#Get-Started-with-Hexo" class="headerlink" title="Get Started with Hexo"></a>Get Started with Hexo</h2><p>The official guide actually tells you about how to build a comment system, but not about how to build it under a particulay framework. And here’re some advices about building it under Hexo.</p>
+<h3 id="Where-should-I-add-my-comment-box"><a href="#Where-should-I-add-my-comment-box" class="headerlink" title="Where should I add my comment box"></a>Where should I add my comment box</h3><p>If you are using the default theme , I recommend you to add it in your /themes/landscape/layout/_partial/article.ejs, after the article tab like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if (!index) &#123; %&gt;</span><br><span class="line">&lt;div id=&quot;gitmentContainer&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://imsun.github.io/gitment/style/default.css&quot;&gt;</span><br><span class="line">&lt;script src=&quot;https://imsun.github.io/gitment/dist/gitment.browser.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">var gitment = new Gitment(&#123;</span><br><span class="line">  owner: &apos;your user name&apos;,</span><br><span class="line">  repo: &apos;your repo name&apos;,</span><br><span class="line">  oauth: &#123;</span><br><span class="line">    client_id: &apos;your client id here&apos;,</span><br><span class="line">    client_secret: &apos;your client secret here&apos;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br><span class="line">gitment.render(&apos;gitmentContainer&apos;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+<p>After you doing that, you will find a comment box under every article of yours. If you want to display a comment box on your home page, you’d better move this part to your footer.ejs and add it to the beginning of your file.</p>
+<h3 id="Why-Github-returns-a-404-while-I-trying-to-use"><a href="#Why-Github-returns-a-404-while-I-trying-to-use" class="headerlink" title="Why Github returns a 404 while I trying to use"></a>Why Github returns a 404 while I trying to use</h3><p>Please check your repo property. It should be your repository’s name or id, not URL or something like that.</p>
+<hr>
+<p>Feel free to comment!</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://siskonemilia.github.io/2017/12/31/Comment-on-Github-Page-with-Gitment/" data-id="cjbuat1z10000k8lr17eypw19" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Github-Pages/">Github Pages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gitment/">Gitment</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/30/Remote-Floder-for-Your-Parents/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Remote Floder for Your Parents</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: 'siskonemilia',
+  repo: 'PageComment',
+  oauth: {
+    client_id: '154bdf960b5615033ebe',
+    client_secret: '254826ff682d5d9b21138e53a7efe4867f2c5c77',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github-Pages/">Github Pages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gitment/">Gitment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Remote-Floder/">Remote Floder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Github-Pages/" style="font-size: 10px;">Github Pages</a> <a href="/tags/Gitment/" style="font-size: 10px;">Gitment</a> <a href="/tags/Remote-Floder/" style="font-size: 10px;">Remote Floder</a> <a href="/tags/WEB/" style="font-size: 20px;">WEB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/31/Comment-on-Github-Page-with-Gitment/">Comment on Github Page with Gitment</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/30/Remote-Floder-for-Your-Parents/">Remote Floder for Your Parents</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/29/WEB-Assignment-4/">WEB Assignment 4</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/27/WEB-Assignment-3/">WEB Assignment 3</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/26/WEB-Assignment-2/">WEB Assignment 2</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Emilia<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a><br>
+      <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_uv"> 
+          Visitors: <span id="busuanzi_value_site_uv">loading...</span>
+      </span>
+    </div>
+  </div>
+  
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
