@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>100 Ways to Die in UWP - 1 | Coding.Siskon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="如何在UWP中作得一手好死 - 1新学期到来，新的课程开始，新的博客也要到来啦～随着博主作死地选了两门开发课程，这学期应该是闲不下来了……那么这个系列呢，主要是记录在“现代操作系统应用开发（MOSAD）”课程中遇到的关于UWP的坑～因为UWP开发方面，虽然微软自己宣传的很给劲，但是其他博主大牛们却没咋响应……网上的相关教程出奇的少，因而踩坑成为了家常便饭～在此记录，希望能够给大家带来帮助！ 坑1:">
+<meta name="keywords" content="UWP,MOSAD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="100 Ways to Die in UWP - 1">
+<meta property="og:url" content="https://siskonemilia.github.io/2018/03/20/100-Ways-to-Die-in-UWP-1/index.html">
+<meta property="og:site_name" content="Coding.Siskon">
+<meta property="og:description" content="如何在UWP中作得一手好死 - 1新学期到来，新的课程开始，新的博客也要到来啦～随着博主作死地选了两门开发课程，这学期应该是闲不下来了……那么这个系列呢，主要是记录在“现代操作系统应用开发（MOSAD）”课程中遇到的关于UWP的坑～因为UWP开发方面，虽然微软自己宣传的很给劲，但是其他博主大牛们却没咋响应……网上的相关教程出奇的少，因而踩坑成为了家常便饭～在此记录，希望能够给大家带来帮助！ 坑1:">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://siskonemilia.github.io/2018/03/20/100-Ways-to-Die-in-UWP-1/face.jpg">
+<meta property="og:image" content="https://siskonemilia.github.io/2018/03/20/100-Ways-to-Die-in-UWP-1/answer.png">
+<meta property="og:image" content="https://siskonemilia.github.io/2018/03/20/100-Ways-to-Die-in-UWP-1/myapp.png">
+<meta property="og:updated_time" content="2018-03-20T09:47:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="100 Ways to Die in UWP - 1">
+<meta name="twitter:description" content="如何在UWP中作得一手好死 - 1新学期到来，新的课程开始，新的博客也要到来啦～随着博主作死地选了两门开发课程，这学期应该是闲不下来了……那么这个系列呢，主要是记录在“现代操作系统应用开发（MOSAD）”课程中遇到的关于UWP的坑～因为UWP开发方面，虽然微软自己宣传的很给劲，但是其他博主大牛们却没咋响应……网上的相关教程出奇的少，因而踩坑成为了家常便饭～在此记录，希望能够给大家带来帮助！ 坑1:">
+<meta name="twitter:image" content="https://siskonemilia.github.io/2018/03/20/100-Ways-to-Die-in-UWP-1/face.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Coding.Siskon" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Coding.Siskon</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Simple Blog of SiskonEmilia</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://siskonemilia.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-100-Ways-to-Die-in-UWP-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/20/100-Ways-to-Die-in-UWP-1/" class="article-date">
+  <time datetime="2018-03-20T09:14:30.000Z" itemprop="datePublished">2018-03-20</time>
+  
+    <span id="busuanzi_container_page_pv">
+        | Views: <span id="busuanzi_value_page_pv">loading...</span>
+    </span>
+  
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      100 Ways to Die in UWP - 1
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="如何在UWP中作得一手好死-1"><a href="#如何在UWP中作得一手好死-1" class="headerlink" title="如何在UWP中作得一手好死 - 1"></a>如何在UWP中作得一手好死 - 1</h2><p>新学期到来，新的课程开始，新的博客也要到来啦～随着博主作死地选了两门开发课程，这学期应该是闲不下来了……那么这个系列呢，主要是记录在“现代操作系统应用开发（MOSAD）”课程中遇到的关于UWP的坑～因为UWP开发方面，虽然微软自己宣传的很给劲，但是其他博主大牛们却没咋响应……网上的相关教程出奇的少，因而踩坑成为了家常便饭～在此记录，希望能够给大家带来帮助！</p>
+<h3 id="坑1-响应式设计-（VisualState及其失效问题）"><a href="#坑1-响应式设计-（VisualState及其失效问题）" class="headerlink" title="坑1:响应式设计 （VisualState及其失效问题）"></a>坑1:响应式设计 （VisualState及其失效问题）</h3><p>响应式设计，简而言之，就是一个网站能够兼容多个终端——而不是为每个终端做一个特定的版本。UWP继承了这个观念，并把它带到了原生应用开发上。想必看过<a href="https://docs.microsoft.com/zh-cn/windows/uwp/design/layout/responsive-design" target="_blank" rel="noopener">MSDN官方文档</a>的人都知道，官方给了很多响应式的设计……然而！却没有告诉我们怎么实现！……</p>
+<p>So, how to do it?</p>
+<p>事实上，微软并没有给每个设计一个特定的组件去实现，而是给出了一套通用的解决方案：VisualState。示例XAML：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;VisualStateManager.VisualStateGroups&gt;</span><br><span class="line">  &lt;VisualStateGroup&gt;</span><br><span class="line">    &lt;VisualState&gt;</span><br><span class="line">      &lt;VisualState.StateTriggers&gt;</span><br><span class="line">        &lt;AdaptiveTrigger MinWindowWidth=&quot;xxx&quot;/&gt;</span><br><span class="line">      &lt;/VisualState.StateTriggers&gt;</span><br><span class="line">      &lt;VisualState.Setters&gt;</span><br><span class="line">        &lt;Setter Target=&quot;xxx&quot; Value=&quot;xxx&quot;/&gt;</span><br><span class="line">      &lt;/VisualState.Setters&gt;</span><br><span class="line">    &lt;/VisualState&gt;</span><br><span class="line">    &lt;VisualState&gt;</span><br><span class="line">      &lt;VisualState.StateTriggers&gt;</span><br><span class="line">        &lt;AdaptiveTrigger MinWindowWidth=&quot;xxx&quot;/&gt;</span><br><span class="line">      &lt;/VisualState.StateTriggers&gt;</span><br><span class="line">      &lt;VisualState.Setters&gt;</span><br><span class="line">        &lt;Setter Target=&quot;xxx&quot; Value=&quot;xxx&quot;/&gt;</span><br><span class="line">      &lt;/VisualState.Setters&gt;</span><br><span class="line">    &lt;/VisualState&gt;</span><br><span class="line">  &lt;/VisualStateGroup&gt;</span><br><span class="line">&lt;/VisualStateManager.VisualStateGroups&gt;</span><br></pre></td></tr></table></figure>
+<p>他的思想是，通过Trigger指定最小窗口尺寸，在不同的VisualState间切换，并通过Setter来改变一些既定参数的值，从而实现UI对窗口大小的“响应”。</p>
+<p>那么我们按照需要把这堆代码搞到XAML里就万事大吉了吧？</p>
+<p>OMG！我一开始也这么天真的以为！然后当你把它傻乎乎的放到Page标签下之后，就会发现 完！全！没！用！</p>
+<img src="/2018/03/20/100-Ways-to-Die-in-UWP-1/face.jpg" title="MyFace">
+<p>为什么呢！是微软的BUG吗！UWP果然是辣鸡吗！</p>
+<p>虽然我很支持你的第二个观点，不过这还的确不是个BUG，在经历一番查询后，我得到了一个“看起来像回事”的答案。</p>
+<img src="/2018/03/20/100-Ways-to-Die-in-UWP-1/answer.png" title="Answer">
+<p>……OK，为啥你不在文档里写清楚啊！那么这个坑就是——不要把你的VisualState放到Page里面！一般而言，放在Page的Content容器里面是个不错的选择，如果你要更改DataTemplate里面的内容的话，则需要挪到DataTemplate里～</p>
+<p>所以我究竟是为啥纠结了两三天啊……气哭……顺带贴一张第一周开发的UWP应用的样子～感觉还是可以看的=v=</p>
+<img src="/2018/03/20/100-Ways-to-Die-in-UWP-1/myapp.png" title="MyApp">
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://siskonemilia.github.io/2018/03/20/100-Ways-to-Die-in-UWP-1/" data-id="cjezg165i0000g4fx8gylmnob" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MOSAD/">MOSAD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/UWP/">UWP</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/01/19/WEB-Assignment-5/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">WEB Assignment 5</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  owner: 'siskonemilia',
+  repo: 'PageComment',
+  oauth: {
+    client_id: '154bdf960b5615033ebe',
+    client_secret: '254826ff682d5d9b21138e53a7efe4867f2c5c77',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github-Pages/">Github Pages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gitment/">Gitment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MOSAD/">MOSAD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Remote-Floder/">Remote Floder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UWP/">UWP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Github-Pages/" style="font-size: 10px;">Github Pages</a> <a href="/tags/Gitment/" style="font-size: 10px;">Gitment</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/MOSAD/" style="font-size: 10px;">MOSAD</a> <a href="/tags/Remote-Floder/" style="font-size: 10px;">Remote Floder</a> <a href="/tags/UWP/" style="font-size: 10px;">UWP</a> <a href="/tags/WEB/" style="font-size: 20px;">WEB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/20/100-Ways-to-Die-in-UWP-1/">100 Ways to Die in UWP - 1</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/19/WEB-Assignment-5/">WEB Assignment 5</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/31/Comment-on-Github-Page-with-Gitment/">Comment on Github Page with Gitment</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/30/Remote-Floder-for-Your-Parents/">Remote Floder for Your Parents</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/29/WEB-Assignment-4/">WEB Assignment 4</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Emilia<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a><br>
+      <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_uv"> 
+          Visitors: <span id="busuanzi_value_site_uv">loading...</span>
+      </span>
+    </div>
+  </div>
+  
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

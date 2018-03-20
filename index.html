@@ -66,6 +66,60 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-100-Ways-to-Die-in-UWP-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/20/100-Ways-to-Die-in-UWP-1/" class="article-date">
+  <time datetime="2018-03-20T09:14:30.000Z" itemprop="datePublished">2018-03-20</time>
+  
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/100-Ways-to-Die-in-UWP-1/">100 Ways to Die in UWP - 1</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="如何在UWP中作得一手好死-1"><a href="#如何在UWP中作得一手好死-1" class="headerlink" title="如何在UWP中作得一手好死 - 1"></a>如何在UWP中作得一手好死 - 1</h2><p>新学期到来，新的课程开始，新的博客也要到来啦～随着博主作死地选了两门开发课程，这学期应该是闲不下来了……那么这个系列呢，主要是记录在“现代操作系统应用开发（MOSAD）”课程中遇到的关于UWP的坑～因为UWP开发方面，虽然微软自己宣传的很给劲，但是其他博主大牛们却没咋响应……网上的相关教程出奇的少，因而踩坑成为了家常便饭～在此记录，希望能够给大家带来帮助！</p>
+<h3 id="坑1-响应式设计-（VisualState及其失效问题）"><a href="#坑1-响应式设计-（VisualState及其失效问题）" class="headerlink" title="坑1:响应式设计 （VisualState及其失效问题）"></a>坑1:响应式设计 （VisualState及其失效问题）</h3><p>响应式设计，简而言之，就是一个网站能够兼容多个终端——而不是为每个终端做一个特定的版本。UWP继承了这个观念，并把它带到了原生应用开发上。想必看过<a href="https://docs.microsoft.com/zh-cn/windows/uwp/design/layout/responsive-design" target="_blank" rel="noopener">MSDN官方文档</a>的人都知道，官方给了很多响应式的设计……然而！却没有告诉我们怎么实现！……</p>
+<p>So, how to do it?</p>
+<p>事实上，微软并没有给每个设计一个特定的组件去实现，而是给出了一套通用的解决方案：VisualState。示例XAML：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;VisualStateManager.VisualStateGroups&gt;</span><br><span class="line">  &lt;VisualStateGroup&gt;</span><br><span class="line">    &lt;VisualState&gt;</span><br><span class="line">      &lt;VisualState.StateTriggers&gt;</span><br><span class="line">        &lt;AdaptiveTrigger MinWindowWidth=&quot;xxx&quot;/&gt;</span><br><span class="line">      &lt;/VisualState.StateTriggers&gt;</span><br><span class="line">      &lt;VisualState.Setters&gt;</span><br><span class="line">        &lt;Setter Target=&quot;xxx&quot; Value=&quot;xxx&quot;/&gt;</span><br><span class="line">      &lt;/VisualState.Setters&gt;</span><br><span class="line">    &lt;/VisualState&gt;</span><br><span class="line">    &lt;VisualState&gt;</span><br><span class="line">      &lt;VisualState.StateTriggers&gt;</span><br><span class="line">        &lt;AdaptiveTrigger MinWindowWidth=&quot;xxx&quot;/&gt;</span><br><span class="line">      &lt;/VisualState.StateTriggers&gt;</span><br><span class="line">      &lt;VisualState.Setters&gt;</span><br><span class="line">        &lt;Setter Target=&quot;xxx&quot; Value=&quot;xxx&quot;/&gt;</span><br><span class="line">      &lt;/VisualState.Setters&gt;</span><br><span class="line">    &lt;/VisualState&gt;</span><br><span class="line">  &lt;/VisualStateGroup&gt;</span><br><span class="line">&lt;/VisualStateManager.VisualStateGroups&gt;</span><br></pre></td></tr></table></figure>
+<p>他的思想是，通过Trigger指定最小窗口尺寸，在不同的VisualState间切换，并通过Setter来改变一些既定参数的值，从而实现UI对窗口大小的“响应”。</p>
+<p>那么我们按照需要把这堆代码搞到XAML里就万事大吉了吧？</p>
+<p>OMG！我一开始也这么天真的以为！然后当你把它傻乎乎的放到Page标签下之后，就会发现 完！全！没！用！</p>
+<img src="/2018/03/20/100-Ways-to-Die-in-UWP-1/face.jpg" title="MyFace">
+<p>为什么呢！是微软的BUG吗！UWP果然是辣鸡吗！</p>
+<p>虽然我很支持你的第二个观点，不过这还的确不是个BUG，在经历一番查询后，我得到了一个“看起来像回事”的答案。</p>
+<img src="/2018/03/20/100-Ways-to-Die-in-UWP-1/answer.png" title="Answer">
+<p>……OK，为啥你不在文档里写清楚啊！那么这个坑就是——不要把你的VisualState放到Page里面！一般而言，放在Page的Content容器里面是个不错的选择，如果你要更改DataTemplate里面的内容的话，则需要挪到DataTemplate里～</p>
+<p>所以我究竟是为啥纠结了两三天啊……气哭……顺带贴一张第一周开发的UWP应用的样子～感觉还是可以看的=v=</p>
+<img src="/2018/03/20/100-Ways-to-Die-in-UWP-1/myapp.png" title="MyApp">
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://siskonemilia.github.io/2018/03/20/100-Ways-to-Die-in-UWP-1/" data-id="cjezg165i0000g4fx8gylmnob" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MOSAD/">MOSAD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/UWP/">UWP</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-WEB-Assignment-5" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/01/19/WEB-Assignment-5/" class="article-date">
@@ -95,7 +149,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/2018/01/19/WEB-Assignment-5/" data-id="cjclc4ajl00050qfx7mkwxbtd" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/2018/01/19/WEB-Assignment-5/" data-id="cjezg165v000ag4fxdoxnfhki" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
@@ -148,7 +202,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/2017/12/31/Comment-on-Github-Page-with-Gitment/" data-id="cjclc4ajd00000qfxyj3x9cpr" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/2017/12/31/Comment-on-Github-Page-with-Gitment/" data-id="cjezg165o0002g4fx2y6eordk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Github-Pages/">Github Pages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gitment/">Gitment</a></li></ul>
@@ -192,7 +246,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/2017/12/30/Remote-Floder-for-Your-Parents/" data-id="cjclc4ajj00030qfxkykkiwiz" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/2017/12/30/Remote-Floder-for-Your-Parents/" data-id="cjezg165p0003g4fx87l9g2kq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Remote-Floder/">Remote Floder</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
@@ -234,10 +288,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/2017/12/29/WEB-Assignment-4/" data-id="cjclc4ajk00040qfx2ipeo7ds" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/2017/12/29/WEB-Assignment-4/" data-id="cjezg165u0009g4fxts6gcklf" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
 
     </footer>
   </div>
@@ -275,7 +329,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/2017/12/27/WEB-Assignment-3/" data-id="cjclc4ajn000a0qfxe1e7vv4j" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/2017/12/27/WEB-Assignment-3/" data-id="cjezg165t0007g4fxkya228tk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
@@ -316,7 +370,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/2017/12/26/WEB-Assignment-2/" data-id="cjclc4ajm00080qfx0f7l9lbz" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/2017/12/26/WEB-Assignment-2/" data-id="cjezg165t0006g4fxnmacwcb6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
@@ -358,7 +412,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/2017/12/25/WEB-Assignment-1/" data-id="cjclc4ajm00070qfxna7xofd2" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/2017/12/25/WEB-Assignment-1/" data-id="cjezg165s0005g4fxcp7tm6aq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
@@ -406,7 +460,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/2017/12/25/First-Article/" data-id="cjclc4ajg00010qfxlwftdpzi" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/2017/12/25/First-Article/" data-id="cjezg165m0001g4fxlvfm1c4e" class="article-share-link">Share</a>
       
       
     </footer>
@@ -453,7 +507,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/2017/12/25/hello-world/" data-id="cjclc4ajo000c0qfxd5st2oyf" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/2017/12/25/hello-world/" data-id="cjezg1660000cg4fx3zx546gk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -477,7 +531,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github-Pages/">Github Pages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gitment/">Gitment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Remote-Floder/">Remote Floder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github-Pages/">Github Pages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gitment/">Gitment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MOSAD/">MOSAD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Remote-Floder/">Remote Floder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UWP/">UWP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
     </div>
   </div>
 
@@ -487,7 +541,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Github-Pages/" style="font-size: 10px;">Github Pages</a> <a href="/tags/Gitment/" style="font-size: 10px;">Gitment</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/Remote-Floder/" style="font-size: 10px;">Remote Floder</a> <a href="/tags/WEB/" style="font-size: 20px;">WEB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a>
+      <a href="/tags/Github-Pages/" style="font-size: 10px;">Github Pages</a> <a href="/tags/Gitment/" style="font-size: 10px;">Gitment</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/MOSAD/" style="font-size: 10px;">MOSAD</a> <a href="/tags/Remote-Floder/" style="font-size: 10px;">Remote Floder</a> <a href="/tags/UWP/" style="font-size: 10px;">UWP</a> <a href="/tags/WEB/" style="font-size: 20px;">WEB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a>
     </div>
   </div>
 
@@ -496,7 +550,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
     </div>
   </div>
 
@@ -507,6 +561,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/03/20/100-Ways-to-Die-in-UWP-1/">100 Ways to Die in UWP - 1</a>
+          </li>
         
           <li>
             <a href="/2018/01/19/WEB-Assignment-5/">WEB Assignment 5</a>
@@ -522,10 +580,6 @@
         
           <li>
             <a href="/2017/12/29/WEB-Assignment-4/">WEB Assignment 4</a>
-          </li>
-        
-          <li>
-            <a href="/2017/12/27/WEB-Assignment-3/">WEB Assignment 3</a>
           </li>
         
       </ul>
