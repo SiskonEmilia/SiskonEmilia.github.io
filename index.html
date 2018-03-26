@@ -66,67 +66,17 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-100-Ways-to-Die-in-UWP-1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/20/100-Ways-to-Die-in-UWP-1/" class="article-date">
-  <time datetime="2018-03-20T09:14:30.000Z" itemprop="datePublished">2018-03-20</time>
-  
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/20/100-Ways-to-Die-in-UWP-1/">100 Ways to Die in UWP - 1</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="如何在UWP中作得一手好死-1"><a href="#如何在UWP中作得一手好死-1" class="headerlink" title="如何在UWP中作得一手好死 - 1"></a>如何在UWP中作得一手好死 - 1</h2><p>新学期到来，新的课程开始，新的博客也要到来啦～随着博主作死地选了两门开发课程，这学期应该是闲不下来了……那么这个系列呢，主要是记录在“现代操作系统应用开发（MOSAD）”课程中遇到的关于UWP的坑～因为UWP开发方面，虽然微软自己宣传的很给劲，但是其他博主大牛们却没咋响应……网上的相关教程出奇的少，因而踩坑成为了家常便饭～在此记录，希望能够给大家带来帮助！</p>
-<h3 id="坑1-响应式设计-（VisualState及其失效问题）"><a href="#坑1-响应式设计-（VisualState及其失效问题）" class="headerlink" title="坑1:响应式设计 （VisualState及其失效问题）"></a>坑1:响应式设计 （VisualState及其失效问题）</h3><p>响应式设计，简而言之，就是一个网站能够兼容多个终端——而不是为每个终端做一个特定的版本。UWP继承了这个观念，并把它带到了原生应用开发上。想必看过<a href="https://docs.microsoft.com/zh-cn/windows/uwp/design/layout/responsive-design" target="_blank" rel="noopener">MSDN官方文档</a>的人都知道，官方给了很多响应式的设计……然而！却没有告诉我们怎么实现！……</p>
-<p>So, how to do it?</p>
-<p>事实上，微软并没有给每个设计一个特定的组件去实现，而是给出了一套通用的解决方案：VisualState。示例XAML：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;VisualStateManager.VisualStateGroups&gt;</span><br><span class="line">  &lt;VisualStateGroup&gt;</span><br><span class="line">    &lt;VisualState&gt;</span><br><span class="line">      &lt;VisualState.StateTriggers&gt;</span><br><span class="line">        &lt;AdaptiveTrigger MinWindowWidth=&quot;xxx&quot;/&gt;</span><br><span class="line">      &lt;/VisualState.StateTriggers&gt;</span><br><span class="line">      &lt;VisualState.Setters&gt;</span><br><span class="line">        &lt;Setter Target=&quot;xxx&quot; Value=&quot;xxx&quot;/&gt;</span><br><span class="line">      &lt;/VisualState.Setters&gt;</span><br><span class="line">    &lt;/VisualState&gt;</span><br><span class="line">    &lt;VisualState&gt;</span><br><span class="line">      &lt;VisualState.StateTriggers&gt;</span><br><span class="line">        &lt;AdaptiveTrigger MinWindowWidth=&quot;xxx&quot;/&gt;</span><br><span class="line">      &lt;/VisualState.StateTriggers&gt;</span><br><span class="line">      &lt;VisualState.Setters&gt;</span><br><span class="line">        &lt;Setter Target=&quot;xxx&quot; Value=&quot;xxx&quot;/&gt;</span><br><span class="line">      &lt;/VisualState.Setters&gt;</span><br><span class="line">    &lt;/VisualState&gt;</span><br><span class="line">  &lt;/VisualStateGroup&gt;</span><br><span class="line">&lt;/VisualStateManager.VisualStateGroups&gt;</span><br></pre></td></tr></table></figure>
-<p>他的思想是，通过Trigger指定最小窗口尺寸，在不同的VisualState间切换，并通过Setter来改变一些既定参数的值，从而实现UI对窗口大小的“响应”。</p>
-<p>那么我们按照需要把这堆代码搞到XAML里就万事大吉了吧？</p>
-<p>OMG！我一开始也这么天真的以为！然后当你把它傻乎乎的放到Page标签下之后，就会发现 完！全！没！用！</p>
-<img src="/2018/03/20/100-Ways-to-Die-in-UWP-1/face.jpg" title="MyFace">
-<p>为什么呢！是微软的BUG吗！UWP果然是辣鸡吗！</p>
-<p>虽然我很支持你的第二个观点，不过这还的确不是个BUG，在经历一番查询后，我得到了一个“看起来像回事”的答案。</p>
-<img src="/2018/03/20/100-Ways-to-Die-in-UWP-1/answer.png" title="Answer">
-<p>……OK，为啥你不在文档里写清楚啊！那么这个坑就是——不要把你的VisualState放到Page里面！一般而言，放在Page的Content容器里面是个不错的选择，如果你要更改DataTemplate里面的内容的话，则需要挪到DataTemplate里～</p>
-<p>所以我究竟是为啥纠结了两三天啊……气哭……顺带贴一张第一周开发的UWP应用的样子～感觉还是可以看的=v=</p>
-<img src="/2018/03/20/100-Ways-to-Die-in-UWP-1/myapp.png" title="MyApp">
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/2018/03/20/100-Ways-to-Die-in-UWP-1/" data-id="cjezg165i0000g4fx8gylmnob" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MOSAD/">MOSAD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/UWP/">UWP</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
     <article id="post-WEB-Assignment-5" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/19/WEB-Assignment-5/" class="article-date">
+    <a href="/WEB-Assignments/WEB-Assignment-5/" class="article-date">
   <time datetime="2018-01-19T02:46:45.000Z" itemprop="datePublished">2018-01-19</time>
   
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/WEB-Assignments/">WEB Assignments</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -135,7 +85,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/19/WEB-Assignment-5/">WEB Assignment 5</a>
+      <a class="article-title" href="/WEB-Assignments/WEB-Assignment-5/">WEB Assignment 5</a>
     </h1>
   
 
@@ -145,11 +95,11 @@
       
         <h2 id="Assignment-5-Games"><a href="#Assignment-5-Games" class="headerlink" title="Assignment 5 - Games"></a>Assignment 5 - Games</h2><p>距离上次更新博客已有些时日了，这些时候一直在忙期末考试的事情，不过总算是顺利结束了，博客也可以开始更新了～本着放松的心态，这篇博文就换做中文书写吧。那么这次的博文是关于我们的第五个WEB作业——两个小游戏：迷宫和打地鼠～如果你是中山大学的在读学生，并且接入了校园网，你应该可以通过<a href="http://my.ss.sysu.edu.cn/wiki/display/WEB/Homework+6+-+Games" target="_blank" rel="noopener">这个网页</a>了解一些关于这个作业的详细信息～从作业本身来说，还是相当好玩的～在好玩的同时也学到了JavaScript编写应用程式的基本方式呢。</p>
 <p>话不多说，一起来看看吧～<a href="https://SiskonEmiliaPage.github.io/Assignment 5/maze/html/maze.html" target="_blank" rel="noopener">迷宫</a> <a href="https://SiskonEmiliaPage.github.io/Assignment 5/mole/html/mole.html" target="_blank" rel="noopener">打地鼠</a></p>
-<img src="/2018/01/19/WEB-Assignment-5/sample.png" title="Assignment5">
+<img src="/WEB-Assignments/WEB-Assignment-5/sample.png" title="Assignment5">
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/2018/01/19/WEB-Assignment-5/" data-id="cjezg165v000ag4fxdoxnfhki" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/WEB-Assignments/WEB-Assignment-5/" data-id="cjf7uegr3000apylrjwbyu97z" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
@@ -164,7 +114,7 @@
   
     <article id="post-Comment-on-Github-Page-with-Gitment" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/12/31/Comment-on-Github-Page-with-Gitment/" class="article-date">
+    <a href="/uncategorized/Comment-on-Github-Page-with-Gitment/" class="article-date">
   <time datetime="2017-12-31T04:19:31.000Z" itemprop="datePublished">2017-12-31</time>
   
 </a>
@@ -177,7 +127,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/31/Comment-on-Github-Page-with-Gitment/">Comment on Github Page with Gitment</a>
+      <a class="article-title" href="/uncategorized/Comment-on-Github-Page-with-Gitment/">Comment on Github Page with Gitment</a>
     </h1>
   
 
@@ -186,23 +136,15 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>Last time, I added visitor statics system to my github page with <a href="http://busuanzi.ibruce.info" target="_blank" rel="noopener">Busuanzi</a>. But a blog without a comment system is still not good enough. After hours of searching and testing, I finally implement it with a tool called <a href="https://github.com/imsun/gitment" target="_blank" rel="noopener">Gitment</a>. And if it works, you will be able to see a comment box below after you enter an article. (I didn’t set one on the home page.) And this article is an addition to the official guide, which might be more easy to understand and practice.</p>
-<h2 id="What-is-Gitment"><a href="#What-is-Gitment" class="headerlink" title="What is Gitment"></a>What is Gitment</h2><p>According to the official document:</p>
-<blockquote>
-<p>Gitment is a comment system based on GitHub Issues, which can be used in the frontend without any server-side implementation.</p>
-</blockquote>
-<p>Actually, it create a issue for every article in your blog, and then every comment you add to the article will be added into the issue as well. And the OAuth mentioned in the official guide is used to get the access permission of your repository.</p>
-<h2 id="Get-Started-with-Hexo"><a href="#Get-Started-with-Hexo" class="headerlink" title="Get Started with Hexo"></a>Get Started with Hexo</h2><p>The official guide actually tells you about how to build a comment system, but not about how to build it under a particulay framework. And here’re some advices about building it under Hexo.</p>
-<h3 id="Where-should-I-add-my-comment-box"><a href="#Where-should-I-add-my-comment-box" class="headerlink" title="Where should I add my comment box"></a>Where should I add my comment box</h3><p>If you are using the default theme , I recommend you to add it in your /themes/landscape/layout/_partial/article.ejs, after the article tab like this:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if (!index) &#123; %&gt;</span><br><span class="line">&lt;div id=&quot;gitmentContainer&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://imsun.github.io/gitment/style/default.css&quot;&gt;</span><br><span class="line">&lt;script src=&quot;https://imsun.github.io/gitment/dist/gitment.browser.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">var gitment = new Gitment(&#123;</span><br><span class="line">  owner: &apos;your user name&apos;,</span><br><span class="line">  repo: &apos;your repo name&apos;,</span><br><span class="line">  oauth: &#123;</span><br><span class="line">    client_id: &apos;your client id here&apos;,</span><br><span class="line">    client_secret: &apos;your client secret here&apos;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br><span class="line">gitment.render(&apos;gitmentContainer&apos;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
-<p>After you doing that, you will find a comment box under every article of yours. If you want to display a comment box on your home page, you’d better move this part to your footer.ejs and add it to the beginning of your file.</p>
-<h3 id="Why-does-Github-return-a-404-while-I-am-trying-to-use-it"><a href="#Why-does-Github-return-a-404-while-I-am-trying-to-use-it" class="headerlink" title="Why does Github return a 404 while I am trying to use it"></a>Why does Github return a 404 while I am trying to use it</h3><p>Please check your repo property. It should be your repository’s name or id, not URL or something like that.</p>
-<hr>
-<p>Feel free to comment!</p>
-
+        
+          <p class="article-more-link">
+            <a href="/uncategorized/Comment-on-Github-Page-with-Gitment/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/2017/12/31/Comment-on-Github-Page-with-Gitment/" data-id="cjezg165o0002g4fx2y6eordk" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/uncategorized/Comment-on-Github-Page-with-Gitment/" data-id="cjf7uegqs0000pylrqjvvmkh6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Github-Pages/">Github Pages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gitment/">Gitment</a></li></ul>
@@ -217,7 +159,7 @@
   
     <article id="post-Remote-Floder-for-Your-Parents" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/12/30/Remote-Floder-for-Your-Parents/" class="article-date">
+    <a href="/uncategorized/Remote-Floder-for-Your-Parents/" class="article-date">
   <time datetime="2017-12-30T03:38:04.000Z" itemprop="datePublished">2017-12-30</time>
   
 </a>
@@ -230,7 +172,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/30/Remote-Floder-for-Your-Parents/">Remote Floder for Your Parents</a>
+      <a class="article-title" href="/uncategorized/Remote-Floder-for-Your-Parents/">Remote Floder for Your Parents</a>
     </h1>
   
 
@@ -246,7 +188,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/2017/12/30/Remote-Floder-for-Your-Parents/" data-id="cjezg165p0003g4fx87l9g2kq" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/uncategorized/Remote-Floder-for-Your-Parents/" data-id="cjf7uegqy0003pylrmuz9qry5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Remote-Floder/">Remote Floder</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
@@ -261,11 +203,15 @@
   
     <article id="post-WEB-Assignment-4" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/12/29/WEB-Assignment-4/" class="article-date">
+    <a href="/WEB-Assignments/WEB-Assignment-4/" class="article-date">
   <time datetime="2017-12-29T01:37:36.000Z" itemprop="datePublished">2017-12-29</time>
   
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/WEB-Assignments/">WEB Assignments</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -274,7 +220,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/29/WEB-Assignment-4/">WEB Assignment 4</a>
+      <a class="article-title" href="/WEB-Assignments/WEB-Assignment-4/">WEB Assignment 4</a>
     </h1>
   
 
@@ -283,12 +229,12 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="Assignment-4-Calculator"><a href="#Assignment-4-Calculator" class="headerlink" title="Assignment 4 - Calculator"></a>Assignment 4 - Calculator</h2><p>Assignment 4 was the start of our journey of JavaScript. We’re required to implement a simple calculator with HTML, CSS and JS. If you are a student of SYSU and are accessing the education network, you may be able to view the detail of this homework by visiting <a href="http://my.ss.sysu.edu.cn/wiki/display/WEB/Homework+5+-+Calculator" target="_blank" rel="noopener">This Page</a>. In order to implement the feature of high-accuracy calculating, this project depende on math.js. And to meet the requirement of users with different sizes of screen, I design two versions of this project. Thus take a look at the final version of it. <a href="https://SiskonEmiliaPage.github.io/Assignment 4/html/calculator.html" target="_blank" rel="noopener">Assignment 4 - bigger one</a>, <a href="https://SiskonEmiliaPage.github.io/Assignment 4/html/calculatorMini.html" target="_blank" rel="noopener">Assignment 4 - smaller one</a>.</p>
-<img src="/2017/12/29/WEB-Assignment-4/sample.jpg" title="Assignment4">
+<img src="/WEB-Assignments/WEB-Assignment-4/sample.jpg" title="Assignment4">
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/2017/12/29/WEB-Assignment-4/" data-id="cjezg165u0009g4fxts6gcklf" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/WEB-Assignments/WEB-Assignment-4/" data-id="cjf7uegr20008pylrvmt5l97m" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
@@ -303,11 +249,15 @@
   
     <article id="post-WEB-Assignment-3" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/12/27/WEB-Assignment-3/" class="article-date">
+    <a href="/WEB-Assignments/WEB-Assignment-3/" class="article-date">
   <time datetime="2017-12-27T04:20:59.000Z" itemprop="datePublished">2017-12-27</time>
   
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/WEB-Assignments/">WEB Assignments</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -316,7 +266,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/27/WEB-Assignment-3/">WEB Assignment 3</a>
+      <a class="article-title" href="/WEB-Assignments/WEB-Assignment-3/">WEB Assignment 3</a>
     </h1>
   
 
@@ -325,11 +275,11 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="Assignment-3-Ring-Menu"><a href="#Assignment-3-Ring-Menu" class="headerlink" title="Assignment 3 - Ring Menu"></a>Assignment 3 - Ring Menu</h2><p>Assignment 3 gave us a good chance to learn the usage of CSS3 features, especially transition and transform. We were required to work out a page which is the same as the one displayed in the video. If you are a student of SYSU and are accessing the education network, you may be able to view the detail of this homework by visiting <a href="http://my.ss.sysu.edu.cn/wiki/display/WEB/Homework+3+-+Ring+Menu" target="_blank" rel="noopener">This Page</a>. It took me about two days to optimize its performace, through which period I learnt a lot about the transition property of CSS3.<br>Whatever, take a look at the final version of it. <a href="https://SiskonEmiliaPage.github.io/Assignment 3/html/index.html" target="_blank" rel="noopener">Assignment 3</a>.</p>
-<img src="/2017/12/27/WEB-Assignment-3/sample.jpeg" title="Assignment3">
+<img src="/WEB-Assignments/WEB-Assignment-3/sample.jpeg" title="Assignment3">
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/2017/12/27/WEB-Assignment-3/" data-id="cjezg165t0007g4fxkya228tk" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/WEB-Assignments/WEB-Assignment-3/" data-id="cjf7uegr10007pylr5bw2faj2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
@@ -344,11 +294,15 @@
   
     <article id="post-WEB-Assignment-2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/12/26/WEB-Assignment-2/" class="article-date">
+    <a href="/WEB-Assignments/WEB-Assignment-2/" class="article-date">
   <time datetime="2017-12-26T02:11:56.000Z" itemprop="datePublished">2017-12-26</time>
   
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/WEB-Assignments/">WEB Assignments</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -357,7 +311,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/26/WEB-Assignment-2/">WEB Assignment 2</a>
+      <a class="article-title" href="/WEB-Assignments/WEB-Assignment-2/">WEB Assignment 2</a>
     </h1>
   
 
@@ -366,11 +320,11 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="Assignment-2-Movie-Review"><a href="#Assignment-2-Movie-Review" class="headerlink" title="Assignment 2 - Movie Review"></a>Assignment 2 - Movie Review</h2><p>Different from Assignment 1, which gave us the freedom to design our own page, this homework require us to implement a page which is almost the same as the one shown in the picture. If you are a student of SYSU and are accessing the education network, you may be able to view the detail of this homework by visiting <a href="http://my.ss.sysu.edu.cn/wiki/display/WEB/Homework+2+-+Movie+Review" target="_blank" rel="noopener">This Page</a>. How to make the page nearly the same as the given one is a huge problem, and I met a lot of troubles implementing it, the biggest one of which is that, I found my chrome will not really display a 8-pt font, and it would be forced to be changed into a 10-pt one.<br>Whatever, take a look at the final version of it. <a href="https://SiskonEmiliaPage.github.io/Assignment 2/html/skeleton.html" target="_blank" rel="noopener">Assignment 2</a>.  </p>
-<img src="/2017/12/26/WEB-Assignment-2/sample.png" title="Assignment2">
+<img src="/WEB-Assignments/WEB-Assignment-2/sample.png" title="Assignment2">
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/2017/12/26/WEB-Assignment-2/" data-id="cjezg165t0006g4fxnmacwcb6" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/WEB-Assignments/WEB-Assignment-2/" data-id="cjf7uegr00005pylrndlek1zw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
@@ -385,11 +339,15 @@
   
     <article id="post-WEB-Assignment-1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/12/25/WEB-Assignment-1/" class="article-date">
+    <a href="/WEB-Assignments/WEB-Assignment-1/" class="article-date">
   <time datetime="2017-12-25T12:16:55.000Z" itemprop="datePublished">2017-12-25</time>
   
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/WEB-Assignments/">WEB Assignments</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -398,7 +356,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/25/WEB-Assignment-1/">WEB Assignment 1</a>
+      <a class="article-title" href="/WEB-Assignments/WEB-Assignment-1/">WEB Assignment 1</a>
     </h1>
   
 
@@ -408,11 +366,11 @@
       
         <p>This article is a start of a set of articles which contains all the static web pages I have worked out in the Modern WEB Technology course of SYSU. They are the mileposts on the road of my WEB learning. And it did take me a long time to design and implement each of them. I think it will be a good ending for them to be displayed here, as a milepost of my life road.</p>
 <h2 id="Assignment-1-Recipe"><a href="#Assignment-1-Recipe" class="headerlink" title="Assignment 1 - Recipe"></a>Assignment 1 - Recipe</h2><p>If you are a student of SYSU and are accessing the education network, you may be able to view the detail of this homework by visiting <a href="http://my.ss.sysu.edu.cn/wiki/display/WEB/Homework+1+-+Recipe" target="_blank" rel="noopener">This Page</a>. This is the very first homework that Professor Wang left for us. And this is also the very first time that I pay attention to designing a website. I use the background music of <a href="https://www.mercedes-benz.com/en/" target="_blank" rel="noopener">Mercedes-Benz’s Official Website</a> as the background music of it, with adding mask layout to optimize the background image’s performance. Lucklily, it seems not to be a bad work.<br>And now, let’s experience it! <a href="https://siskonemiliapage.github.io/Assignment%201/html/index.html" target="_blank" rel="noopener">Assignment 1</a> (It seems that hexo cannot normally display a customized page. I think I have to register another Github account to accommodate my assignments.)</p>
-<img src="/2017/12/25/WEB-Assignment-1/example.jpg" title="Assignment1">
+<img src="/WEB-Assignments/WEB-Assignment-1/example.jpg" title="Assignment1">
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/2017/12/25/WEB-Assignment-1/" data-id="cjezg165s0005g4fxcp7tm6aq" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/WEB-Assignments/WEB-Assignment-1/" data-id="cjf7uegqz0004pylrmn60ylc3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WEB/">WEB</a></li></ul>
@@ -427,11 +385,15 @@
   
     <article id="post-First-Article" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/12/25/First-Article/" class="article-date">
+    <a href="/Hexo/First-Article/" class="article-date">
   <time datetime="2017-12-25T12:16:11.000Z" itemprop="datePublished">2017-12-25</time>
   
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Hexo/">Hexo</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -440,7 +402,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/25/First-Article/">First Article</a>
+      <a class="article-title" href="/Hexo/First-Article/">First Article</a>
     </h1>
   
 
@@ -460,54 +422,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/2017/12/25/First-Article/" data-id="cjezg165m0001g4fxlvfm1c4e" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/25/hello-world/" class="article-date">
-  <time datetime="2017-12-25T12:13:20.000Z" itemprop="datePublished">2017-12-25</time>
-  
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/25/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/2017/12/25/hello-world/" data-id="cjezg1660000cg4fx3zx546gk" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Hexo/First-Article/" data-id="cjf7uegqv0001pylrnzofb5au" class="article-share-link">Share</a>
       
       
     </footer>
@@ -525,13 +440,20 @@
           <aside id="sidebar">
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB-Assignments/">WEB Assignments</a></li></ul>
+    </div>
+  </div>
+
 
   
     
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github-Pages/">Github Pages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gitment/">Gitment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MOSAD/">MOSAD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Remote-Floder/">Remote Floder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UWP/">UWP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github-Pages/">Github Pages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gitment/">Gitment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Remote-Floder/">Remote Floder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
     </div>
   </div>
 
@@ -541,7 +463,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Github-Pages/" style="font-size: 10px;">Github Pages</a> <a href="/tags/Gitment/" style="font-size: 10px;">Gitment</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/MOSAD/" style="font-size: 10px;">MOSAD</a> <a href="/tags/Remote-Floder/" style="font-size: 10px;">Remote Floder</a> <a href="/tags/UWP/" style="font-size: 10px;">UWP</a> <a href="/tags/WEB/" style="font-size: 20px;">WEB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a>
+      <a href="/tags/Github-Pages/" style="font-size: 10px;">Github Pages</a> <a href="/tags/Gitment/" style="font-size: 10px;">Gitment</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Remote-Floder/" style="font-size: 10px;">Remote Floder</a> <a href="/tags/WEB/" style="font-size: 20px;">WEB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a>
     </div>
   </div>
 
@@ -550,7 +472,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
     </div>
   </div>
 
@@ -563,23 +485,23 @@
       <ul>
         
           <li>
-            <a href="/2018/03/20/100-Ways-to-Die-in-UWP-1/">100 Ways to Die in UWP - 1</a>
+            <a href="/WEB-Assignments/WEB-Assignment-5/">WEB Assignment 5</a>
           </li>
         
           <li>
-            <a href="/2018/01/19/WEB-Assignment-5/">WEB Assignment 5</a>
+            <a href="/uncategorized/Comment-on-Github-Page-with-Gitment/">Comment on Github Page with Gitment</a>
           </li>
         
           <li>
-            <a href="/2017/12/31/Comment-on-Github-Page-with-Gitment/">Comment on Github Page with Gitment</a>
+            <a href="/uncategorized/Remote-Floder-for-Your-Parents/">Remote Floder for Your Parents</a>
           </li>
         
           <li>
-            <a href="/2017/12/30/Remote-Floder-for-Your-Parents/">Remote Floder for Your Parents</a>
+            <a href="/WEB-Assignments/WEB-Assignment-4/">WEB Assignment 4</a>
           </li>
         
           <li>
-            <a href="/2017/12/29/WEB-Assignment-4/">WEB Assignment 4</a>
+            <a href="/WEB-Assignments/WEB-Assignment-3/">WEB Assignment 3</a>
           </li>
         
       </ul>
