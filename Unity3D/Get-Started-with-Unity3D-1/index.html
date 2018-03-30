@@ -16,7 +16,7 @@
 <meta property="og:description" content="本篇博客是Unity3D第一周课程作业，包含对Unity3D基本概念的详尽解释和井字棋开发指南。若有疏漏，欢迎大家在评论区指正，谢谢～！">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-1/UML.png">
-<meta property="og:updated_time" content="2018-03-27T14:05:46.000Z">
+<meta property="og:updated_time" content="2018-03-30T09:22:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Get Started with Unity3D - 1">
 <meta name="twitter:description" content="本篇博客是Unity3D第一周课程作业，包含对Unity3D基本概念的详尽解释和井字棋开发指南。若有疏漏，欢迎大家在评论区指正，谢谢～！">
@@ -105,32 +105,30 @@
         <p>本篇博客是Unity3D第一周课程作业，包含对Unity3D基本概念的详尽解释和井字棋开发指南。若有疏漏，欢迎大家在评论区指正，谢谢～！<a id="more"></a></p>
 <h2 id="概念解答"><a href="#概念解答" class="headerlink" title="概念解答"></a>概念解答</h2><p>注：<strong><a href="https://github.com/SiskonEmilia/3D-Assignments/blob/master/Assignment%201/ShortAnswer.md" target="_blank" rel="noopener">markdown文档地址</a></strong></p>
 <ul>
-<li>解释 游戏对象（GameObjects） 和 资源（Assets）的区别与联系<ul>
-<li>区别<ul>
-<li>游戏对象<blockquote>
+<li><p>解释 游戏对象（GameObjects） 和 资源（Assets）的区别与联系</p>
+<ul>
+<li><p>区别</p>
+<ul>
+<li><p>游戏对象</p>
 <p>游戏对象是游戏场景中的所有实体的统称。它不仅包含游戏中的实体，同时也包含摄像机、光源等。正是他们之间的互动构成了游戏。</p>
-</blockquote>
 </li>
-<li>资源<blockquote>
+<li><p>资源</p>
 <p>资源包含材质、音乐、脚本等等，他们通常附着于游戏对象而发挥作用，但同时，也包含可以直接实例化为游戏对象的对象的预制。</p>
-</blockquote>
 </li>
 </ul>
 </li>
-<li>联系<blockquote>
+<li><p>联系</p>
 <p>资源可以附着在游戏对象上，也可以实例化为对象而发挥作用，但是独立的资源不能直接发挥作用。</p>
-</blockquote>
 </li>
 </ul>
 </li>
-<li>下载几个游戏案例，分别总结资源、对象组织的结构（指资源的目录组织结构与游戏对象树的层次结构）<ul>
-<li>资源目录结构<blockquote>
+<li><p>下载几个游戏案例，分别总结资源、对象组织的结构（指资源的目录组织结构与游戏对象树的层次结构）</p>
+<ul>
+<li><p>资源目录结构</p>
 <p>资源目录一般下属多个文件夹以区分不同的资源类型，如预制、材质、场景、脚本、音乐等，在文件夹下放置对应的资源，如此方便制作者对不同资源的管理。</p>
-</blockquote>
 </li>
-<li>游戏对象树结构<blockquote>
+<li><p>游戏对象树结构</p>
 <p>如同资源目录一般，根据用途被划分为几个大的空对象，来区分不同的游戏对象。实际起作用的对象作为这些对象的子对象而存在。常见的花粉中包含：光源、背景、实体、边界、事件、文字、摄像机等。</p>
-</blockquote>
 </li>
 </ul>
 </li>
@@ -156,20 +154,24 @@
 </li>
 <li><p>查找脚本手册，了解 GameObject，Transform，Component 对象</p>
 <ul>
-<li>分别翻译官方对三个对象的描述（Description）<ul>
-<li>GameObject<blockquote>
-<p>Scripting: 在Unity场景中的所有实体的基类。</p>
-<p>Manual: 游戏对象在Unity中是那些表现角色、道具和场景基础对象。他们本身并不十分完整，但她们作为组件（Components）的容器而存在，这使得她们得以实现她们真正的功能。</p>
-</blockquote>
+<li><p>分别翻译官方对三个对象的描述（Description）</p>
+<ul>
+<li><p>GameObject</p>
+<ul>
+<li>Scripting: 在Unity场景中的所有实体的基类。</li>
+<li>Manual: 游戏对象在Unity中是那些表现角色、道具和场景基础对象。他们本身并不十分完整，但她们作为组件（Components）的容器而存在，这使得她们得以实现她们真正的功能。</li>
+</ul>
 </li>
-<li>Transform<blockquote>
-<p>Scripting: 一个对象的位置、旋转（角度）和缩放。每个对象都有一个Transform。它被用于存储、和操作对象的位置、旋转角和缩放。 每个Transform都有一个父元素，这允许分层地应用这些属性。这也就是在层级窗口所呈现的层级。</p>
-<p>Manual: Transform组件决定了场景中每个对象的位置、旋转（角度）和缩放。每个游戏对象都有一个Transform。</p>
-</blockquote>
+<li><p>Transform</p>
+<ul>
+<li><p>Scripting: 一个对象的位置、旋转（角度）和缩放。每个对象都有一个Transform。它被用于存储、和操作对象的位置、旋转角和缩放。 每个Transform都有一个父元素，这允许分层地应用这些属性。这也就是在层级窗口所呈现的层级。</p>
 </li>
-<li>Component<blockquote>
-<p>Scripting: 所有附着于游戏对象类的东西的基类。</p>
-</blockquote>
+<li><p>Manual: Transform组件决定了场景中每个对象的位置、旋转（角度）和缩放。每个游戏对象都有一个Transform。</p>
+</li>
+</ul>
+</li>
+<li><p>Component</p>
+<p>  Scripting: 所有附着于游戏对象类的东西的基类。</p>
 </li>
 </ul>
 </li>
@@ -187,8 +189,7 @@
 </ul>
 </li>
 <li><p>用 UML 图描述 三者的关系</p>
-<blockquote>
-<img src="/Unity3D/Get-Started-with-Unity3D-1/UML.png" title="UML"></blockquote>
+<img src="/Unity3D/Get-Started-with-Unity3D-1/UML.png" title="UML">
 </li>
 </ul>
 </li>
@@ -201,10 +202,8 @@
  <figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GameObject parentObj = GameObject.Find([ParentName]);</span><br><span class="line">GameObject childObj = GameObject.Find([ChildName]);</span><br><span class="line">childObj.transform.parent = parentObj.transform;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>遍历对象树</p>
-<blockquote>
 <p>如前文所述，FindObjectsOfType函数可以通过对象类型寻找对象，因而将其type令为GameObject即可得到所有的对象的一个列表，遍历列表即可遍历整个对象树</p>
  <figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> obj <span class="keyword">in</span> GameObject.FindObjectsOfType(<span class="keyword">typeof</span>(GameObject))) &#123;</span><br><span class="line"><span class="comment">// your code here</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</blockquote>
 </li>
 <li><p>清除所有子对象</p>
  <figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; transform.childCount; i++) &#123;</span><br><span class="line">       Destroy (transform.GetChil(i).gameObject);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -214,32 +213,30 @@
 </li>
 <li><p>资源预设（Prefabs）与 对象克隆 (clone)</p>
 <ul>
-<li>预设（Prefabs）有什么好处？<blockquote>
+<li><p>预设（Prefabs）有什么好处？</p>
 <ol>
 <li>提高设计的复用性，降低设计成本</li>
 <li>提高资源的复用性，降低游戏空间复杂度</li>
 <li>“类化”游戏对象，提高逻辑复用性</li>
 <li>变相提供相对统一的设计风格</li>
 </ol>
-</blockquote>
 </li>
-<li>预设与对象克隆 (clone or copy or Instantiate of Unity Object) 关系？<blockquote>
+<li><p>预设与对象克隆 (clone or copy or Instantiate of Unity Object) 关系？</p>
 <ol>
 <li>二者都可以创造一类相同／相似的对象</li>
 <li>由同个预设创造的对象在预设更改时也会同步更改，但是克隆出来的对象是互相独立的</li>
 </ol>
-</blockquote>
 </li>
-<li>制作 table 预制，写一段代码将 table 预制资源实例化成游戏对象 <figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GameObject prefab = Resources.Load(<span class="string">"Prefabs/table"</span>) <span class="keyword">as</span> GameObject;</span><br><span class="line">GameObject instance = Instantiate(prefab);</span><br></pre></td></tr></table></figure>
+<li><p>制作 table 预制，写一段代码将 table 预制资源实例化成游戏对象</p>
+ <figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GameObject prefab = Resources.Load(<span class="string">"Prefabs/table"</span>) <span class="keyword">as</span> GameObject;</span><br><span class="line">GameObject instance = Instantiate(prefab);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 <li><p>尝试解释组合模式（Composite Pattern / 一种设计模式</p>
-<blockquote>
 <p>是一种树状层级式的组织结构，它允许使用者递归地处理对象间的关系。在这种模式下，复杂对象和简单对象被一视同仁——复杂对象的内部细节对外部是隐藏的，从而使得客户程序与复杂元素的内部结构解耦。一个形象的例子是计算机的文件系统——文件夹和单个文件从外部看都是一致的。</p>
-</blockquote>
 </li>
-<li>使用 BroadcastMessage() 方法向子对象发送消息  <figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 父类对象通过BroadcastMessage方法发送字符串消息，子类对象的同名方法将被调用</span></span><br><span class="line"><span class="keyword">this</span>.BroadcastMessage(<span class="string">"Hey"</span>); <span class="comment">// 父类对象发出消息</span></span><br><span class="line"><span class="comment">/*---*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Hey</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="comment">// This part will be executed</span></span><br><span class="line">&#125; <span class="comment">// 子类对象同名方法将被调用</span></span><br></pre></td></tr></table></figure>
+<li><p>使用 BroadcastMessage() 方法向子对象发送消息</p>
+  <figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 父类对象通过BroadcastMessage方法发送字符串消息，子类对象的同名方法将被调用</span></span><br><span class="line"><span class="keyword">this</span>.BroadcastMessage(<span class="string">"Hey"</span>); <span class="comment">// 父类对象发出消息</span></span><br><span class="line"><span class="comment">/*---*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Hey</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="comment">// This part will be executed</span></span><br><span class="line">&#125; <span class="comment">// 子类对象同名方法将被调用</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h2 id="开发实验：井字棋"><a href="#开发实验：井字棋" class="headerlink" title="开发实验：井字棋"></a>开发实验：井字棋</h2><p>注：<strong><a href="https://github.com/SiskonEmilia/3D-Assignments/tree/master/Assignment%201/TicTacToe" target="_blank" rel="noopener">仓库地址</a></strong></p>
