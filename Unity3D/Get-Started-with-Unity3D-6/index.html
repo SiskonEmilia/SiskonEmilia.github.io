@@ -23,7 +23,9 @@
 <meta property="og:image" content="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-6/005.png">
 <meta property="og:image" content="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-6/006.png">
 <meta property="og:image" content="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-6/007.png">
-<meta property="og:updated_time" content="2018-06-05T17:47:52.000Z">
+<meta property="og:image" content="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-6/008.png">
+<meta property="og:image" content="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-6/009.png">
+<meta property="og:updated_time" content="2018-06-06T12:20:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Get Started with Unity3D - 6">
 <meta name="twitter:description" content="天色天歌天音 - Unity 换装游戏B站视频 注：视频有声音，请开大音量食用。 游戏预览：">
@@ -137,7 +139,10 @@
 <p>将物品放入装备栏也是同理，不再赘述。</p>
 <h4 id="如何“换装”"><a href="#如何“换装”" class="headerlink" title="如何“换装”"></a>如何“换装”</h4><p>单从 Unity 的角度来说，这是简单的。我们对每个人物部件进行标号，并且预先生成各种情况下的人物立绘，再根据装备栏的情况选择加载即可：</p>
 <figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refresh</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    getChar();</span><br><span class="line">    <span class="keyword">if</span> (equippedItem1s[<span class="number">3</span>].isEmpty)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    GameObject.Find(<span class="string">"Background"</span>).GetComponent&lt;SpriteRenderer&gt;().sprite =</span><br><span class="line">        Resources.Load&lt;Sprite&gt;(<span class="string">"bgimage/"</span> + equippedItem1s[<span class="number">3</span>].content);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getChar</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (equippedItem1s[i].isEmpty)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    GameObject.Find(<span class="string">"Character"</span>).GetComponent&lt;SpriteRenderer&gt;().sprite =</span><br><span class="line">        Resources.Load&lt;Sprite&gt;(<span class="string">"figure/"</span> + equippedItem1s[<span class="number">1</span>].content + equippedItem1s[<span class="number">2</span>].content + equippedItem1s[<span class="number">0</span>].content);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>真正的难点在于：如何把图片从游戏中提取出来并且组合成我们想要的形式呢？在这里我们使用了xp3解包和一些解密的知识，考虑到和课程无关且有版权问题便不再赘述了。</p>
+<p>真正的难点在于：如何把图片从游戏中提取出来并且组合成我们想要的形式呢？首先，我们要将数据包中的立绘资源（fgimage.xp3）取出（<a href="https://github.com/xmoeproject/KrkrExtract" target="_blank" rel="noopener">工具</a>），取出来的东西大概是长这个样子：</p>
+<img src="/Unity3D/Get-Started-with-Unity3D-6/008.png" title="preview">
+<p>看上去游戏里的角色被拆分成很多份存起来了……这是游戏为了节约内存空间而设计的。注意到文件夹中的 txt 文件了吗？它们指定了完整立绘的合成规则。借助一些小工具（百度一下就有～）我们就能合成出完整的立绘啦～</p>
+<img src="/Unity3D/Get-Started-with-Unity3D-6/009.png" title="preview">
 <p><em>Enjoy Your Time with Her!</em></p>
 
       
