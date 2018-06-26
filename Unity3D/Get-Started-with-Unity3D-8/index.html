@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Get Started with Unity3D - 8 | Coding.Siskon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="网络对战-天际赛车经历了一个学期的各种学习，我们今天终于迎来了 Unity 制作网游的重要一步——网络模块。网络模块的存在使得游戏可以随时变身客户端／服务端，并且让多人共同进行游戏——没有什么比分享更能让人快乐的了！那么这次我们制作的是《天际赛车》，玩家将驾驶飞行器和同伴一起穿过圆环，争取分数！单人预览：">
+<meta name="keywords" content="Unity3D">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Get Started with Unity3D - 8">
+<meta property="og:url" content="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-8/index.html">
+<meta property="og:site_name" content="Coding.Siskon">
+<meta property="og:description" content="网络对战-天际赛车经历了一个学期的各种学习，我们今天终于迎来了 Unity 制作网游的重要一步——网络模块。网络模块的存在使得游戏可以随时变身客户端／服务端，并且让多人共同进行游戏——没有什么比分享更能让人快乐的了！那么这次我们制作的是《天际赛车》，玩家将驾驶飞行器和同伴一起穿过圆环，争取分数！单人预览：">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-8/GIF.gif">
+<meta property="og:image" content="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-8/standardasstes.png">
+<meta property="og:image" content="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-8/NetworkHost.png">
+<meta property="og:image" content="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-8/NetworkLocalPlayers.png">
+<meta property="og:image" content="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-8/networkmanager.png">
+<meta property="og:image" content="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-8/aircraft.png">
+<meta property="og:image" content="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-8/amazing.jpg">
+<meta property="og:image" content="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-8/startposition.png">
+<meta property="og:updated_time" content="2018-06-26T14:34:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Get Started with Unity3D - 8">
+<meta name="twitter:description" content="网络对战-天际赛车经历了一个学期的各种学习，我们今天终于迎来了 Unity 制作网游的重要一步——网络模块。网络模块的存在使得游戏可以随时变身客户端／服务端，并且让多人共同进行游戏——没有什么比分享更能让人快乐的了！那么这次我们制作的是《天际赛车》，玩家将驾驶飞行器和同伴一起穿过圆环，争取分数！单人预览：">
+<meta name="twitter:image" content="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-8/GIF.gif">
+  
+    <link rel="alternate" href="/atom.xml" title="Coding.Siskon" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Coding.Siskon</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Simple Blog of SiskonEmilia</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://siskonemilia.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Get-Started-with-Unity3D-8" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/Unity3D/Get-Started-with-Unity3D-8/" class="article-date">
+  <time datetime="2018-06-26T13:38:35.000Z" itemprop="datePublished">2018-06-26</time>
+  
+    <span id="busuanzi_container_page_pv">
+        | Views: <span id="busuanzi_value_page_pv">loading...</span>
+    </span>
+  
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Unity3D/">Unity3D</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Get Started with Unity3D - 8
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="网络对战-天际赛车"><a href="#网络对战-天际赛车" class="headerlink" title="网络对战-天际赛车"></a>网络对战-天际赛车</h2><p>经历了一个学期的各种学习，我们今天终于迎来了 Unity 制作网游的重要一步——网络模块。网络模块的存在使得游戏可以随时变身客户端／服务端，并且让多人共同进行游戏——没有什么比分享更能让人快乐的了！那么这次我们制作的是《天际赛车》，玩家将驾驶飞行器和同伴一起穿过圆环，争取分数！单人预览：</p>
+<img src="/Unity3D/Get-Started-with-Unity3D-8/GIF.gif" title="preview"><a id="more"></a>
+<h2 id="强大的官方标准资源包"><a href="#强大的官方标准资源包" class="headerlink" title="强大的官方标准资源包"></a>强大的官方标准资源包</h2><p>当然……这个飞机和控制脚本基本不是我的作品。它们是来自官方的 Standard Assets 包中的喷气式飞机。</p>
+<img src="/Unity3D/Get-Started-with-Unity3D-8/standardasstes.png" title="preview">
+<p>导入资源包后，直接打开 Standard Scenes 中的场景，我们就能够看到一个造好的飞机场，和停在上面的一架飞机。运行游戏，我们可以看到，飞机的控制等等官方已经为我们设计好了，我们需要操心的就只有网络模块在之上的应用。</p>
+<h2 id="网路模块"><a href="#网路模块" class="headerlink" title="网路模块"></a>网路模块</h2><h3 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h3><p>如我们前文所说的，客户端之间应该是不能够直接相连的，否则我们难以解决数据的统一问题。那么网络交互的架构到底是如何的呢？</p>
+<h4 id="主机和服务器"><a href="#主机和服务器" class="headerlink" title="主机和服务器"></a>主机和服务器</h4><img src="/Unity3D/Get-Started-with-Unity3D-8/NetworkHost.png" title="preview">
+<p>如图所示，在众多的客户端中，有一个客户端是脱颖而出的：主机（Host），它在包含一个客户端的同时，还包含了一个服务器（Server），所有的客户端彼此之间并不交互，他们都统一和客户端进行数据交换，以确保数据的统一，并最小化传输代价。当然，Host 的存在并不是必须的。严格来说，大型的网络游戏一般是采用 Server/Client 分离的模式，也就是单独一个程序作为 Server，其余的都是 Client，如此来更好地利用服务器资源和降低模块耦合程度。</p>
+<h4 id="实例化与孵化"><a href="#实例化与孵化" class="headerlink" title="实例化与孵化"></a>实例化与孵化</h4><p>在一个单机中，游戏对象创建称为实例化（Instantiate）</p>
+<p>在网络游戏中，网络游戏对象，客户端必须从服务器接受这些对象及其属性，称为孵化（Spawn），并由服务器的孵化系统（Spawning System）管理分布式对象生命周期和状态同步。</p>
+<h4 id="网络游戏对象"><a href="#网络游戏对象" class="headerlink" title="网络游戏对象"></a>网络游戏对象</h4><p>前面我们说到，每个客户端中的游戏对象实际上都是由服务器的孵化系统管理和同步的。但是在我们的实际体验中，每台客户端的显示效果显然是不同的，我们要如何做到这一点呢？这就要涉及到 Unity 的网络游戏对象系统：</p>
+<p>网络游戏对象（Networked GameObjects） ：在服务器上注册，由孵化系统（Spawning System）管理的对象，它必须包含 NetworkIdentity 组件，并用 NetworkBehaviour 脚本编程。</p>
+<p>玩家游戏对象（player GameObjects）是特殊的网络游戏对象，指一个 client 加入网络游戏，服务器创建并孵化到客户端，由玩家控制的游戏对象。客户端代码可以控制它们的状态，并自动有服务器同步到其他玩家的客户端。例如：联网赛车游戏，每个玩家都有属于自己的赛车。</p>
+<img src="/Unity3D/Get-Started-with-Unity3D-8/NetworkLocalPlayers.png" title="preview">
+<h3 id="实战！"><a href="#实战！" class="headerlink" title="实战！"></a>实战！</h3><p>说了那么多基本知识，没有实战的就毫无意义。我们如何把这部分内容应用到我们的游戏中呢？让我们一步步说来：</p>
+<h4 id="NetworkManager"><a href="#NetworkManager" class="headerlink" title="NetworkManager"></a>NetworkManager</h4><img src="/Unity3D/Get-Started-with-Unity3D-8/networkmanager.png" title="preview">
+<p>如上图，我们首先向场景中添加一个新的空对象，并在其上添加 Network Manager 和 Network Manager HUD 两个组件，前者是整个网络模块的核心，它负责处理程序作为 client 或 host(server) 时应该进行的网络行为，后者是其的 GUI 界面，方便我们在游戏中直接对其进行操作。这样我们就搭建好了网络模块的基石。</p>
+<h4 id="让你的飞机做好准备"><a href="#让你的飞机做好准备" class="headerlink" title="让你的飞机做好准备"></a>让你的飞机做好准备</h4><p>经过上面的设置，我们的程序已经做好了准备，但是我们的游戏对象们都还对网络模块的到来感到一脸懵逼。我们如何让它们融入网络的环境呢？让我们从飞机开始：</p>
+<img src="/Unity3D/Get-Started-with-Unity3D-8/aircraft.png" title="preview">
+<p>找到我们的飞机对象，为其添加 Network Identity 和 Network Transform，前者是为了让网络模块能够认识到其存在并且将其纳入网络对象的行列（注意勾选 Local Player Authority，来表示其是本地客户端所有的对象），后者是为了实时更新各个客户端上该对象的位置。</p>
+<p>之后，我们把飞机制作成预制，删除原来实例化好的游戏对象，将预制添加到 Network Manager 的 Player Prefab 中，整个网络环境就算搭建好了！你甚至可以现在就试玩一下……当然，你会发现一些奇怪的事情——为什么所有客户端实例的视角都是跟随 Host 的飞机的？而且我们在任何客户端上的操作都会对所有飞机生效！别急……我们慢慢道来……</p>
+<h4 id="让本地的东西只为本地服务"><a href="#让本地的东西只为本地服务" class="headerlink" title="让本地的东西只为本地服务"></a>让本地的东西只为本地服务</h4><p>让我们打开 <code>Aeroplane User Control 2Axis.cs</code>，这个脚本是用于接收用户输入信息，并据此控制飞机运动的。看到满屏不认识的代码是否有些小懵逼？不用担心，我们要做的只是在 <code>FixedUpdate</code> 方法中最前面加上短短的一行：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!isLocalPlayer)</span><br><span class="line">  <span class="keyword">return</span>;</span><br></pre></td></tr></table></figure>
+<p>这段代码告诉 Unity，如果当前对象不是本地的，那么就不会对其进行操作——从而把对对象的控制权交给服务器全权负责。这样一来，我们的输入就只会影响到本地的对象了。</p>
+<p>接下来，是最麻烦的摄像机问题。看看场景中的 Cameras，里面可有着不少东西呢。其中，他有一个叫做 JetCameraRig 的子对象，它的属性里面有一个 Target，看上去因为我们删掉了飞机对象，所以他现在指向的是 None——人畜无害的样子呢！不过…… Unity 在设计之初对他动了些手脚，因而当脚本开始运行时，其的 Target 会自动的锁定在 Tag 为 Player 的对象身上！哦，看看我们的预制小飞机，它的 Tag 正好是 Player，因而我们在开启多个客户端的时候，Camera 会屁颠屁颠地自动把自己绑在他找到的第一个 Player 身上——也就是 Host 的飞机了。</p>
+<p>那么，简单地去掉 Tag 就好了嘛？基本上是如此的，不过我们还需要在创建对象的时候设置一下这个 Target，代码是这样的：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">OnStartLocalPlayer</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> camera = Instantiate(cameraPrefab) <span class="keyword">as</span> GameObject;</span><br><span class="line">    camera.transform.GetChild(<span class="number">0</span>).gameObject.GetComponent&lt;UnityStandardAssets.Cameras.AutoCam&gt;().Target = transform;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不过……这样就万事大吉了吗？并不！你的 Unity 应该已经在疯狂用红色的 Error 抗议你的所作所为了——Target 不是一个可修改的变量！</p>
+<img src="/Unity3D/Get-Started-with-Unity3D-8/amazing.jpg" title="preview">
+<p>还有这种操作？要解决这个问题，我们就要刨根问底一下了。首先我们提着刀就来到了 <code>AutoCam.cs</code>，然而左右巡视一圈……</p>
+<p>“Target人呢？？”</p>
+<p>看样子 Target 虽然在 AutoCam 的属性面板中，但是却并不是它的直接数据成员。那么问题应该就很显然了——Target 是 AutoCam 的某个基类的数据成员！一路找下去，我们就能在 <code>AbstractTargetFollower.cs</code> 中找到 Target 的踪迹，把它改成以下的样子，就能够真的搞定了：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Transform Target</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">set</span></span><br><span class="line">    &#123;</span><br><span class="line">        m_Target = <span class="keyword">value</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">get</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> m_Target;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="赛道一人一个，不要争抢"><a href="#赛道一人一个，不要争抢" class="headerlink" title="赛道一人一个，不要争抢"></a>赛道一人一个，不要争抢</h4><p>怀着激动的心再来跑一次！……诶诶诶诶？？怎么我的飞机开局都被彼此挤的到处乱飞……一条跑道不够用啊！</p>
+<p>那就多加几条呗。复制几条跑道，放在合适的地方，万事俱备！不过我们怎么让飞机们乖乖地一人一个跑道呢？创建多个空对象，为他们每人配备一个 Network Start Position 组件，再回到我们的 Network Manager，把 Player Spawn Met 改为 Rolin Robin（旋转罗宾法），这样每架飞机都会安分地选一条跑道起飞了～</p>
+<img src="/Unity3D/Get-Started-with-Unity3D-8/startposition.png" title="preview">
+<h4 id="剩下的一些微小的工作"><a href="#剩下的一些微小的工作" class="headerlink" title="剩下的一些微小的工作"></a>剩下的一些微小的工作</h4><p>搞完这些，我们就只有些基础的内容需要再改改了：</p>
+<ol>
+<li><p>辨识本地对象</p>
+<p>在 <code>OnStartLocalPlayer</code> 中修改对象的 Mesh Renderer 的 material 的 color 即可</p>
+</li>
+<li><p>穿过环加分</p>
+<p>为所有的环添加带 Trigger 的碰撞体，添加碰撞的处理函数，为一个 static 的 int + 1，之后通过 IMGUI 显示到屏幕上即可</p>
+</li>
+</ol>
+<h2 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h2><p>本次作业可以说是 Unity3D 开课以来最为有趣的几次作业之一！在本次作业中，我们深入探寻了隐藏在网络游戏背后的秘密，这不仅对我们游戏开发有很大的好处，还能帮助我们融会贯通 web 技术、计算机网络等方面的知识，可谓是一举多得了～</p>
+<h2 id="奇奇怪怪的链接"><a href="#奇奇怪怪的链接" class="headerlink" title="奇奇怪怪的链接"></a>奇奇怪怪的链接</h2><p><a href="https://www.bilibili.com/video/av25647607/" target="_blank" rel="noopener">b站视频～</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-8/" data-id="cjivsbpmo0008bklr3tdqujw0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/Unity3D/Get-Started-with-Unity3D-7/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Get Started with Unity3D - 7</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: 'Get Started with Unity3D - 8',
+  owner: 'siskonemilia',
+  repo: 'PageComment',
+  oauth: {
+    client_id: '154bdf960b5615033ebe',
+    client_secret: '254826ff682d5d9b21138e53a7efe4867f2c5c77',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Others/">Others</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity3D/">Unity3D</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB-Assignments/">WEB Assignments</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github-Pages/">Github Pages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gitment/">Gitment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Remote-Floder/">Remote Floder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity3D/">Unity3D</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Github-Pages/" style="font-size: 10px;">Github Pages</a> <a href="/tags/Gitment/" style="font-size: 10px;">Gitment</a> <a href="/tags/JavaScript/" style="font-size: 13.33px;">JavaScript</a> <a href="/tags/Remote-Floder/" style="font-size: 10px;">Remote Floder</a> <a href="/tags/Unity3D/" style="font-size: 20px;">Unity3D</a> <a href="/tags/WEB/" style="font-size: 16.67px;">WEB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/Unity3D/Get-Started-with-Unity3D-8/">Get Started with Unity3D - 8</a>
+          </li>
+        
+          <li>
+            <a href="/Unity3D/Get-Started-with-Unity3D-7/">Get Started with Unity3D - 7</a>
+          </li>
+        
+          <li>
+            <a href="/Unity3D/Get-Started-with-Unity3D-6/">Get Started with Unity3D - 6</a>
+          </li>
+        
+          <li>
+            <a href="/Unity3D/Get-Started-with-Unity3D-5/">Get Started with Unity3D - 5</a>
+          </li>
+        
+          <li>
+            <a href="/Unity3D/Get-Started-with-Unity3D-4/">Get Started with Unity3D - 4</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Emilia<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a><br>
+      <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_uv"> 
+          Visitors: <span id="busuanzi_value_site_uv">loading...</span>
+      </span>
+    </div>
+  </div>
+  
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
