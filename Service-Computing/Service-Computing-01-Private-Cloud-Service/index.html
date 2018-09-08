@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://siskonemilia.github.io/Service-Computing/Service-Computing-01-Private-Cloud-Service/sample1.png">
 <meta property="og:image" content="https://siskonemilia.github.io/Service-Computing/Service-Computing-01-Private-Cloud-Service/sample2.png">
 <meta property="og:image" content="https://siskonemilia.github.io/Service-Computing/Service-Computing-01-Private-Cloud-Service/sample3.png">
-<meta property="og:updated_time" content="2018-09-08T11:02:21.000Z">
+<meta property="og:updated_time" content="2018-09-08T11:05:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Service Computing 01 - Private Cloud Service">
 <meta name="twitter:description" content="由于作者水平有限，内容可能存在错漏，若有发现，还望您在评论区指出。 本博客内容仅适用于 VMWare Workstation，Virtual Box 上的操作可能有所不同。 使用 VMWare Workstation 让 PC 提供云桌面服务">
@@ -112,8 +112,8 @@
 <li><a href="#2-从安装虚拟机开始">2. 从安装虚拟机开始</a><ul>
 <li><a href="#21-恼人的网卡">2.1. 恼人的网卡</a></li>
 <li><a href="#22-关于-yum-源">2.2. 关于 yum 源</a></li>
-<li><a href="#关于复制虚拟机">关于复制虚拟机</a></li>
-<li><a href="#关于虚拟机环境配置">关于虚拟机环境配置</a></li>
+<li><a href="#23-关于复制虚拟机">2.3. 关于复制虚拟机</a></li>
+<li><a href="#24-关于虚拟机环境配置">2.4. 关于虚拟机环境配置</a></li>
 </ul>
 </li>
 </ul>
@@ -148,10 +148,10 @@ yum makecache
 </code></pre><p>如此即可。</p>
 <p>注：如果不清楚工具在哪个 yum 包中，可以使用如下命令查找：</p>
 <pre><code>yum whatprovides [tool name]
-</code></pre><h2 id="关于复制虚拟机"><a href="#关于复制虚拟机" class="headerlink" title="关于复制虚拟机"></a>关于复制虚拟机</h2><p>云服务的提供商通常不会止步于单个系统，那么如何批量生产这些满足要求的系统就是个问题了。复制虚拟机便是一个不错的方案。在 VMWare Workstation 中，该操作首先会创建一个当前虚拟机的快照（可以理解为当前状态的完整记录），然后用快照生成一个与原虚拟机独立的系统。</p>
+</code></pre><h2 id="2-3-关于复制虚拟机"><a href="#2-3-关于复制虚拟机" class="headerlink" title="2.3. 关于复制虚拟机"></a>2.3. 关于复制虚拟机</h2><p>云服务的提供商通常不会止步于单个系统，那么如何批量生产这些满足要求的系统就是个问题了。复制虚拟机便是一个不错的方案。在 VMWare Workstation 中，该操作首先会创建一个当前虚拟机的快照（可以理解为当前状态的完整记录），然后用快照生成一个与原虚拟机独立的系统。</p>
 <p>在这里 VM 和 VB 都提供了两种不同的复制方式：<strong>链接复制</strong> 和 <strong>完整复制</strong>。其中，链接复制的虚拟机虽然和原虚拟机在运行上是独立的，但是仍旧使用原来系统的磁盘空间，而所有对于原虚拟机快照中文件的修改将会被存储在一个“差量磁盘”上。这种方法的好处是省去了创建新虚拟磁盘的时间，使得两个虚拟机共享一套快照文件，节约磁盘空间。坏处是二者不能完全独立，仍旧共用磁盘空间。而后者则是单独开辟虚拟磁盘，并在之上创建虚拟机。</p>
 <p>你可以在 虚拟机-&gt;管理-&gt;克隆 中进行相关操作。需要注意的是，虚拟机中网卡的 MAC 地址必须不同（可以在虚拟机的设置中重新生成），而 IP 地址则无需担心，因为我们配置的主机虚拟网卡均配置了 DHCP 服务，子网中的设备会自动获得不冲突的 IP 地址。</p>
-<h2 id="关于虚拟机环境配置"><a href="#关于虚拟机环境配置" class="headerlink" title="关于虚拟机环境配置"></a>关于虚拟机环境配置</h2><ul>
+<h2 id="2-4-关于虚拟机环境配置"><a href="#2-4-关于虚拟机环境配置" class="headerlink" title="2.4. 关于虚拟机环境配置"></a>2.4. 关于虚拟机环境配置</h2><ul>
 <li><p>VMWare Tools</p>
 <p>和 VB 的增强套件差不多的东西，开启虚拟机后在 虚拟机-&gt;安装VMWare Tools 处安装即可。</p>
 </li>
