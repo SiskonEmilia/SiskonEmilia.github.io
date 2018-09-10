@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://siskonemilia.github.io/Service-Computing/Service-Computing-01-Private-Cloud-Service/sample1.png">
 <meta property="og:image" content="https://siskonemilia.github.io/Service-Computing/Service-Computing-01-Private-Cloud-Service/sample2.png">
 <meta property="og:image" content="https://siskonemilia.github.io/Service-Computing/Service-Computing-01-Private-Cloud-Service/sample3.png">
-<meta property="og:updated_time" content="2018-09-08T11:05:53.000Z">
+<meta property="og:updated_time" content="2018-09-10T10:14:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Service Computing 01 - Private Cloud Service">
 <meta name="twitter:description" content="由于作者水平有限，内容可能存在错漏，若有发现，还望您在评论区指出。 本博客内容仅适用于 VMWare Workstation，Virtual Box 上的操作可能有所不同。 使用 VMWare Workstation 让 PC 提供云桌面服务">
@@ -114,6 +114,11 @@
 <li><a href="#22-关于-yum-源">2.2. 关于 yum 源</a></li>
 <li><a href="#23-关于复制虚拟机">2.3. 关于复制虚拟机</a></li>
 <li><a href="#24-关于虚拟机环境配置">2.4. 关于虚拟机环境配置</a></li>
+<li><a href="#25-远程桌面">2.5. 远程桌面</a><ul>
+<li><a href="#配置-centos-的图形化桌面">配置 CentOS 的图形化桌面</a></li>
+<li><a href="#配置-xrdp-远程桌面环境">配置 Xrdp 远程桌面环境</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -170,6 +175,37 @@ yum makecache
 </code></pre><p>访问到虚拟机了。</p>
 </li>
 </ul>
+<h2 id="2-5-远程桌面"><a href="#2-5-远程桌面" class="headerlink" title="2.5. 远程桌面"></a>2.5. 远程桌面</h2><p>我们之前完成了 <code>ssh</code> 的配置，可以让外部用户通过这个工具方便地连接到 Linux 终端。但是 CLI 毕竟是极客们的狂欢，我们还得为普通用户准备一个 GUI 的方案……</p>
+<h3 id="配置-CentOS-的图形化桌面"><a href="#配置-CentOS-的图形化桌面" class="headerlink" title="配置 CentOS 的图形化桌面"></a>配置 CentOS 的图形化桌面</h3><p>安装图形化桌面组件（如果没有在系统安装时就加载的话）：</p>
+<pre><code>yum groupinstall &quot;GNOME Desktop&quot;
+</code></pre><p>设置图形化组建为启动目标</p>
+<pre><code>ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
+</code></pre><p>重新启动</p>
+<pre><code>shutdown -r now
+</code></pre><p>你可以看到我们的 CentOS 已经具有了图形化界面。</p>
+<h3 id="配置-Xrdp-远程桌面环境"><a href="#配置-Xrdp-远程桌面环境" class="headerlink" title="配置 Xrdp 远程桌面环境"></a>配置 Xrdp 远程桌面环境</h3><p>Windows 自带的远程桌面使用的是 <code>rdp</code> 协议，而 Linux 中需要通过额外的组件 <code>Xrdp</code> 来支持这种协议的远程桌面。首先，我们需要配置 EPEL 源，这是对于 CentOS 原生 yum 源的补充。</p>
+<p>首先：</p>
+<pre><code>yum search epel
+</code></pre><p>结果里会有</p>
+<pre><code>epel-release-latest.noarch
+</code></pre><p>安装 EPEL 源</p>
+<pre><code>yum install -y epel-release-latest.noarch
+</code></pre><p>然后就可以安装 Xrdp 组件啦：</p>
+<pre><code>yum install xrdp tigervnc-server
+</code></pre><p>安装完成之后，该服务默认并为启动，我们启动它，并且为他添加开机启动</p>
+<pre><code>systemctl start xrdp
+systemctl enable xrdp
+</code></pre><p>之后，我们可以看看现在系统的端口调用：</p>
+<pre><code>netstat -antup | grep xrdp
+</code></pre><p>不出意外的话，你应该能看到：</p>
+<pre><code>tcp        0      0 0.0.0.0:3389            0.0.0.0:*               LISTEN      1508/xrdp
+tcp        0      0 127.0.0.1:3350          0.0.0.0:*               LISTEN      1507/xrdp-sesman
+</code></pre><p>3389 端口就是 Xrdp 用来监听 rdp 请求的端口。不过为了让 rdp 正常使用，我们还需要配置防火墙（控制网络入口）和 SELinux（控制程序访问权限）：</p>
+<pre><code>firewall-cmd --permanent --add-port=3389/tcp
+firewall-cmd --reload
+chcon --type=bin_t /usr/sbin/xrdp
+chcon --type=bin_t /usr/sbin/xrdp-sesman
+</code></pre><p>配置到此全部完成，试试用 Windows 自带的远程桌面连接虚拟机吧～初始化耗时可能较久，请耐心等待哦～</p>
 
       
     </div>
