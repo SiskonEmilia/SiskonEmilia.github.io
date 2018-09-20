@@ -66,6 +66,57 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Leetcode-124-Binary-Tree-Maximum-Path-Sum" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/Leetcode/Leetcode-124-Binary-Tree-Maximum-Path-Sum/" class="article-date">
+  <time datetime="2018-09-20T12:31:21.000Z" itemprop="datePublished">2018-09-20</time>
+  
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Leetcode/Leetcode-124-Binary-Tree-Maximum-Path-Sum/">Leetcode 124. Binary Tree Maximum Path Sum</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><h3 id="124-Binary-Tree-Maximum-Path-Sum"><a href="#124-Binary-Tree-Maximum-Path-Sum" class="headerlink" title="124. Binary Tree Maximum Path Sum"></a>124. Binary Tree Maximum Path Sum</h3><p>Given a <strong>non-empty</strong> binary tree, find the maximum path sum.</p>
+<p>For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The path must contain <strong>at least one node</strong> and does not need to go through the root.</p>
+<h2 id="解题报告"><a href="#解题报告" class="headerlink" title="解题报告"></a>解题报告</h2><h3 id="AC-截图"><a href="#AC-截图" class="headerlink" title="AC 截图"></a>AC 截图</h3><img src="/Leetcode/Leetcode-124-Binary-Tree-Maximum-Path-Sum/finalresult.png" title="FinalResult">
+<h3 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h3><p>给定一个非空的二叉树，我们需要找到一个路径，使得路径上所有节点的值的和最大。需要注意的是，该路径最少需要包含一个节点，同时这个路径可以不沿着树边「由父到子」的方向走，但是不可以回头。同时，这个路径也不需要经过根结点。</p>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>很简单的 DFS + 贪心算法就可以求解。因为路径可以不经过根节点，因而任何子过程都有可能产生一个最优解。为了记录这些最优解，我们建立一个全局变量来记录当前的最优解。考虑一条路径，以最上层的节点的视角，其有三种可能的形状：向左/右子树延伸，同时向两个子树延伸，以及一个裸节点。</p>
+<p>其中，第一种情况和第三种情况的路径可以被上层节点复用，来构成新的路径；而第二种情况的路径则不能拓展，因为路径不能回头，因而不可能有分叉。因而，在每个子过程中，我们获取左右子树的非第二种情况的最大 sum 的路径，将其中大于 0 的都与节点的值相加，并尝试更新全局最大值。然后选择其中最大的大于零的 sum，与节点的值相加，并返回该值，作为「非第二种情况的最大值」。</p>
+<p>然后，不要忘记加上 <code>iostream</code> 的加速装置～我们的最优解就出炉啦：</p>
+<h3 id="题解（最优解）"><a href="#题解（最优解）" class="headerlink" title="题解（最优解）"></a>题解（最优解）</h3><h4 id="C-代码"><a href="#C-代码" class="headerlink" title="C++ 代码"></a>C++ 代码</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">auto</span> runfirst = []() &#123;</span><br><span class="line">    <span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cin</span>.tie(<span class="literal">nullptr</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">&#125;();</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> globalMax = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxPathSum</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">      globalMax = root-&gt;val;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">int</span> maxSum = root-&gt;val, temp;</span><br><span class="line"></span><br><span class="line">      temp = subtreeMax(root-&gt;left);</span><br><span class="line">      <span class="keyword">if</span> (temp &gt; <span class="number">0</span>)</span><br><span class="line">        maxSum += temp;</span><br><span class="line">        </span><br><span class="line">      <span class="built_in">cout</span> &lt;&lt; temp;</span><br><span class="line">      </span><br><span class="line">      temp = subtreeMax(root-&gt;right);</span><br><span class="line">      <span class="keyword">if</span> (temp &gt; <span class="number">0</span>)</span><br><span class="line">        maxSum += temp;</span><br><span class="line"></span><br><span class="line">      <span class="built_in">cout</span> &lt;&lt; temp &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        </span><br><span class="line">      <span class="keyword">if</span> (maxSum &gt; globalMax)</span><br><span class="line">        globalMax = maxSum;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> globalMax;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">subtreeMax</span><span class="params">(TreeNode* subroot)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (subroot == <span class="literal">nullptr</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">      </span><br><span class="line">      <span class="keyword">int</span> val = subroot-&gt;val, temp1, temp2;</span><br><span class="line"></span><br><span class="line">      temp1 = subtreeMax(subroot-&gt;left);</span><br><span class="line">      temp2 = subtreeMax(subroot-&gt;right);</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (temp1 &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (temp2 &gt; <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="keyword">if</span> (temp1 &gt; temp2) &#123;</span><br><span class="line">            val += temp1;</span><br><span class="line">            <span class="keyword">if</span> (val + temp2 &gt; globalMax)</span><br><span class="line">              globalMax = val + temp2;</span><br><span class="line">            <span class="keyword">return</span> val;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">else</span> &#123;</span><br><span class="line">            val += temp2;</span><br><span class="line">            <span class="keyword">if</span> (val + temp1 &gt; globalMax)</span><br><span class="line">              globalMax = val + temp1;</span><br><span class="line">            <span class="keyword">return</span> val;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">          val += temp1;</span><br><span class="line">          <span class="keyword">if</span> (val &gt; globalMax)</span><br><span class="line">            globalMax = val;</span><br><span class="line">          <span class="keyword">return</span> val; </span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span> (temp2 &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        val += temp2;</span><br><span class="line">        <span class="keyword">if</span> (val &gt; globalMax)</span><br><span class="line">          globalMax = val;</span><br><span class="line">        <span class="keyword">return</span> val;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (val &gt; globalMax)</span><br><span class="line">        globalMax = val;</span><br><span class="line">      <span class="keyword">return</span> val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-124-Binary-Tree-Maximum-Path-Sum/" data-id="cjmakys2o0009ctxma7iqlman" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Leetcode-4-Median-of-Two-Sorted-Arrays" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/Leetcode/Leetcode-4-Median-of-Two-Sorted-Arrays/" class="article-date">
@@ -126,14 +177,14 @@ The median is (2 + 3)/2 = 2.5
 <p>参加过 ACM 的同学应该都知道，能用 <code>scanf</code> 的代码绝对不用 <code>cin</code>。不过其实 <code>cin</code> 的效率并不算差，只是，我们需要对其进行一些优化才能让他发挥出应有的实力。要想解放 <code>cin</code> 实力的封印，一行代码足矣：</p>
 <pre><code>ios::sync_with_stdio(false);
 </code></pre><p>这会禁用 cin／cout 和 scanf／printf 之间的同步等待，从而大幅提升 cin 的效率——甚至可以直追 scanf。但是这里我们又有一个问题了，我们函数的调用显然是在输入操作之后，怎样才能让这个函数在输入操作前生效呢？当然是有办法的啦：</p>
-<h3 id="题解3"><a href="#题解3" class="headerlink" title="题解3"></a>题解3</h3><h4 id="C-代码-2"><a href="#C-代码-2" class="headerlink" title="C++ 代码"></a>C++ 代码</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">auto</span> runfirst = []() &#123;</span><br><span class="line">    <span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cin</span>.tie(<span class="literal">nullptr</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">&#125;();</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">int</span> lengthSum = nums1.size() + nums2.size();</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> (lengthSum % <span class="number">2</span> == <span class="number">1</span>) ?</span><br><span class="line">        (<span class="keyword">double</span>)findMedian(nums1, nums2, <span class="number">0</span>, nums1.size(), <span class="number">0</span>, nums2.size(), (lengthSum + <span class="number">1</span>) / <span class="number">2</span>) :</span><br><span class="line">        ((<span class="keyword">double</span>)findMedian(nums1, nums2, <span class="number">0</span>, nums1.size(), <span class="number">0</span>, nums2.size(), lengthSum / <span class="number">2</span> + <span class="number">1</span>) +</span><br><span class="line">        (<span class="keyword">double</span>)findMedian(nums1, nums2, <span class="number">0</span>, nums1.size(), <span class="number">0</span>, nums2.size(), lengthSum / <span class="number">2</span>)) / <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findMedian</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp;nums2,</span></span></span><br><span class="line"><span class="function"><span class="params">      <span class="keyword">int</span> start1, <span class="keyword">int</span> end1,</span></span></span><br><span class="line"><span class="function"><span class="params">      <span class="keyword">int</span> start2, <span class="keyword">int</span> end2,</span></span></span><br><span class="line"><span class="function"><span class="params">      <span class="keyword">int</span> halfSize)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> size1, size2, mid1, mid2;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            </span><br><span class="line">            size1 = end1 - start1;</span><br><span class="line">            size2 = end2 - start2;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (size1 &lt;= <span class="number">0</span>) <span class="keyword">return</span> nums2[start2 + halfSize - <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span> (size2 &lt;= <span class="number">0</span>) <span class="keyword">return</span> nums1[start1 + halfSize - <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span> (halfSize == <span class="number">1</span>) <span class="keyword">return</span> min(nums1[start1], nums2[start2]);</span><br><span class="line"></span><br><span class="line">            mid1 = (end1 + start1) / <span class="number">2</span>;</span><br><span class="line">            mid2 = (end2 + start2) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (nums1[mid1] &lt;= nums2[mid2]) &#123;</span><br><span class="line">              <span class="keyword">if</span> (size1 / <span class="number">2</span> + size2 / <span class="number">2</span> + <span class="number">1</span> &gt;= halfSize) &#123;</span><br><span class="line">                end2 = mid2;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">else</span> &#123;</span><br><span class="line">                start1 = mid1 + <span class="number">1</span>;</span><br><span class="line">                halfSize -= size1 / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">              <span class="keyword">if</span> (size1 / <span class="number">2</span> + size2 / <span class="number">2</span> + <span class="number">1</span> &gt;= halfSize) &#123;</span><br><span class="line">                end1 = mid1;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">else</span> &#123;</span><br><span class="line">                start2 = mid2 + <span class="number">1</span>;</span><br><span class="line">                halfSize -= size2 / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="题解3（最优解）"><a href="#题解3（最优解）" class="headerlink" title="题解3（最优解）"></a>题解3（最优解）</h3><h4 id="C-代码-2"><a href="#C-代码-2" class="headerlink" title="C++ 代码"></a>C++ 代码</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">auto</span> runfirst = []() &#123;</span><br><span class="line">    <span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cin</span>.tie(<span class="literal">nullptr</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">&#125;();</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">int</span> lengthSum = nums1.size() + nums2.size();</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> (lengthSum % <span class="number">2</span> == <span class="number">1</span>) ?</span><br><span class="line">        (<span class="keyword">double</span>)findMedian(nums1, nums2, <span class="number">0</span>, nums1.size(), <span class="number">0</span>, nums2.size(), (lengthSum + <span class="number">1</span>) / <span class="number">2</span>) :</span><br><span class="line">        ((<span class="keyword">double</span>)findMedian(nums1, nums2, <span class="number">0</span>, nums1.size(), <span class="number">0</span>, nums2.size(), lengthSum / <span class="number">2</span> + <span class="number">1</span>) +</span><br><span class="line">        (<span class="keyword">double</span>)findMedian(nums1, nums2, <span class="number">0</span>, nums1.size(), <span class="number">0</span>, nums2.size(), lengthSum / <span class="number">2</span>)) / <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findMedian</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp;nums2,</span></span></span><br><span class="line"><span class="function"><span class="params">      <span class="keyword">int</span> start1, <span class="keyword">int</span> end1,</span></span></span><br><span class="line"><span class="function"><span class="params">      <span class="keyword">int</span> start2, <span class="keyword">int</span> end2,</span></span></span><br><span class="line"><span class="function"><span class="params">      <span class="keyword">int</span> halfSize)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> size1, size2, mid1, mid2;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">            </span><br><span class="line">            size1 = end1 - start1;</span><br><span class="line">            size2 = end2 - start2;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (size1 &lt;= <span class="number">0</span>) <span class="keyword">return</span> nums2[start2 + halfSize - <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span> (size2 &lt;= <span class="number">0</span>) <span class="keyword">return</span> nums1[start1 + halfSize - <span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span> (halfSize == <span class="number">1</span>) <span class="keyword">return</span> min(nums1[start1], nums2[start2]);</span><br><span class="line"></span><br><span class="line">            mid1 = (end1 + start1) / <span class="number">2</span>;</span><br><span class="line">            mid2 = (end2 + start2) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (nums1[mid1] &lt;= nums2[mid2]) &#123;</span><br><span class="line">              <span class="keyword">if</span> (size1 / <span class="number">2</span> + size2 / <span class="number">2</span> + <span class="number">1</span> &gt;= halfSize) &#123;</span><br><span class="line">                end2 = mid2;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">else</span> &#123;</span><br><span class="line">                start1 = mid1 + <span class="number">1</span>;</span><br><span class="line">                halfSize -= size1 / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">              <span class="keyword">if</span> (size1 / <span class="number">2</span> + size2 / <span class="number">2</span> + <span class="number">1</span> &gt;= halfSize) &#123;</span><br><span class="line">                end1 = mid1;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">else</span> &#123;</span><br><span class="line">                start2 = mid2 + <span class="number">1</span>;</span><br><span class="line">                halfSize -= size2 / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h4 id="AC-截图-3"><a href="#AC-截图-3" class="headerlink" title="AC 截图"></a>AC 截图</h4><img src="/Leetcode/Leetcode-4-Median-of-Two-Sorted-Arrays/finalresult.png" title="FinalResult">
 <h4 id="题解分析-2"><a href="#题解分析-2" class="headerlink" title="题解分析"></a>题解分析</h4><p>通过声明一个静态的常量变量，我们使得后面这个自执行的函数甚至可以在编译阶段预执行，从而在输入输出前完成对于 cin/cout 的设置～总时耗也从 56ms 下降到了 16ms，妥妥的第一梯队～看来算法和实现细节都是保证程序执行速度的重要环节呢。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-4-Median-of-Two-Sorted-Arrays/" data-id="cjm4ug7bm0027nkrs3odbrt82" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-4-Median-of-Two-Sorted-Arrays/" data-id="cjmakys4a002ectxmp6q0e5gm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -183,7 +234,7 @@ The median is (2 + 3)/2 = 2.5
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Service-Computing/Service-Computing-01-Private-Cloud-Service/" data-id="cjm4ug7bw002enkrsx2lzyulx" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Service-Computing/Service-Computing-01-Private-Cloud-Service/" data-id="cjmakys4n002kctxmrr42kyvi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cloud-Service/">Cloud Service</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Service-Computing/">Service Computing</a></li></ul>
@@ -278,7 +329,7 @@ Output: 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-41-First-Missing-Positive/" data-id="cjm4ug7br002ankrsp3u9ptz3" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-41-First-Missing-Positive/" data-id="cjmakys4g002hctxm6pkzfc0n" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -328,7 +379,7 @@ Output: 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-8/" data-id="cjm4ug7bi0024nkrsqsaalp8y" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-8/" data-id="cjmakys44002bctxmqq0owbty" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
@@ -379,7 +430,7 @@ Output: 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-7/" data-id="cjm4ug7be0021nkrs19p1ncgq" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-7/" data-id="cjmakys3x0028ctxmjzqp6ehf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
@@ -431,7 +482,7 @@ Output: 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-6/" data-id="cjm4ug79u0005nkrszrzn2k46" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-6/" data-id="cjmakys2c0005ctxm9tmxwneb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
@@ -483,7 +534,7 @@ Output: 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-5/" data-id="cjm4ug79s0004nkrsggjdtkba" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-5/" data-id="cjmakys290004ctxmerhsy705" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
@@ -536,7 +587,7 @@ Output: 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-4/" data-id="cjm4ug7cm002wnkrsb7sgljoj" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-4/" data-id="cjmakys5e002xctxmh25qewe0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
@@ -588,57 +639,7 @@ Output: 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-3/" data-id="cjm4ug7ba001znkrs7fq7uwal" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Get-Started-with-Unity3D-2" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/Unity3D/Get-Started-with-Unity3D-2/" class="article-date">
-  <time datetime="2018-04-01T01:02:56.000Z" itemprop="datePublished">2018-04-01</time>
-  
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Unity3D/">Unity3D</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/Unity3D/Get-Started-with-Unity3D-2/">Get Started with Unity3D - 2</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="简答-amp-程序验证"><a href="#简答-amp-程序验证" class="headerlink" title="简答 &amp; 程序验证"></a>简答 &amp; 程序验证</h2><p><a href="https://github.com/SiskonEmilia/3D-Assignments/blob/master/Assignment%202/ShortAnswer.md" target="_blank" rel="noopener">简答题仓库地址</a></p>
-<p>注意：本简答题作业所有代码／实现／实验均包含在SolarSystem项目中，由不同的场景呈现，通过选择不同的场景，您可以快速查看各题目实现效果
-        
-          <p class="article-more-link">
-            <a href="/Unity3D/Get-Started-with-Unity3D-2/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-2/" data-id="cjm4ug7b7001wnkrsda77gjew" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-3/" data-id="cjmakys3t0026ctxmrtwwqj7q" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
@@ -686,7 +687,7 @@ Output: 1
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Algorithm/" style="font-size: 12.5px;">Algorithm</a> <a href="/tags/Cloud-Service/" style="font-size: 10px;">Cloud Service</a> <a href="/tags/Github-Pages/" style="font-size: 10px;">Github Pages</a> <a href="/tags/Gitment/" style="font-size: 10px;">Gitment</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Leetcode/" style="font-size: 12.5px;">Leetcode</a> <a href="/tags/Remote-Floder/" style="font-size: 10px;">Remote Floder</a> <a href="/tags/Service-Computing/" style="font-size: 10px;">Service Computing</a> <a href="/tags/Unity3D/" style="font-size: 20px;">Unity3D</a> <a href="/tags/WEB/" style="font-size: 17.5px;">WEB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a>
+      <a href="/tags/Algorithm/" style="font-size: 13.33px;">Algorithm</a> <a href="/tags/Cloud-Service/" style="font-size: 10px;">Cloud Service</a> <a href="/tags/Github-Pages/" style="font-size: 10px;">Github Pages</a> <a href="/tags/Gitment/" style="font-size: 10px;">Gitment</a> <a href="/tags/JavaScript/" style="font-size: 13.33px;">JavaScript</a> <a href="/tags/Leetcode/" style="font-size: 13.33px;">Leetcode</a> <a href="/tags/Remote-Floder/" style="font-size: 10px;">Remote Floder</a> <a href="/tags/Service-Computing/" style="font-size: 10px;">Service Computing</a> <a href="/tags/Unity3D/" style="font-size: 20px;">Unity3D</a> <a href="/tags/WEB/" style="font-size: 16.67px;">WEB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a>
     </div>
   </div>
 
@@ -708,6 +709,10 @@ Output: 1
       <ul>
         
           <li>
+            <a href="/Leetcode/Leetcode-124-Binary-Tree-Maximum-Path-Sum/">Leetcode 124. Binary Tree Maximum Path Sum</a>
+          </li>
+        
+          <li>
             <a href="/Leetcode/Leetcode-4-Median-of-Two-Sorted-Arrays/">Leetcode 4. Median of Two Sorted Arrays</a>
           </li>
         
@@ -721,10 +726,6 @@ Output: 1
         
           <li>
             <a href="/Unity3D/Get-Started-with-Unity3D-8/">Get Started with Unity3D - 8</a>
-          </li>
-        
-          <li>
-            <a href="/Unity3D/Get-Started-with-Unity3D-7/">Get Started with Unity3D - 7</a>
           </li>
         
       </ul>
