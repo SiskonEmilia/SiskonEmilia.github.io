@@ -66,6 +66,104 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Leetcode-685-Redundant-Connection-II" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/Leetcode/Leetcode-685-Redundant-Connection-II/" class="article-date">
+  <time datetime="2018-09-26T14:11:15.000Z" itemprop="datePublished">2018-09-26</time>
+  
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Leetcode/Leetcode-685-Redundant-Connection-II/">Leetcode 685. Redundant Connection II</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><h3 id="685-Redundant-Connection-II"><a href="#685-Redundant-Connection-II" class="headerlink" title="685. Redundant Connection II"></a>685. Redundant Connection II</h3><ul>
+<li><strong>Difficulty:</strong> Hard</li>
+<li><strong>Total Accepted:</strong> 11.2K</li>
+<li><strong>Total Submissions:</strong> 39.7K</li>
+</ul>
+<p>In this problem, a rooted tree is a <strong>directed</strong> graph such that, there is exactly one node (the root) for which all other nodes are descendants of this node, plus every node has exactly one parent, except for the root node which has no parents.</p>
+<p>The given input is a directed graph that started as a rooted tree with N nodes (with distinct values 1, 2, …, N), with one additional directed edge added. The added edge has two different vertices chosen from 1 to N, and was not an edge that already existed.</p>
+<p>The resulting graph is given as a 2D-array of <code>edges</code>. Each element of <code>edges</code> is a pair <code>[u, v]</code> that represents a directed edge connecting nodes <code>u</code> and <code>v</code>, where <code>u</code> is a parent of child <code>v</code>.</p>
+<p>Return an edge that can be removed so that the resulting graph is a rooted tree of N nodes. If there are multiple answers, return the answer that occurs last in the given 2D-array.</p>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input: [[1,2], [1,3], [2,3]]
+Output: [2,3]
+Explanation: The given directed graph will be like this:
+  1
+ / \
+v   v
+2--&gt;3
+</code></pre><p><strong>Example 2:</strong></p>
+<pre><code>Input: [[1,2], [2,3], [3,4], [4,1], [1,5]]
+Output: [4,1]
+Explanation: The given directed graph will be like this:
+5 &lt;- 1 -&gt; 2
+     ^    |
+     |    v
+     4 &lt;- 3
+</code></pre><p><strong>Note:</strong></p>
+<ul>
+<li>The size of the input 2D-array will be between 3 and 1000.</li>
+<li>Every integer represented in the 2D-array will be between 1 and N, where N is the size of the input array.</li>
+</ul>
+<h2 id="解题报告"><a href="#解题报告" class="headerlink" title="解题报告"></a>解题报告</h2><h3 id="AC-截图"><a href="#AC-截图" class="headerlink" title="AC 截图"></a>AC 截图</h3><img src="/Leetcode/Leetcode-685-Redundant-Connection-II/finalresult.png" title="FinalResult">
+<h3 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h3><p>该问题给出一组有向图内的边，并且给出等同数量的节点，构成一个可以通过 <strong>删掉一条边</strong> 而成为 <strong>有根树</strong> 的有向图。在有多个答案时，输出最后出现的可用边。</p>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>该题乍一看情况非常复杂，因为要从一个有向图转换为有根树，需要消除图中所有的回环，以及所有入度大于 1 的节点（后称「双源」节点）。但是冷静下来想想，题目其实已经给出了相当优厚的条件——<strong>只能删掉一条边</strong>。</p>
+<p>根据这个条件，我们可以反推回输入数据的情况：该有向图只可能是下列三种情况的一种。</p>
+<ul>
+<li>有一个回环，没有「双源」节点</li>
+<li>有一个「双源」节点，没有回环</li>
+<li>有一个「双源」节点，并且该节点也在一个回环内</li>
+</ul>
+<p>考虑第一种情况，因为只删掉一条边就可以构成有根树，那么最后形成环的那条边，肯定就是我们要找的边，因而在扫描一边所有边的时候监控整个图的连通性即可，<strong>一旦发现成环，我们就删掉那条边</strong>。</p>
+<p>考虑第二种情况，在没有回环的情况下，两条边可以 <strong>任意地删除</strong>，因而删除触发形成双源节点条件的边即可，因其相对位于集合的后部，处理方式同第一种。</p>
+<p>考虑第三种情况，因为这个时候双源节点接入的两条边中有一条会参与成环，因而要同时解除成环和双源，我们只能 <strong>删掉参与成环和双源节点的唯一边</strong>。同时，为了保证不会漏掉这种重叠情况，在前两种情况的判定中，我们 <strong>不能在判定后立刻作出相应操作</strong>，而要等待整个边集合扫描完后再处理。</p>
+<p>那么接下来，我们来考虑如何判定双源与回环的问题。</p>
+<p>（这实际上是一个简化的 <strong>并查集</strong> 问题，有兴趣的同学可以了解一下）我们维护一个「祖先」数组，它标定整个图中每个节点的祖先。每当一条边由点 A 指向点 B 时，我们令点 B 的祖先为点 A 的祖先。这样，当一条边指向一个有祖先的节点时，就会发生「双源」；当一条边的两端祖先相同时，就会发生「回环」。</p>
+<p>必须要考虑的是，当「双源」发生时，对双源节点的祖先查找可能引导向两个结果，如何对两个结果进行处理会是一个问题。</p>
+<h3 id="题解-1"><a href="#题解-1" class="headerlink" title="题解 1"></a>题解 1</h3><h4 id="结果截图"><a href="#结果截图" class="headerlink" title="结果截图"></a>结果截图</h4><img src="/Leetcode/Leetcode-685-Redundant-Connection-II/midresult.png" title="MidResult">
+<h4 id="C-代码"><a href="#C-代码" class="headerlink" title="C++ 代码"></a>C++ 代码</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">auto</span> runfirst = []() &#123;</span><br><span class="line">    <span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cin</span>.tie(<span class="literal">nullptr</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">&#125;();</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="keyword">int</span> parent1, parent2;</span><br><span class="line">  <span class="keyword">int</span> subParent1, subParent2;</span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; *doubleSourceEdge, *circularEdge;</span><br><span class="line">  <span class="keyword">int</span> doubleSourceNode;</span><br><span class="line">  <span class="keyword">int</span> subParent;</span><br><span class="line">  <span class="keyword">int</span> sameParent;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; findRedundantDirectedConnection(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; edges) &#123;</span><br><span class="line">    <span class="keyword">int</span> size = edges.size();</span><br><span class="line">    <span class="keyword">int</span> *parent = <span class="keyword">new</span> <span class="keyword">int</span>[size + <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">int</span> *father = <span class="keyword">new</span> <span class="keyword">int</span>[size + <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    doubleSourceEdge = circularEdge = <span class="literal">nullptr</span>;</span><br><span class="line">    doubleSourceNode = subParent = <span class="number">0</span>;</span><br><span class="line">      </span><br><span class="line">    <span class="built_in">memset</span>(parent, <span class="number">0</span>, (size + <span class="number">1</span>) * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;iter : edges) &#123;</span><br><span class="line">      <span class="keyword">if</span> (doubleSourceNode) &#123;</span><br><span class="line">        <span class="keyword">auto</span> temp1 = findParentFork(parent, father, iter[<span class="number">0</span>]),</span><br><span class="line">          temp2 = findParentFork(parent, father, iter[<span class="number">1</span>]);</span><br><span class="line">        </span><br><span class="line">        parent1 = temp1[<span class="number">0</span>];</span><br><span class="line">        parent2 = temp2[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">        subParent1 = temp1[<span class="number">1</span>];</span><br><span class="line">        subParent2 = temp2[<span class="number">1</span>];</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span> &#123;</span><br><span class="line">        parent1 = findParent(parent, iter[<span class="number">0</span>]);</span><br><span class="line">        parent2 = findParent(parent, iter[<span class="number">1</span>]);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (parent[iter[<span class="number">1</span>]]) &#123;</span><br><span class="line">        <span class="comment">// Double source</span></span><br><span class="line">        <span class="keyword">if</span> (parent1 == parent2) &#123;</span><br><span class="line">          <span class="keyword">return</span> iter;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (circularEdge) &#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(&#123;father[iter[<span class="number">1</span>]], iter[<span class="number">1</span>]&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">          doubleSourceNode = iter[<span class="number">1</span>];</span><br><span class="line">          doubleSourceEdge = <span class="keyword">new</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(&#123;father[iter[<span class="number">1</span>]], iter[<span class="number">1</span>]&#125;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        subParent = parent2;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (doubleSourceNode) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((sameParent = parent1) == parent2 || (sameParent = parent1) == subParent2 || (sameParent = parent2) == subParent1) &#123;</span><br><span class="line">          <span class="keyword">if</span> (findParent(parent, doubleSourceNode) == sameParent) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(&#123;father[doubleSourceNode], doubleSourceNode&#125;);</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> *doubleSourceEdge;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125; </span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span> (parent1 == parent2) &#123;</span><br><span class="line">        <span class="comment">// Circular path</span></span><br><span class="line">        circularEdge = <span class="keyword">new</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(&#123;iter[<span class="number">0</span>], iter[<span class="number">1</span>]&#125;);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      parent[iter[<span class="number">1</span>]] = parent1;</span><br><span class="line">      father[iter[<span class="number">1</span>]] = iter[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (doubleSourceNode) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(&#123;father[doubleSourceNode], doubleSourceNode&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> *circularEdge;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">findParent</span><span class="params">(<span class="keyword">int</span> *parent, <span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (index == parent[index] || parent[index] == <span class="number">0</span>)</span><br><span class="line">      <span class="keyword">return</span> index;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">      <span class="keyword">return</span> findParent(parent, parent[index]);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; findParentFork(<span class="keyword">int</span> *parent, <span class="keyword">int</span> *father, <span class="keyword">int</span> index) &#123;</span><br><span class="line">    <span class="keyword">if</span> (index == parent[index] || parent[index] == <span class="number">0</span>)</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(&#123;index, <span class="number">0</span>&#125;);</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (index == doubleSourceNode) <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(&#123;findParent(parent, father[index]),</span><br><span class="line">        findParent(parent, subParent)&#125;);</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">return</span> findParentFork(parent, father, father[index]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="改进思路"><a href="#改进思路" class="headerlink" title="改进思路"></a>改进思路</h4><p>在题解 1 中，我们通过在一次扫描中监控前两种情况来达成要求。在检测到其中一种情况发生后，我们将继续扫描，直到第三种情况发生或者到达终点。这个算法很好的达到了我们的预期效果，但是有很多问题。</p>
+<p>首先，在触发「双源」后，后续扫描复杂度陡增，严重影响了程序运行效率。其次，过于复杂的逻辑判断大大增加了编程难度。最后，在“寻找祖先”的过程中，大量可以复用的信息被浪费掉。</p>
+<p>那么有没有什么优化的办法呢？</p>
+<p>首先，我们考虑一下这三种情况。实际上我们不必在扫描时判断如此多的内容。首先，我们进行一次扫描，查看是否有「双源」的发生。若有，我们去除触发双源的边，再进行一次查找，此时如果没有回环的发生，那么这条边就是目标边，否则，就说明是另一条「双源」边在回环内，那条边也就是目标边。如果没有发生「双源」，则是简单的回环问题，找到成环边即可。</p>
+<p>然后，我们考虑一下信息复用的问题。由动态规划的思想，我们可以在每次寻找祖先的过程中，更新整个路径上的所有祖先，从而大大减少后续的查找祖先的时间。</p>
+<p>具体实现见题解 2。</p>
+<h3 id="题解-2（最优解）"><a href="#题解-2（最优解）" class="headerlink" title="题解 2（最优解）"></a>题解 2（最优解）</h3><h4 id="结果截图-1"><a href="#结果截图-1" class="headerlink" title="结果截图"></a>结果截图</h4><img src="/Leetcode/Leetcode-685-Redundant-Connection-II/finalresult.png" title="FinalResult">
+<h4 id="C-代码-1"><a href="#C-代码-1" class="headerlink" title="C++ 代码"></a>C++ 代码</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> fast = []() &#123;</span><br><span class="line">  ios_base::sync_with_stdio(<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">cout</span>.tie(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;();</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="keyword">int</span> parent1, parent2;</span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; doubleSourceEdge1, doubleSourceEdge2;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; findRedundantDirectedConnection(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; edges) &#123;</span><br><span class="line">    <span class="keyword">int</span> size = edges.size();</span><br><span class="line">    <span class="keyword">int</span> *father = <span class="keyword">new</span> <span class="keyword">int</span>[size + <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    doubleSourceEdge1 = doubleSourceEdge2 = <span class="literal">nullptr</span>;</span><br><span class="line">      </span><br><span class="line">    <span class="built_in">memset</span>(father, <span class="number">0</span>, (size + <span class="number">1</span>) * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Looking for node which has two sources</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;iter : edges) &#123;</span><br><span class="line">      <span class="keyword">if</span> (father[iter[<span class="number">1</span>]]) &#123;</span><br><span class="line">        <span class="comment">// found</span></span><br><span class="line">        doubleSourceEdge1 = &#123;</span><br><span class="line">          father[iter[<span class="number">1</span>]], iter[<span class="number">1</span>]</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        doubleSourceEdge2 = iter;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// break;</span></span><br><span class="line">      &#125;</span><br><span class="line">      father[iter[<span class="number">1</span>]] = iter[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= size; ++i) father[i] = i;</span><br><span class="line">    <span class="comment">// Looking for an edge which forms a circular path</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;iter: edges) &#123;</span><br><span class="line">      <span class="keyword">if</span> (doubleSourceEdge2 &amp;&amp; iter == *doubleSourceEdge2) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">      parent1 = findParent(father, iter[<span class="number">0</span>]);</span><br><span class="line">      parent2 = findParent(father, iter[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (parent1 == parent2) &#123;</span><br><span class="line">        <span class="comment">// found</span></span><br><span class="line">        <span class="keyword">if</span> (doubleSourceEdge1.empty())</span><br><span class="line">          <span class="keyword">return</span> iter;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">          <span class="keyword">return</span> doubleSourceEdge1;</span><br><span class="line">      &#125;</span><br><span class="line">      father[iter[<span class="number">1</span>]] = iter[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> doubleSourceEdge2;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">findParent</span><span class="params">(<span class="keyword">int</span> *&amp;father, <span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (index == father[index])</span><br><span class="line">      <span class="keyword">return</span> index;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">      <span class="keyword">return</span> father[index] = findParent(father, father[index]);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-685-Redundant-Connection-II/" data-id="cjmjc48wa002m7orstrm3kqrx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Make-Full-Use-of-Your-VPS-Server" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/Tips/Make-Full-Use-of-Your-VPS-Server/" class="article-date">
@@ -102,7 +200,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Tips/Make-Full-Use-of-Your-VPS-Server/" data-id="cjmbbnkqw000aimrsynxj90j9" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Tips/Make-Full-Use-of-Your-VPS-Server/" data-id="cjmjc48uq000a7orsvt9e4488" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VPS-server/">VPS server</a></li></ul>
@@ -158,7 +256,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-124-Binary-Tree-Maximum-Path-Sum/" data-id="cjmbbnkqu0008imrsks90qopg" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-124-Binary-Tree-Maximum-Path-Sum/" data-id="cjmjc48uh00067ors6t7lcuvq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -238,7 +336,7 @@ The median is (2 + 3)/2 = 2.5
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-4-Median-of-Two-Sorted-Arrays/" data-id="cjmbbnks20025imrstb0lu8yx" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-4-Median-of-Two-Sorted-Arrays/" data-id="cjmjc48wh002p7orsphpf1gxz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -288,7 +386,7 @@ The median is (2 + 3)/2 = 2.5
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Service-Computing/Service-Computing-01-Private-Cloud-Service/" data-id="cjmbbnks5002bimrsprynpjfs" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Service-Computing/Service-Computing-01-Private-Cloud-Service/" data-id="cjmjc48wn002s7orsptcge6ek" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cloud-Service/">Cloud Service</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Service-Computing/">Service Computing</a></li></ul>
@@ -383,7 +481,7 @@ Output: 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-41-First-Missing-Positive/" data-id="cjmbbnks30028imrsquo1wbxa" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-41-First-Missing-Positive/" data-id="cjmjc48w4002j7ors7gj3i4lq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -433,7 +531,7 @@ Output: 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-8/" data-id="cjmbbnks0001zimrsk35tyd3v" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-8/" data-id="cjmjc48vz002g7orsin49zkcs" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
@@ -484,7 +582,7 @@ Output: 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-7/" data-id="cjmbbnks10022imrs3fvjziaf" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-7/" data-id="cjmjc48vu002d7orshdu18vcb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
@@ -536,7 +634,7 @@ Output: 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-6/" data-id="cjmbbnkqo0005imrst5td0hks" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-6/" data-id="cjmjc48uf00057ors4hbcr7of" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
@@ -588,60 +686,7 @@ Output: 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-5/" data-id="cjmbbnkql0003imrsj5jcmazf" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Get-Started-with-Unity3D-4" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/Unity3D/Get-Started-with-Unity3D-4/" class="article-date">
-  <time datetime="2018-05-11T12:14:49.000Z" itemprop="datePublished">2018-05-11</time>
-  
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Unity3D/">Unity3D</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/Unity3D/Get-Started-with-Unity3D-4/">Get Started with Unity3D - 4</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Escape-with-Unity-Chan"><a href="#Escape-with-Unity-Chan" class="headerlink" title="Escape with Unity-Chan!"></a>Escape with Unity-Chan!</h2><p><a href="https://github.com/SiskonEmilia/3D-Assignments/tree/master/Assignment%204/Escape" target="_blank" rel="noopener">Github仓库</a></p>
-<p><a href="https://www.bilibili.com/video/av23296354/" target="_blank" rel="noopener">B站视频</a></p>
-<p><strong>和 Unity 酱一起逃出生天！</strong> Unity 酱来到了一座美丽的森林，但是好像森林里并不只有她一人……WASD 控制方向 + 右键控制视角来躲避追逐而来的敌人，带着 Unity 酱逃出森林吧（并不能）！</p>
-<p><strong>先来看几张预览图吧！</strong></p>
-<img src="/Unity3D/Get-Started-with-Unity3D-4/preview01.gif" title="preview1">
-        
-          <p class="article-more-link">
-            <a href="/Unity3D/Get-Started-with-Unity3D-4/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-4/" data-id="cjmbbnktz002wimrsp0giz6f8" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-5/" data-id="cjmjc48uc00037ors10a42esg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
@@ -689,7 +734,7 @@ Output: 1
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Algorithm/" style="font-size: 13.33px;">Algorithm</a> <a href="/tags/Cloud-Service/" style="font-size: 10px;">Cloud Service</a> <a href="/tags/Github-Pages/" style="font-size: 10px;">Github Pages</a> <a href="/tags/Gitment/" style="font-size: 10px;">Gitment</a> <a href="/tags/JavaScript/" style="font-size: 13.33px;">JavaScript</a> <a href="/tags/Leetcode/" style="font-size: 13.33px;">Leetcode</a> <a href="/tags/Remote-Floder/" style="font-size: 10px;">Remote Floder</a> <a href="/tags/Service-Computing/" style="font-size: 10px;">Service Computing</a> <a href="/tags/Unity3D/" style="font-size: 20px;">Unity3D</a> <a href="/tags/VPS-server/" style="font-size: 10px;">VPS server</a> <a href="/tags/WEB/" style="font-size: 16.67px;">WEB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a>
+      <a href="/tags/Algorithm/" style="font-size: 15px;">Algorithm</a> <a href="/tags/Cloud-Service/" style="font-size: 10px;">Cloud Service</a> <a href="/tags/Github-Pages/" style="font-size: 10px;">Github Pages</a> <a href="/tags/Gitment/" style="font-size: 10px;">Gitment</a> <a href="/tags/JavaScript/" style="font-size: 12.5px;">JavaScript</a> <a href="/tags/Leetcode/" style="font-size: 15px;">Leetcode</a> <a href="/tags/Remote-Floder/" style="font-size: 10px;">Remote Floder</a> <a href="/tags/Service-Computing/" style="font-size: 10px;">Service Computing</a> <a href="/tags/Unity3D/" style="font-size: 20px;">Unity3D</a> <a href="/tags/VPS-server/" style="font-size: 10px;">VPS server</a> <a href="/tags/WEB/" style="font-size: 17.5px;">WEB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a>
     </div>
   </div>
 
@@ -711,6 +756,10 @@ Output: 1
       <ul>
         
           <li>
+            <a href="/Leetcode/Leetcode-685-Redundant-Connection-II/">Leetcode 685. Redundant Connection II</a>
+          </li>
+        
+          <li>
             <a href="/Tips/Make-Full-Use-of-Your-VPS-Server/">Make Full Use of Your VPS Server</a>
           </li>
         
@@ -724,10 +773,6 @@ Output: 1
         
           <li>
             <a href="/Service-Computing/Service-Computing-01-Private-Cloud-Service/">Service Computing 01 - Private Cloud Service</a>
-          </li>
-        
-          <li>
-            <a href="/Leetcode/Leetcode-41-First-Missing-Positive/">Leetcode 41. First Missing Positive</a>
           </li>
         
       </ul>
