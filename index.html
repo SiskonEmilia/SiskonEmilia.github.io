@@ -66,6 +66,220 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Golang-CLI-Program-Selpg" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/Service-Computing/Golang-CLI-Program-Selpg/" class="article-date">
+  <time datetime="2018-10-07T15:23:48.000Z" itemprop="datePublished">2018-10-07</time>
+  
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Service-Computing/">Service Computing</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Service-Computing/Golang-CLI-Program-Selpg/">Service Computing 02 - Golang CLI Program - Selpg</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#设计说明">设计说明</a><ul>
+<li><a href="#包引用">包引用</a></li>
+<li><a href="#初始化">初始化</a></li>
+<li><a href="#标识参数预处理">标识、参数预处理</a></li>
+<li><a href="#接受输入数据">接受输入数据</a></li>
+<li><a href="#数据处理">数据处理</a></li>
+<li><a href="#输出结果">输出结果</a></li>
+</ul>
+</li>
+<li><a href="#使用方法">使用方法</a><ul>
+<li><a href="#安装程序">安装程序</a></li>
+<li><a href="#使用范例和参数说明">使用范例和参数说明</a><ul>
+<li><a href="#必需参数-snumber-enumber">必需参数：-sNumber，-eNumber</a></li>
+<li><a href="#互斥的可选参数-lnumber-f">互斥的可选参数：-lNumber，-f</a></li>
+<li><a href="#可选参数-ddestination">可选参数：-dDestination</a></li>
+<li><a href="#可选参数file_name">可选参数：file_name</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#测试">测试</a><ul>
+<li><a href="#生成测试文件">生成测试文件</a></li>
+<li><a href="#测试与结果">测试与结果</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h2 id="设计说明"><a href="#设计说明" class="headerlink" title="设计说明"></a>设计说明</h2><p>本程序参照 <a href="https://www.ibm.com/developerworks/cn/linux/shell/clutil/index.html" target="_blank" rel="noopener">开发 Linux 命令行实用程序</a> 的设计，以 go 语言替代 C 语言构建。下面我们分版块来讲解实现。<a href="https://github.com/SiskonEmilia/Selpg/blob/master/selpg.go" target="_blank" rel="noopener">完整源代码</a></p>
+<h3 id="包引用"><a href="#包引用" class="headerlink" title="包引用"></a>包引用</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"bufio"</span></span><br><span class="line">	<span class="string">"io"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">	<span class="string">"os"</span></span><br><span class="line">	<span class="string">"os/exec"</span></span><br><span class="line">	<span class="string">"strings"</span></span><br><span class="line"></span><br><span class="line">	flag <span class="string">"github.com/spf13/pflag"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>在这一部分，我们声明了程序所要用到的所有包：</p>
+<ul>
+<li><code>bufio</code>：用于从标准输入流获取数据和将数据写入到标准输出流</li>
+<li><code>io</code>：用于引用 <code>io.EOF</code> 来判断错误是否是文件尾导致</li>
+<li><code>log</code>：用于将错误信息写入到标准错误流</li>
+<li><code>os</code>：用于打开文件和异常退出时发送状态码</li>
+<li><code>os/exec</code>：用于开启 <code>lp</code> 子进程</li>
+<li><code>strings</code>：用于划分、拼接字符串</li>
+<li><code>github.com/spf13/pflag</code>：用于获取程序运行时用户输入的参数和标识</li>
+</ul>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Initializing //</span></span><br><span class="line">startNumber := flag.IntP(<span class="string">"startpage"</span>, <span class="string">"s"</span>, <span class="number">0</span>, <span class="string">"The page to start printing at [Necessary, no greater than endpage]"</span>)</span><br><span class="line">endNumber := flag.IntP(<span class="string">"endpage"</span>, <span class="string">"e"</span>, <span class="number">0</span>, <span class="string">"The page to end printing at [Necessary, no less than startpage]"</span>)</span><br><span class="line">lineNumber := flag.IntP(<span class="string">"linenumber"</span>, <span class="string">"l"</span>, <span class="number">72</span>, <span class="string">"If this flag is used, a page will consist of a fixed number of characters, which is given by you"</span>)</span><br><span class="line">forcePage := flag.BoolP(<span class="string">"forcepaging"</span>, <span class="string">"f"</span>, <span class="literal">false</span>, <span class="string">"Change page only if '-f' appears [Cannot be used with -l]"</span>)</span><br><span class="line">destinationPrinter := flag.StringP(<span class="string">"destination"</span>, <span class="string">"d"</span>, <span class="string">""</span>, <span class="string">"Choose a printer to accept the result as a task"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// StdErr printer //</span></span><br><span class="line">l := log.New(os.Stderr, <span class="string">""</span>, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Data holder //</span></span><br><span class="line">bytes := <span class="built_in">make</span>([]<span class="keyword">byte</span>, <span class="number">65535</span>)</span><br><span class="line"><span class="keyword">var</span> data <span class="keyword">string</span></span><br><span class="line"><span class="keyword">var</span> resultData <span class="keyword">string</span></span><br><span class="line"></span><br><span class="line">flag.Parse()</span><br></pre></td></tr></table></figure>
+<p>在这个部分，我们进行了初始化操作。这包括对于 <code>pflag</code> 中各个标识的设置和变量绑定，标准错误流的绑定，缓冲区 <code>bytes</code> 的创建，读入数据变量、结果数据变量的创建。</p>
+<p>在完成这些设置后，我们通过 <code>flag.Parse()</code> 方法使得 <code>pflag</code> 执行对于标识和参数的解析。</p>
+<h3 id="标识、参数预处理"><a href="#标识、参数预处理" class="headerlink" title="标识、参数预处理"></a>标识、参数预处理</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Are necessary flags given? //</span></span><br><span class="line"><span class="keyword">if</span> *startNumber == <span class="number">0</span> || *endNumber == <span class="number">0</span> &#123;</span><br><span class="line">  l.Println(<span class="string">"Necessary flags are not given!"</span>)</span><br><span class="line">  flag.Usage()</span><br><span class="line">  os.Exit(<span class="number">1</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Are flags value valid? //</span></span><br><span class="line"><span class="keyword">if</span> (*startNumber &gt; *endNumber) || *startNumber &lt; <span class="number">0</span> || *endNumber &lt; <span class="number">0</span> || *lineNumber &lt;= <span class="number">0</span> &#123;</span><br><span class="line">  l.Println(<span class="string">"Invalid flag values!"</span>)</span><br><span class="line">  flag.Usage()</span><br><span class="line">  os.Exit(<span class="number">1</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Are lineNumber and forcePage set at the same time? //</span></span><br><span class="line"><span class="keyword">if</span> *lineNumber != <span class="number">72</span> &amp;&amp; *forcePage &#123;</span><br><span class="line">  l.Println(<span class="string">"Linenumber and forcepaging cannot be set at the same time!"</span>)</span><br><span class="line">  flag.Usage()</span><br><span class="line">  os.Exit(<span class="number">1</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Too many arguments? //</span></span><br><span class="line"><span class="keyword">if</span> flag.NArg() &gt; <span class="number">1</span> &#123;</span><br><span class="line">  l.Println(<span class="string">"Too many arguments!"</span>)</span><br><span class="line">  flag.Usage()</span><br><span class="line">  os.Exit(<span class="number">1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这部分，我们检验了所有标识的合法性，这包括：</p>
+<ul>
+<li>必须的标识，<code>-s</code> 和 <code>-e</code> 是否被设置？</li>
+<li>标识是否具有一个合法的值</li>
+<li>互斥的参数，也就是通过行数分页和通过分页符分页，是否被同时设置</li>
+<li>参数数量是否过多</li>
+</ul>
+<p>如果任何不合法的参数被使用，那么我们向标准错误流输出错误信息，打印正确使用方法，然后退出程序（并返回一个通用的错误状态码）。</p>
+<h3 id="接受输入数据"><a href="#接受输入数据" class="headerlink" title="接受输入数据"></a>接受输入数据</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// StdIn or File? //</span></span><br><span class="line"><span class="keyword">if</span> flag.NArg() == <span class="number">0</span> &#123;</span><br><span class="line">  <span class="comment">// StdIn condition //</span></span><br><span class="line">  reader := bufio.NewReader(os.Stdin)</span><br><span class="line"></span><br><span class="line">  size, err := reader.Read(bytes)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> size != <span class="number">0</span> &amp;&amp; err == <span class="literal">nil</span> &#123;</span><br><span class="line">    data = data + <span class="keyword">string</span>(bytes)</span><br><span class="line">    size, err = reader.Read(bytes)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Error</span></span><br><span class="line">  <span class="keyword">if</span> err != io.EOF &#123;</span><br><span class="line">    l.Println(<span class="string">"Error occured when reading from StdIn:\n"</span>, err.Error())</span><br><span class="line">    os.Exit(<span class="number">1</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// File condition //</span></span><br><span class="line">  file, err := os.Open(flag.Args()[<span class="number">0</span>]) <span class="comment">// TODO TEST: is PATH needed?</span></span><br><span class="line">  <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    l.Println(<span class="string">"Error occured when opening file:\n"</span>, err.Error())</span><br><span class="line">    os.Exit(<span class="number">1</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Read the whole file</span></span><br><span class="line">  size, err := file.Read(bytes)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> size != <span class="number">0</span> &amp;&amp; err == <span class="literal">nil</span> &#123;</span><br><span class="line">    data = data + <span class="keyword">string</span>(bytes)</span><br><span class="line">    size, err = file.Read(bytes)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Error</span></span><br><span class="line">  <span class="keyword">if</span> err != io.EOF &#123;</span><br><span class="line">    l.Println(<span class="string">"Error occured when reading file:\n"</span>, err.Error())</span><br><span class="line">    os.Exit(<span class="number">1</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这一部分，我们判断输入方式，并且将数据读入并写在 <code>data</code> 变量中。</p>
+<p>对于 <strong>标准输入</strong> 的模式，也就是没有额外参数的情况：我们首先通过 <code>bufio.NewReader(os.Stdin)</code> 创建一个绑定到标准输入流的读者，然后通过它向缓冲区 <code>bytes</code> 读入数据，并且将其转换为字符串并写入到 <code>data</code> 中。由于缓冲区的大小限制，这个读入过程可能需要进行多次，因而我们迭代该过程，直到确保读完了标准输入流的数据（也就是该次读入没有读入到数据，即 <code>size = 0</code>）为止。在读入遇到错误时，我们输出错误信息，并且退出程序。</p>
+<p>对于 <strong>文件输入</strong> 的模式，也就是有一个参数的情况：我们首先通过 <code>os.Open()</code> 打开文件。在没有错误的情况下，我们通过 <code>file.Read()</code> 迭代地从中读入数据，直到完成读取。如果我们在整个过程中遇到错误，那么输出错误信息，并且退出程序。</p>
+<p>在完成这一个部分的处理后，我们的数据信息就存储在了 <code>data</code> 变量中。</p>
+<h3 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// LineNumber or ForcePaging? //</span></span><br><span class="line"><span class="keyword">if</span> *forcePage &#123;</span><br><span class="line">  <span class="comment">// ForcePaging //</span></span><br><span class="line">  pagedData := strings.SplitAfter(data, <span class="string">"\f"</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> <span class="built_in">len</span>(pagedData) &lt; *endNumber &#123;</span><br><span class="line">    l.Println(<span class="string">"Invalid flag values! Too large endNumber!"</span>)</span><br><span class="line">    flag.Usage()</span><br><span class="line">    os.Exit(<span class="number">1</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  resultData = strings.Join(pagedData[*startNumber<span class="number">-1</span>:*endNumber+<span class="number">1</span>], <span class="string">""</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// LineNumber //</span></span><br><span class="line">  lines := strings.SplitAfter(data, <span class="string">"\n"</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> <span class="built_in">len</span>(lines) &lt; (*endNumber<span class="number">-1</span>)*(*lineNumber)+<span class="number">1</span> &#123;</span><br><span class="line">    l.Println(<span class="string">"Invalid flag values! Too large endNumber!"</span>)</span><br><span class="line">    flag.Usage()</span><br><span class="line">    os.Exit(<span class="number">1</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> <span class="built_in">len</span>(lines) &lt; *endNumber*(*lineNumber) &#123;</span><br><span class="line">    resultData = strings.Join(lines[(*startNumber)*(*lineNumber)-(*lineNumber):<span class="built_in">len</span>(lines)], <span class="string">""</span>)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    resultData = strings.Join(lines[(*startNumber)*(*lineNumber)-(*lineNumber):(*endNumber)*(*lineNumber)], <span class="string">""</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这部分，我们对存储在 <code>data</code> 里的字符串进行处理，以满足用户要求。这部分根据分页过程的不同分为两种：按分页符分页和按行分页。</p>
+<p>在按 <strong>分页符分页</strong> 的情况下，我们通过 <code>strings.SplitAfter()</code> 方法来将字符串以 <code>&#39;\f&#39;</code> 为界分为数个段，每一段即是一页，然后我们根据用户输入的开始页码和结束页码将相应的数据写入 <code>resultData</code> 中。</p>
+<p>在 <strong>按行数分页</strong> 的情况下，我们首先以 <code>&#39;\n&#39;</code> 为界将字符串分段，然后根据开始页码和结束页码计算出开始行和结束行，并将其间数据写入 <code>resultData</code> 中。</p>
+<h3 id="输出结果"><a href="#输出结果" class="headerlink" title="输出结果"></a>输出结果</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">writer := bufio.NewWriter(os.Stdout)</span><br><span class="line"></span><br><span class="line"><span class="comment">// StdOut or Printer? //</span></span><br><span class="line"><span class="keyword">if</span> *destinationPrinter == <span class="string">""</span> &#123;</span><br><span class="line">  <span class="comment">// StdOut //</span></span><br><span class="line">  fmt.Printf(<span class="string">"%s"</span>, resultData)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// Printer //</span></span><br><span class="line">  cmd := exec.Command(<span class="string">"lp"</span>, <span class="string">"-d"</span>+*destinationPrinter)</span><br><span class="line">  lpStdin, err := cmd.StdinPipe()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    l.Println(<span class="string">"Error occured when trying to send data to lp:\n"</span>, err.Error())</span><br><span class="line">    os.Exit(<span class="number">1</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">defer</span> lpStdin.Close()</span><br><span class="line">    io.WriteString(lpStdin, resultData)</span><br><span class="line">  &#125;()</span><br><span class="line"></span><br><span class="line">  out, err := cmd.CombinedOutput()</span><br><span class="line">  <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    l.Println(<span class="string">"Error occured when sending data to lp:\n"</span>, err.Error())</span><br><span class="line">    os.Exit(<span class="number">1</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  _, err = writer.Write(out)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    l.Println(<span class="string">"Error occured when writing information to StdOut:\n"</span>, err.Error())</span><br><span class="line">    os.Exit(<span class="number">1</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这部分，我们以输出方式的不同分为两类：直接输出到标准输出流的和将数据传送给 <code>lp</code> 进行打印工作的。由于二者实际上都需要用到标准输出流（后者是要输出 <code>lp</code> 的信息），所以我们首先创建了与标准输出流绑定的 <code>Writer</code>：<code>writer</code>。</p>
+<p>对于直接输出到标准输出流的，我们直接通过 <code>Writer.Write()</code> 方法将转换为 byte 切片的字符串输出即可。</p>
+<p>而对于输出到 <code>lp</code> 的，我们首先通过 <code>exec.Command()</code> 创建一个 <code>lp</code> 的子进程，并且通过 <code>cmd.StdinPipe()</code> 获取和其标准输入绑定的管道，然后将数据送入管道即可。同时，我们也需要将 <code>lp</code> 指令的输出转发到标准输出流上，方便用户查看。</p>
+<p>在这期间对于错误的处理依旧和前文相同：输出错误并退出程序。</p>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>使用方法基本同 C 版本的 <code>selpg</code>。</p>
+<h3 id="安装程序"><a href="#安装程序" class="headerlink" title="安装程序"></a>安装程序</h3><p>在配置好 golang 环境的前提下，运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/siskonemilia/selpg</span><br></pre></td></tr></table></figure>
+<p>若成功执行（无回显），则安装成功。</p>
+<h3 id="使用范例和参数说明"><a href="#使用范例和参数说明" class="headerlink" title="使用范例和参数说明"></a>使用范例和参数说明</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">selpg -sNumber -eNumber [-lNumber/-f] [-dDestination] [file_name]</span><br></pre></td></tr></table></figure>
+<h4 id="必需参数：-sNumber，-eNumber"><a href="#必需参数：-sNumber，-eNumber" class="headerlink" title="必需参数：-sNumber，-eNumber"></a>必需参数：-sNumber，-eNumber</h4><p><code>selpg</code> 要求用户用两个命令行参数“-sNumber”（例如，“-s10”表示从第 10 页开始）和“-eNumber”（例如，“-e20”表示在第 20 页结束）指定要抽取的页面范围的起始页和结束页。<code>selpg</code> 对所给的页号进行合理性检查；换句话说，它会检查两个数字是否为有效的正整数以及结束页是否不小于起始页。两者是程序执行所必需的。</p>
+<h4 id="互斥的可选参数：-lNumber，-f"><a href="#互斥的可选参数：-lNumber，-f" class="headerlink" title="互斥的可选参数：-lNumber，-f"></a>互斥的可选参数：-lNumber，-f</h4><p>selpg 可以处理两种输入文本：</p>
+<p><strong>类型 1</strong>：该类文本的页行数固定。这是缺省类型，因此不必给出选项进行说明。也就是说，如果既没有给出“-lNumber”也没有给出“-f”选项，则 <code>selpg</code> 会理解为页有固定的长度（每页 72 行）。例如：</p>
+<pre><code>selpg -s10 -e20 -l66
+</code></pre><p><strong>类型 2</strong>：该类型文本的页由 ASCII 换页字符（十进制数值为 12，在 C 中用“\f”表示）定界。该格式与“每页行数固定”格式相比的好处在于，当每页的行数有很大不同而且文件有很多页时，该格式可以节省磁盘空间。在含有文本的行后面，类型 2 的页只需要一个字符 ― 换页 ― 就可以表示该页的结束。打印机会识别换页符并自动根据在新的页开始新行所需的行数移动打印头。例如：</p>
+<pre><code>selpg -s10 -e20 -f 
+</code></pre><h4 id="可选参数：-dDestination"><a href="#可选参数：-dDestination" class="headerlink" title="可选参数：-dDestination"></a>可选参数：-dDestination</h4><p><code>selpg</code> 还允许用户使用“-dDestination”选项将选定的页直接发送至打印机。这里，“Destination”应该是 lp 命令“-d”选项（请参阅“man lp”）可接受的打印目的地名称。该目的地应该存在 ― <code>selpg</code> 不检查这一点。在运行了带“-d”选项的 <code>selpg</code> 命令后，若要验证该选项是否已生效，请运行命令“lpstat -t”。该命令应该显示添加到“Destination”打印队列的一项打印作业。如果当前有打印机连接至该目的地并且是启用的，则打印机应打印该输出。</p>
+<h4 id="可选参数：file-name"><a href="#可选参数：file-name" class="headerlink" title="可选参数：file_name"></a>可选参数：file_name</h4><p>如果没有给出 file_name，那么 <code>selpg</code> 将从标准输入流读取数据进行处理，否则，<code>selpg</code> 将根据文件名寻找相应文件，并从中读取数据进行处理。</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>该部分参照 <a href="https://www.ibm.com/developerworks/cn/linux/shell/clutil/index.html#6" target="_blank" rel="noopener">使用 selpg</a> 进行程序测试。</p>
+<h3 id="生成测试文件"><a href="#生成测试文件" class="headerlink" title="生成测试文件"></a>生成测试文件</h3><p>为了使得实验结果直观易懂，我们采用固定的程序生成的输入文件进行测试，生成程序如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># input_file_generator.sh</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &#123;1..7200&#125;</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="variable">$i</span> &gt;&gt; input_file</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>其生成的结果是一个由 1 到 7200 的，步长为 1 的等差数列，且每行一个数字。即是说，每一行的数字都是该行的编号。</p>
+<h3 id="测试与结果"><a href="#测试与结果" class="headerlink" title="测试与结果"></a>测试与结果</h3><ol>
+<li><p>把 <code>input_file</code> 的第 1 页写至标准输出</p>
+<pre><code>$selpg -s1 -e1 input_file
+</code></pre><p> 结果：</p>
+<pre><code>1
+2
+...
+72
+</code></pre></li>
+<li><p><code>selpg</code> 读取标准输入，而标准输入已被 shell 重定向为来自 <code>input_file</code> 而不是显式命名的文件名参数。输入的第 1 页被写至屏幕</p>
+<pre><code>$ selpg -s1 -e1 &lt; input_file
+</code></pre><p> 结果：</p>
+<pre><code>1
+2
+...
+72
+</code></pre></li>
+<li><p><code>cat</code> 的标准输出被 shell／内核重定向至 selpg 的标准输入。将第 10 页到第 20 页写至 selpg 的标准输出</p>
+<pre><code>$ cat input_file | selpg -s10 -e20
+</code></pre><p> 结果：</p>
+<pre><code>649
+650
+...
+1440
+</code></pre></li>
+<li><p><code>selpg</code> 将第 10 页到第 20 页写至标准输出（屏幕）；所有的错误消息被 shell 重定向至 <code>error_file</code></p>
+<pre><code>$ selpg -s10 -e20 input_file 2&gt;error_file
+</code></pre><p> 结果：</p>
+<pre><code>649
+650
+...
+1440
+</code></pre><p> <code>error_file</code>: 无内容</p>
+</li>
+<li><p><code>selpg</code> 将第 10 页到第 20 页写至标准输出；标准输出被 shell 重定向至 <code>res</code></p>
+<pre><code>$selpg -s10 -e20 input_file &gt;res
+</code></pre><p> 结果（res文件内容）：</p>
+<pre><code>649
+650
+...
+1440
+</code></pre></li>
+<li><p><code>selpg</code> 将第 10 页到第 20 页写至标准输出，标准输出被重定向至 <code>res</code>，<code>selpg</code> 写至标准错误的所有内容都被重定向至 <code>error_file</code></p>
+<pre><code>$selpg -s10 -e20 input_file &gt;res 2&gt;error_file
+</code></pre><p> 结果（res文件内容）：</p>
+<pre><code>649
+650
+...
+1440
+</code></pre><p> <code>error_file</code>: 无内容</p>
+</li>
+<li><p><code>selpg</code> 的标准输出透明地被 shell 重定向，成为 <code>cat</code> 的标准输入，第 10 页到第 20 页被写至该标准输入</p>
+<pre><code>$ selpg -s10 -e20 input_file | cat
+</code></pre><p> 结果：</p>
+<pre><code>649
+650
+...
+1440
+</code></pre></li>
+<li><p>将页长设置为 66 行，这样 <code>selpg</code> 就可以把输入当作被定界为该长度的页那样处理。第 10 页到第 20 页被写至 <code>selpg</code> 的标准输出</p>
+<pre><code>$ selpg -s10 -e20 -l66 input_file
+</code></pre><p> 结果：</p>
+<pre><code>595
+596
+...
+1320
+</code></pre></li>
+<li><p>假定页由换页符定界。第 10 页到第 20 页被写至 <code>selpg</code> 的标准输出</p>
+<pre><code>$ selpg -s10 -e20 -f input_file
+</code></pre><p> 结果（输入文件没有换页符，所以只有一页）：</p>
+<pre><code>Invalid flag values! Too large endNumber!
+Usage of selpg:
+-d, --destination string   Choose a printer to accept the result as a task
+-e, --endpage int          The page to end printing at [Necessary, no less than startpage]
+-f, --forcepaging          Change page only if &apos;-f&apos; appears [Cannot be used with -l]
+-l, --linenumber int       If this flag is used, a page will consist of a fixed number of characters, which is given by you (default 72)
+-s, --startpage int        The page to start printing at [Necessary, no greater than endpage]
+</code></pre></li>
+<li><p>第 10 页到第 20 页由管道输送至命令 <code>lp -dlp1</code>，该命令将使输出在打印机 lp1 上打印</p>
+<pre><code>$ selpg -s10 -e20 -dlp1 input_file
+</code></pre><p> 结果（因为没有打印机）：</p>
+<pre><code>Error occured when sending data to lp:
+exit status 1
+</code></pre></li>
+</ol>
+<p>经测试，程序运行符合预期，工作正常。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://siskonemilia.github.io/Service-Computing/Golang-CLI-Program-Selpg/" data-id="cjmz0rh49002fabrs6r6q53o3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Service-Computing/">Service Computing</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Leetcode-685-Redundant-Connection-II" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/Leetcode/Leetcode-685-Redundant-Connection-II/" class="article-date">
@@ -151,7 +365,7 @@ Explanation: The given directed graph will be like this:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-685-Redundant-Connection-II/" data-id="cjmjc48wa002m7orstrm3kqrx" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-685-Redundant-Connection-II/" data-id="cjmz0rh4b002nabrs9prdm46t" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -200,7 +414,7 @@ Explanation: The given directed graph will be like this:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Tips/Make-Full-Use-of-Your-VPS-Server/" data-id="cjmjc48uq000a7orsvt9e4488" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Tips/Make-Full-Use-of-Your-VPS-Server/" data-id="cjmz0rh2v000aabrs1bdbfi5y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VPS-server/">VPS server</a></li></ul>
@@ -256,7 +470,7 @@ Explanation: The given directed graph will be like this:
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-124-Binary-Tree-Maximum-Path-Sum/" data-id="cjmjc48uh00067ors6t7lcuvq" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-124-Binary-Tree-Maximum-Path-Sum/" data-id="cjmz0rh2n0006abrs1sqjbmzz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -336,7 +550,7 @@ The median is (2 + 3)/2 = 2.5
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-4-Median-of-Two-Sorted-Arrays/" data-id="cjmjc48wh002p7orsphpf1gxz" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-4-Median-of-Two-Sorted-Arrays/" data-id="cjmz0rh48002cabrsdtyxev8z" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -386,7 +600,7 @@ The median is (2 + 3)/2 = 2.5
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Service-Computing/Service-Computing-01-Private-Cloud-Service/" data-id="cjmjc48wn002s7orsptcge6ek" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Service-Computing/Service-Computing-01-Private-Cloud-Service/" data-id="cjmz0rh4c002qabrsibyfg6a6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cloud-Service/">Cloud Service</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Service-Computing/">Service Computing</a></li></ul>
@@ -481,7 +695,7 @@ Output: 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-41-First-Missing-Positive/" data-id="cjmjc48w4002j7ors7gj3i4lq" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-41-First-Missing-Positive/" data-id="cjmz0rh4a002iabrs89qq06wl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -531,7 +745,7 @@ Output: 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-8/" data-id="cjmjc48vz002g7orsin49zkcs" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-8/" data-id="cjmz0rh440026abrsz4qpbqec" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
@@ -582,7 +796,7 @@ Output: 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-7/" data-id="cjmjc48vu002d7orshdu18vcb" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-7/" data-id="cjmz0rh460029abrsua4fnq2y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
@@ -634,59 +848,7 @@ Output: 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-6/" data-id="cjmjc48uf00057ors4hbcr7of" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Get-Started-with-Unity3D-5" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/Unity3D/Get-Started-with-Unity3D-5/" class="article-date">
-  <time datetime="2018-05-28T15:35:31.000Z" itemprop="datePublished">2018-05-28</time>
-  
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Unity3D/">Unity3D</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/Unity3D/Get-Started-with-Unity3D-5/">Get Started with Unity3D - 5</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Escape-with-Unity-Chan-v2-0"><a href="#Escape-with-Unity-Chan-v2-0" class="headerlink" title="Escape with Unity-Chan v2.0 !"></a>Escape with Unity-Chan v2.0 !</h2><p><a href="https://www.bilibili.com/video/av23296354/" target="_blank" rel="noopener">B站视频</a></p>
-<p><strong>和Unity酱逃出生天第二弹！</strong> 这次Unity酱来到了精灵森林，在本次游戏中，你将看到环绕着Unity酱上下飞舞的光精灵，在森林中驻足的水精灵和火精灵……以及动听的背景音乐！</p>
-<p>效果预览：</p>
-<img src="/Unity3D/Get-Started-with-Unity3D-5/1.gif" title="preview">
-        
-          <p class="article-more-link">
-            <a href="/Unity3D/Get-Started-with-Unity3D-5/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-5/" data-id="cjmjc48uc00037ors10a42esg" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-6/" data-id="cjmz0rh2k0005abrs2xxflcxd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
@@ -724,7 +886,7 @@ Output: 1
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cloud-Service/">Cloud Service</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github-Pages/">Github Pages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gitment/">Gitment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Remote-Floder/">Remote Floder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Service-Computing/">Service Computing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity3D/">Unity3D</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS-server/">VPS server</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cloud-Service/">Cloud Service</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github-Pages/">Github Pages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gitment/">Gitment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Golang/">Golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Remote-Floder/">Remote Floder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Service-Computing/">Service Computing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity3D/">Unity3D</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS-server/">VPS server</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
     </div>
   </div>
 
@@ -734,7 +896,7 @@ Output: 1
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Algorithm/" style="font-size: 15px;">Algorithm</a> <a href="/tags/Cloud-Service/" style="font-size: 10px;">Cloud Service</a> <a href="/tags/Github-Pages/" style="font-size: 10px;">Github Pages</a> <a href="/tags/Gitment/" style="font-size: 10px;">Gitment</a> <a href="/tags/JavaScript/" style="font-size: 12.5px;">JavaScript</a> <a href="/tags/Leetcode/" style="font-size: 15px;">Leetcode</a> <a href="/tags/Remote-Floder/" style="font-size: 10px;">Remote Floder</a> <a href="/tags/Service-Computing/" style="font-size: 10px;">Service Computing</a> <a href="/tags/Unity3D/" style="font-size: 20px;">Unity3D</a> <a href="/tags/VPS-server/" style="font-size: 10px;">VPS server</a> <a href="/tags/WEB/" style="font-size: 17.5px;">WEB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a>
+      <a href="/tags/Algorithm/" style="font-size: 16px;">Algorithm</a> <a href="/tags/Cloud-Service/" style="font-size: 10px;">Cloud Service</a> <a href="/tags/Github-Pages/" style="font-size: 10px;">Github Pages</a> <a href="/tags/Gitment/" style="font-size: 10px;">Gitment</a> <a href="/tags/Golang/" style="font-size: 10px;">Golang</a> <a href="/tags/JavaScript/" style="font-size: 14px;">JavaScript</a> <a href="/tags/Leetcode/" style="font-size: 16px;">Leetcode</a> <a href="/tags/Remote-Floder/" style="font-size: 10px;">Remote Floder</a> <a href="/tags/Service-Computing/" style="font-size: 12px;">Service Computing</a> <a href="/tags/Unity3D/" style="font-size: 20px;">Unity3D</a> <a href="/tags/VPS-server/" style="font-size: 10px;">VPS server</a> <a href="/tags/WEB/" style="font-size: 18px;">WEB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a>
     </div>
   </div>
 
@@ -743,7 +905,7 @@ Output: 1
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
     </div>
   </div>
 
@@ -754,6 +916,10 @@ Output: 1
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/Service-Computing/Golang-CLI-Program-Selpg/">Service Computing 02 - Golang CLI Program - Selpg</a>
+          </li>
         
           <li>
             <a href="/Leetcode/Leetcode-685-Redundant-Connection-II/">Leetcode 685. Redundant Connection II</a>
@@ -769,10 +935,6 @@ Output: 1
         
           <li>
             <a href="/Leetcode/Leetcode-4-Median-of-Two-Sorted-Arrays/">Leetcode 4. Median of Two Sorted Arrays</a>
-          </li>
-        
-          <li>
-            <a href="/Service-Computing/Service-Computing-01-Private-Cloud-Service/">Service Computing 01 - Private Cloud Service</a>
           </li>
         
       </ul>
