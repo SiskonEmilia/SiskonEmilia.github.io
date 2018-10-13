@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Leetcode 65. Valid Number | Coding.Siskon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="题目65. Valid Number Difficulty: Hard Total Accepted: 99.5K Total Submissions: 753.7K  Validate if a given string can be interpreted as a decimal number. Some examples:&amp;quot;0&amp;quot; =&amp;gt; true&amp;quot; 0.1">
+<meta name="keywords" content="Algorithm,Leetcode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leetcode 65. Valid Number">
+<meta property="og:url" content="https://siskonemilia.github.io/Leetcode/Leetcode-65-Valid-Number/index.html">
+<meta property="og:site_name" content="Coding.Siskon">
+<meta property="og:description" content="题目65. Valid Number Difficulty: Hard Total Accepted: 99.5K Total Submissions: 753.7K  Validate if a given string can be interpreted as a decimal number. Some examples:&amp;quot;0&amp;quot; =&amp;gt; true&amp;quot; 0.1">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://siskonemilia.github.io/Leetcode/Leetcode-65-Valid-Number/result.png">
+<meta property="og:image" content="https://siskonemilia.github.io/Leetcode/Leetcode-65-Valid-Number/result.png">
+<meta property="og:updated_time" content="2018-10-13T02:52:10.315Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Leetcode 65. Valid Number">
+<meta name="twitter:description" content="题目65. Valid Number Difficulty: Hard Total Accepted: 99.5K Total Submissions: 753.7K  Validate if a given string can be interpreted as a decimal number. Some examples:&amp;quot;0&amp;quot; =&amp;gt; true&amp;quot; 0.1">
+<meta name="twitter:image" content="https://siskonemilia.github.io/Leetcode/Leetcode-65-Valid-Number/result.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Coding.Siskon" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Coding.Siskon</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Simple Blog of SiskonEmilia</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://siskonemilia.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Leetcode-65-Valid-Number" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/Leetcode/Leetcode-65-Valid-Number/" class="article-date">
+  <time datetime="2018-10-13T02:18:09.000Z" itemprop="datePublished">2018-10-13</time>
+  
+    <span id="busuanzi_container_page_pv">
+        | Views: <span id="busuanzi_value_page_pv">loading...</span>
+    </span>
+  
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Leetcode 65. Valid Number
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><h3 id="65-Valid-Number"><a href="#65-Valid-Number" class="headerlink" title="65. Valid Number"></a>65. Valid Number</h3><ul>
+<li><strong>Difficulty:</strong> Hard</li>
+<li><strong>Total Accepted:</strong> 99.5K</li>
+<li><strong>Total Submissions:</strong> 753.7K</li>
+</ul>
+<p>Validate if a given string can be interpreted as a decimal number.</p>
+<p>Some examples:<br><code>&quot;0&quot;</code> =&gt; <code>true</code><br><code>&quot; 0.1 &quot;</code> =&gt; <code>true</code><br><code>&quot;abc&quot;</code> =&gt; <code>false</code><br><code>&quot;1 a&quot;</code> =&gt; <code>false</code><br><code>&quot;2e10&quot;</code> =&gt; <code>true</code><br><code>&quot; -90e3   &quot;</code> =&gt; <code>true</code><br><code>&quot; 1e&quot;</code> =&gt; <code>false</code><br><code>&quot;e3&quot;</code> =&gt; <code>false</code><br><code>&quot; 6e-1&quot;</code> =&gt; <code>true</code><br><code>&quot; 99e2.5 &quot;</code> =&gt; <code>false</code><br><code>&quot;53.5e93&quot;</code> =&gt; <code>true</code><br><code>&quot; --6 &quot;</code> =&gt; <code>false</code><br><code>&quot;-+3&quot;</code> =&gt; <code>false</code><br><code>&quot;95a54e53&quot;</code> =&gt; <code>false</code></p>
+<p><strong>Note:</strong> It is intended for the problem statement to be ambiguous. You should gather all requirements up front before implementing one. However, here is a list of characters that can be in a valid decimal number:</p>
+<p>Numbers 0-9<br>Exponent - “e”<br>Positive/negative sign - “+”/“-“<br>Decimal point - “.”</p>
+<p>Of course, the context of these characters also matters in the input.</p>
+<h2 id="解题报告"><a href="#解题报告" class="headerlink" title="解题报告"></a>解题报告</h2><h3 id="AC-截图"><a href="#AC-截图" class="headerlink" title="AC 截图"></a>AC 截图</h3><img src="/Leetcode/Leetcode-65-Valid-Number/result.png" title="FinalResult">
+<h3 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h3><p>检查一个字符串的内容（在删去前后缀的空格后）是否是一个合法的十进制数。</p>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>该题可以通过将字符串分块来令问题化为简单的子问题的组合。首先考虑有 E 的字符串，则我们只需要判断左边是否为一个合法小数，右边是否为一个合法整数。</p>
+<p>对于一个小数字符串，我们只需要判断小数点左边和右边是否为一个合法整数。</p>
+<p>对于一个整数字符串，我们只需要判断除了符号外，其他字符是否是一个合法数字即可。</p>
+<h4 id="坑点"><a href="#坑点" class="headerlink" title="坑点"></a>坑点</h4><p><code>1.</code> 和 <code>.3</code> 都是合法的数字。</p>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><h4 id="AC-截图-1"><a href="#AC-截图-1" class="headerlink" title="AC 截图"></a>AC 截图</h4><img src="/Leetcode/Leetcode-65-Valid-Number/result.png" title="FinalResult">
+<h4 id="C-代码"><a href="#C-代码" class="headerlink" title="C++ 代码"></a>C++ 代码</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">isNumber</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> front = <span class="number">0</span>, last = s.size() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (; front &lt; last &amp;&amp; s[front] == <span class="string">' '</span>; ++front);</span><br><span class="line">    <span class="keyword">for</span> (; front &lt; last &amp;&amp; s[last] == <span class="string">' '</span>; --last);</span><br><span class="line">    s = s.substr(front, last - front + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> indexOfE;</span><br><span class="line">    <span class="keyword">if</span> ((indexOfE = s.find(<span class="string">'e'</span>)) != <span class="number">-1</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (indexOfE != s.size() - <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> (isFraction(s.substr(<span class="number">0</span>, indexOfE)) &amp;&amp;</span><br><span class="line">          isInteger(s.substr(indexOfE + <span class="number">1</span>), <span class="literal">true</span>));</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> isFraction(s);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">isFraction</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">    s = s.substr(s[<span class="number">0</span>] == <span class="string">'+'</span> || s[<span class="number">0</span>] == <span class="string">'-'</span>);</span><br><span class="line">    <span class="keyword">int</span> indexOfDot = s.find(<span class="string">'.'</span>);</span><br><span class="line">    <span class="keyword">if</span> (indexOfDot != <span class="number">-1</span> &amp;&amp; indexOfDot != s.size() - <span class="number">1</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> isInteger(s.substr(<span class="number">0</span>, indexOfDot), <span class="literal">false</span>, <span class="literal">true</span>) &amp;&amp; isInteger(s.substr(indexOfDot + <span class="number">1</span>), <span class="literal">false</span>, <span class="literal">true</span>);</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">return</span> isInteger(s);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">isInteger</span><span class="params">(<span class="built_in">string</span> s, <span class="keyword">bool</span> checkMinus = <span class="literal">false</span>, <span class="keyword">bool</span> allowZero = <span class="literal">false</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (checkMinus) &#123;</span><br><span class="line">      s = s.substr(s[<span class="number">0</span>] == <span class="string">'+'</span> || s[<span class="number">0</span>] == <span class="string">'-'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;iter : s) &#123;</span><br><span class="line">      <span class="keyword">if</span> (iter &gt; <span class="string">'9'</span> || iter &lt; <span class="string">'0'</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> allowZero || s.size();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-65-Valid-Number/" data-id="cjn6uhzvd000a5dxm3vhtvifu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/Service-Computing/Golang-CLI-Program-Selpg/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Service Computing 02 - Golang CLI Program - Selpg</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: 'Leetcode 65. Valid Number',
+  owner: 'siskonemilia',
+  repo: 'PageComment',
+  oauth: {
+    client_id: '154bdf960b5615033ebe',
+    client_secret: '254826ff682d5d9b21138e53a7efe4867f2c5c77',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Leetcode/">Leetcode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Others/">Others</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Service-Computing/">Service Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity3D/">Unity3D</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB-Assignments/">WEB Assignments</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cloud-Service/">Cloud Service</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github-Pages/">Github Pages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gitment/">Gitment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Golang/">Golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Remote-Floder/">Remote Floder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Service-Computing/">Service Computing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity3D/">Unity3D</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS-server/">VPS server</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.5px;">Algorithm</a> <a href="/tags/Cloud-Service/" style="font-size: 10px;">Cloud Service</a> <a href="/tags/Github-Pages/" style="font-size: 10px;">Github Pages</a> <a href="/tags/Gitment/" style="font-size: 10px;">Gitment</a> <a href="/tags/Golang/" style="font-size: 10px;">Golang</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Leetcode/" style="font-size: 17.5px;">Leetcode</a> <a href="/tags/Remote-Floder/" style="font-size: 10px;">Remote Floder</a> <a href="/tags/Service-Computing/" style="font-size: 12.5px;">Service Computing</a> <a href="/tags/Unity3D/" style="font-size: 20px;">Unity3D</a> <a href="/tags/VPS-server/" style="font-size: 10px;">VPS server</a> <a href="/tags/WEB/" style="font-size: 17.5px;">WEB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/Leetcode/Leetcode-65-Valid-Number/">Leetcode 65. Valid Number</a>
+          </li>
+        
+          <li>
+            <a href="/Service-Computing/Golang-CLI-Program-Selpg/">Service Computing 02 - Golang CLI Program - Selpg</a>
+          </li>
+        
+          <li>
+            <a href="/Leetcode/Leetcode-839-Similar-String-Groups/">Leetcode 839. Similar String Groups</a>
+          </li>
+        
+          <li>
+            <a href="/Leetcode/Leetcode-685-Redundant-Connection-II/">Leetcode 685. Redundant Connection II</a>
+          </li>
+        
+          <li>
+            <a href="/Tips/Make-Full-Use-of-Your-VPS-Server/">Make Full Use of Your VPS Server</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Emilia<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a><br>
+      <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_uv"> 
+          Visitors: <span id="busuanzi_value_site_uv">loading...</span>
+      </span>
+    </div>
+  </div>
+  
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
