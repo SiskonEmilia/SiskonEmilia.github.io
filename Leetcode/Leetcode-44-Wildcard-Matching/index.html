@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Leetcode 44. Wildcard Matching | Coding.Siskon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="题目44. Wildcard Matching Difficulty: Hard Total Accepted: 144.11K Total Submissions: 665.07K  Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for ‘?’ and ‘">
+<meta name="keywords" content="Algorithm,Leetcode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leetcode 44. Wildcard Matching">
+<meta property="og:url" content="https://siskonemilia.github.io/Leetcode/Leetcode-44-Wildcard-Matching/index.html">
+<meta property="og:site_name" content="Coding.Siskon">
+<meta property="og:description" content="题目44. Wildcard Matching Difficulty: Hard Total Accepted: 144.11K Total Submissions: 665.07K  Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for ‘?’ and ‘">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://siskonemilia.github.io/Leetcode/Leetcode-44-Wildcard-Matching/final.png">
+<meta property="og:image" content="https://siskonemilia.github.io/Leetcode/Leetcode-44-Wildcard-Matching/TLE.png">
+<meta property="og:image" content="https://siskonemilia.github.io/Leetcode/Leetcode-44-Wildcard-Matching/final.png">
+<meta property="og:updated_time" content="2018-10-18T09:20:25.303Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Leetcode 44. Wildcard Matching">
+<meta name="twitter:description" content="题目44. Wildcard Matching Difficulty: Hard Total Accepted: 144.11K Total Submissions: 665.07K  Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for ‘?’ and ‘">
+<meta name="twitter:image" content="https://siskonemilia.github.io/Leetcode/Leetcode-44-Wildcard-Matching/final.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Coding.Siskon" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Coding.Siskon</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Simple Blog of SiskonEmilia</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://siskonemilia.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Leetcode-44-Wildcard-Matching" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/Leetcode/Leetcode-44-Wildcard-Matching/" class="article-date">
+  <time datetime="2018-10-18T05:48:56.000Z" itemprop="datePublished">2018-10-18</time>
+  
+    <span id="busuanzi_container_page_pv">
+        | Views: <span id="busuanzi_value_page_pv">loading...</span>
+    </span>
+  
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Leetcode/">Leetcode</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Leetcode 44. Wildcard Matching
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><h3 id="44-Wildcard-Matching"><a href="#44-Wildcard-Matching" class="headerlink" title="44. Wildcard Matching"></a>44. Wildcard Matching</h3><ul>
+<li><strong>Difficulty:</strong> Hard</li>
+<li><strong>Total Accepted:</strong> 144.11K</li>
+<li><strong>Total Submissions:</strong> 665.07K</li>
+</ul>
+<p>Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for ‘?’ and ‘*’.</p>
+<pre><code>&apos;?&apos; Matches any single character.
+&apos;*&apos; Matches any sequence of characters (including the empty sequence).
+</code></pre><p>The matching should cover the entire input string (not partial).</p>
+<p><strong>Note:</strong></p>
+<ul>
+<li><code>s</code> could be empty and contains only lowercase letters a-z.</li>
+<li><code>p</code> could be empty and contains only lowercase letters a-z, and characters like <code>?</code> or <code>*</code>.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<pre><code>Input:
+s = &quot;aa&quot;
+p = &quot;a&quot;
+Output: false
+Explanation: &quot;a&quot; does not match the entire string &quot;aa&quot;.
+</code></pre><p><strong>Example 2:</strong></p>
+<pre><code>Input:
+s = &quot;aa&quot;
+p = &quot;*&quot;
+Output: true
+Explanation: &apos;*&apos; matches any sequence.
+</code></pre><p><strong>Example 3:</strong></p>
+<pre><code>Input:
+s = &quot;cb&quot;
+p = &quot;?a&quot;
+Output: false
+Explanation: &apos;?&apos; matches &apos;c&apos;, but the second letter is &apos;a&apos;, which does not match &apos;b&apos;.
+</code></pre><p><strong>Example 4:</strong></p>
+<pre><code>Input:
+s = &quot;adceb&quot;
+p = &quot;*a*b&quot;
+Output: true
+Explanation: The first &apos;*&apos; matches the empty sequence, while the second &apos;*&apos; matches the substring &quot;dce&quot;.
+</code></pre><p><strong>Example 5:</strong></p>
+<pre><code>Input:
+s = &quot;acdcb&quot;
+p = &quot;a*c?b&quot;
+Output: false
+</code></pre><h2 id="解题报告"><a href="#解题报告" class="headerlink" title="解题报告"></a>解题报告</h2><h3 id="AC-截图"><a href="#AC-截图" class="headerlink" title="AC 截图"></a>AC 截图</h3><img src="/Leetcode/Leetcode-44-Wildcard-Matching/final.png" title="FinalResult">
+<a id="more"></a>
+<h3 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h3><p>本题实际上是一个正则表达式的匹配问题，旨在检查字符串是否满足给定的正则表达式。正则表达式支持 <code>?</code> 和 <code>*</code> 通配符，前者为单个字符的通配符，后者为任意字符序列（含空串）的通配符。</p>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>对于此类状态转换，最暴力的做法自然是直接 DFS/BFS 扫描一遍看是否满足即可，但是这样的方法有很大的风险造成 TLE：</p>
+<h3 id="TLE-解"><a href="#TLE-解" class="headerlink" title="TLE 解"></a>TLE 解</h3><h4 id="AC-截图-1"><a href="#AC-截图-1" class="headerlink" title="AC 截图"></a>AC 截图</h4><img src="/Leetcode/Leetcode-44-Wildcard-Matching/TLE.png" title="FinalResult">
+<h4 id="C-代码"><a href="#C-代码" class="headerlink" title="C++ 代码"></a>C++ 代码</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isMatch</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> p)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> isMatchSubquestion(s, p);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isMatchSubquestion</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> p)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s.size() == <span class="number">0</span>) <span class="keyword">return</span> </span><br><span class="line">            [&amp;]()&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;i : p) <span class="keyword">if</span> (i != <span class="string">'*'</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;();</span><br><span class="line">        <span class="keyword">if</span> (p.size() == <span class="number">0</span>) <span class="keyword">return</span> s.size() == <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">switch</span>(p[<span class="number">0</span>]) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'?'</span> :</span><br><span class="line">                <span class="keyword">return</span> isMatchSubquestion(s.substr(<span class="number">1</span>), p.substr(<span class="number">1</span>));</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'*'</span> :</span><br><span class="line">                <span class="keyword">return</span> isMatchSubquestion(s.substr(<span class="number">1</span>), p.substr(<span class="number">1</span>)) ||</span><br><span class="line">                    isMatchSubquestion(s.substr(<span class="number">1</span>), p) ||</span><br><span class="line">                    isMatchSubquestion(s, p.substr(<span class="number">1</span>));</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">return</span> (s[<span class="number">0</span>] == p[<span class="number">0</span>]) &amp;&amp; isMatchSubquestion(s.substr(<span class="number">1</span>), p.substr(<span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="题解分析"><a href="#题解分析" class="headerlink" title="题解分析"></a>题解分析</h4><p>如你所见，暴力搜索的算法果然暴毙了（当然弱智的 <code>substr</code> 也得背锅），重复的 <code>*</code> 带来了难以忍受的时间复杂度，因而我们不得不考虑其他方法（或是想方法去除重复的 <code>*</code>，但是这不能改变暴力搜索效率低下的本质）。</p>
+<p>让我们考虑这样一个回滚算法。我们首先尽可能多地匹配两个字符串，然后一旦遇到表达式中的 <em>，则记录该位置并跳过他继续匹配。如果后续不匹配，则从上一个 </em> 位置之后的第 i 个位置继续匹配（i 为不匹配的次数），直到遍历完字符串或者表达式为止。</p>
+<p>写作代码如下：</p>
+<h3 id="题解1（最优解）"><a href="#题解1（最优解）" class="headerlink" title="题解1（最优解）"></a>题解1（最优解）</h3><h4 id="C-代码-1"><a href="#C-代码-1" class="headerlink" title="C++ 代码"></a>C++ 代码</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">auto</span> runfirst = []() &#123;</span><br><span class="line">    <span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cin</span>.tie(<span class="literal">nullptr</span>);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>.tie(<span class="literal">nullptr</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">&#125;();</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isMatch</span><span class="params">(<span class="built_in">string</span>&amp; s, <span class="built_in">string</span>&amp; p)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sIndex = <span class="number">0</span>, pIndex = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> pStarIndex = <span class="number">-1</span>, sStarIndex = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">int</span> sSize = s.size();</span><br><span class="line">        <span class="keyword">while</span> (sIndex &lt; sSize) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s[sIndex] == p[pIndex] || p[pIndex] == <span class="string">'?'</span>) &#123;</span><br><span class="line">                ++sIndex;</span><br><span class="line">                ++pIndex;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (p[pIndex] == <span class="string">'*'</span>) &#123;</span><br><span class="line">                pStarIndex = pIndex++;</span><br><span class="line">                sStarIndex = sIndex;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (pStarIndex &gt; <span class="number">-1</span>)&#123;</span><br><span class="line">                pIndex = pStarIndex + <span class="number">1</span>;</span><br><span class="line">                sIndex = ++sStarIndex;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(p[pIndex] == <span class="string">'*'</span>) ++pIndex;</span><br><span class="line">        <span class="keyword">return</span> (pIndex == p.size());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="AC-截图-2"><a href="#AC-截图-2" class="headerlink" title="AC 截图"></a>AC 截图</h4><img src="/Leetcode/Leetcode-44-Wildcard-Matching/final.png" title="FinalResult">
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-44-Wildcard-Matching/" data-id="cjnedhq70000d01rss9sxxfrk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/Leetcode/Leetcode-65-Valid-Number/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Leetcode 65. Valid Number</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: 'Leetcode 44. Wildcard Matching',
+  owner: 'siskonemilia',
+  repo: 'PageComment',
+  oauth: {
+    client_id: '154bdf960b5615033ebe',
+    client_secret: '254826ff682d5d9b21138e53a7efe4867f2c5c77',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Leetcode/">Leetcode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Others/">Others</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Service-Computing/">Service Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity3D/">Unity3D</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB-Assignments/">WEB Assignments</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cloud-Service/">Cloud Service</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github-Pages/">Github Pages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gitment/">Gitment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Golang/">Golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Remote-Floder/">Remote Floder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Service-Computing/">Service Computing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity3D/">Unity3D</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS-server/">VPS server</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 18px;">Algorithm</a> <a href="/tags/Cloud-Service/" style="font-size: 10px;">Cloud Service</a> <a href="/tags/Github-Pages/" style="font-size: 10px;">Github Pages</a> <a href="/tags/Gitment/" style="font-size: 10px;">Gitment</a> <a href="/tags/Golang/" style="font-size: 10px;">Golang</a> <a href="/tags/JavaScript/" style="font-size: 14px;">JavaScript</a> <a href="/tags/Leetcode/" style="font-size: 18px;">Leetcode</a> <a href="/tags/Remote-Floder/" style="font-size: 10px;">Remote Floder</a> <a href="/tags/Service-Computing/" style="font-size: 12px;">Service Computing</a> <a href="/tags/Unity3D/" style="font-size: 20px;">Unity3D</a> <a href="/tags/VPS-server/" style="font-size: 10px;">VPS server</a> <a href="/tags/WEB/" style="font-size: 16px;">WEB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/Leetcode/Leetcode-44-Wildcard-Matching/">Leetcode 44. Wildcard Matching</a>
+          </li>
+        
+          <li>
+            <a href="/Leetcode/Leetcode-65-Valid-Number/">Leetcode 65. Valid Number</a>
+          </li>
+        
+          <li>
+            <a href="/Service-Computing/Golang-CLI-Program-Selpg/">Service Computing 02 - Golang CLI Program - Selpg</a>
+          </li>
+        
+          <li>
+            <a href="/Leetcode/Leetcode-839-Similar-String-Groups/">Leetcode 839. Similar String Groups</a>
+          </li>
+        
+          <li>
+            <a href="/Leetcode/Leetcode-685-Redundant-Connection-II/">Leetcode 685. Redundant Connection II</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Emilia<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a><br>
+      <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_uv"> 
+          Visitors: <span id="busuanzi_value_site_uv">loading...</span>
+      </span>
+    </div>
+  </div>
+  
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
