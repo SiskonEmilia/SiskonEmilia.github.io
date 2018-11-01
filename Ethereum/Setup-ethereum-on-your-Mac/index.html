@@ -7,18 +7,18 @@
   
   <title>Setup ethereum on your Mac | Coding.Siskon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="你适合使用本教程吗？ 环境要求 安装 Geth 我们需要做什么？ 等等，在开始之前…… Step 1: 创建创世区块并初始化区块链 什么是创世区块？ 配置创世区块 初始化区块链   Step 2: 启动区块链！ 服务端，启动！ 建立 Geth JavaScript 客户端 开始挖矿吧！ 区块字段分析 进行交易吧！   Step 3: 部署智能合约并调用 我们的第一个智能合约 交易字段分析">
+  <meta name="description" content="!--由于本次作业涉及问题较多，处理方法繁杂。出于对知识的再利用的考虑，我将本次报告写作教程的形式，并发布在了[个人博客](https://siskonemilia.github.io/Ethereum/Setup-ethereum-on-your-Mac/)上。--   你适合使用本教程吗？ 环境要求 安装 Geth 我们需要做什么？ 等等，在开始之前…… Step 1: 创建创世区块并初始化区">
 <meta name="keywords" content="Blockchain,Ethereum">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Setup ethereum on your Mac">
 <meta property="og:url" content="https://siskonemilia.github.io/Ethereum/Setup-ethereum-on-your-Mac/index.html">
 <meta property="og:site_name" content="Coding.Siskon">
-<meta property="og:description" content="你适合使用本教程吗？ 环境要求 安装 Geth 我们需要做什么？ 等等，在开始之前…… Step 1: 创建创世区块并初始化区块链 什么是创世区块？ 配置创世区块 初始化区块链   Step 2: 启动区块链！ 服务端，启动！ 建立 Geth JavaScript 客户端 开始挖矿吧！ 区块字段分析 进行交易吧！   Step 3: 部署智能合约并调用 我们的第一个智能合约 交易字段分析">
+<meta property="og:description" content="!--由于本次作业涉及问题较多，处理方法繁杂。出于对知识的再利用的考虑，我将本次报告写作教程的形式，并发布在了[个人博客](https://siskonemilia.github.io/Ethereum/Setup-ethereum-on-your-Mac/)上。--   你适合使用本教程吗？ 环境要求 安装 Geth 我们需要做什么？ 等等，在开始之前…… Step 1: 创建创世区块并初始化区">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-01T17:14:14.853Z">
+<meta property="og:updated_time" content="2018-11-01T17:22:33.573Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Setup ethereum on your Mac">
-<meta name="twitter:description" content="你适合使用本教程吗？ 环境要求 安装 Geth 我们需要做什么？ 等等，在开始之前…… Step 1: 创建创世区块并初始化区块链 什么是创世区块？ 配置创世区块 初始化区块链   Step 2: 启动区块链！ 服务端，启动！ 建立 Geth JavaScript 客户端 开始挖矿吧！ 区块字段分析 进行交易吧！   Step 3: 部署智能合约并调用 我们的第一个智能合约 交易字段分析">
+<meta name="twitter:description" content="!--由于本次作业涉及问题较多，处理方法繁杂。出于对知识的再利用的考虑，我将本次报告写作教程的形式，并发布在了[个人博客](https://siskonemilia.github.io/Ethereum/Setup-ethereum-on-your-Mac/)上。--   你适合使用本教程吗？ 环境要求 安装 Geth 我们需要做什么？ 等等，在开始之前…… Step 1: 创建创世区块并初始化区">
   
     <link rel="alternate" href="/atom.xml" title="Coding.Siskon" type="application/atom+xml">
   
@@ -100,7 +100,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!--由于本次作业涉及问题较多，处理方法繁杂。出于对知识的再利用的考虑，我将本次报告写作教程的形式，并发布在了[个人博客]()上。-->
+        <a href="!--由于本次作业涉及问题较多，处理方法繁杂。出于对知识的再利用的考虑，我将本次报告写作教程的形式，并发布在了[个人博客](https://siskonemilia.github.io/Ethereum/Setup-ethereum-on-your-Mac/)上。--">!--由于本次作业涉及问题较多，处理方法繁杂。出于对知识的再利用的考虑，我将本次报告写作教程的形式，并发布在了[个人博客](https://siskonemilia.github.io/Ethereum/Setup-ethereum-on-your-Mac/)上。--</a>
 <!-- TOC -->
 <ul>
 <li><a href="#你适合使用本教程吗">你适合使用本教程吗？</a></li>
@@ -130,6 +130,7 @@
 </ul>
 <!-- /TOC -->
 <h2 id="你适合使用本教程吗？"><a href="#你适合使用本教程吗？" class="headerlink" title="你适合使用本教程吗？"></a>你适合使用本教程吗？</h2><p>本教程将带领你从零开始在 MacOS 上搭建一个以太坊环境，并且设置一个你自己的私有节点，然后完成挖矿和交易。在它上面，你可以测试你的智能合约代码，或是干任何你想做的事情~在最后，我们也会带领你在上面撰写一个你自己的智能合约，并尝试运行它。</p>
+<a id="more"></a>
 <h2 id="环境要求"><a href="#环境要求" class="headerlink" title="环境要求"></a>环境要求</h2><ul>
 <li>运行在 MacOS 上的计算机</li>
 <li>配置好的 <a href="https://brew.sh" target="_blank" rel="noopener">Homebrew</a> 环境</li>
@@ -139,7 +140,7 @@
 <p>打开你的终端，并且运行以下命令来安装 Geth</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">brew update </span><br><span class="line"><span class="comment"># update your homebrew</span></span><br><span class="line">brew tap ethereum/ethereum </span><br><span class="line"><span class="comment"># switch to the repository repository</span></span><br><span class="line">brew install ethereum</span><br><span class="line"><span class="comment"># install Geth</span></span><br></pre></td></tr></table></figure>
 <p>在 Homebrew 的工作完成后，Geth 就已经被成功安装到你的 Mac 上了。接下来就让我们正式走入以太坊的世界吧！</p>
-<h2 id="我们需要做什么？"><a href="#我们需要做什么？" class="headerlink" title="我们需要做什么？"></a>我们需要做什么？</h2><p>为了搭建一个私有的以太坊节点，我们需要经过以下几步：</p>
+<h2 id="我们需要做什么？"><a href="#我们需要做什么？" class="headerlink" title="我们需要做什么？"></a>我们需要做什么？</h2><p>从搭建一个私有的以太坊节点到运行智能合约，我们需要经过以下几步：</p>
 <ol>
 <li>创建创世区块并初始化区块链</li>
 <li>启动区块链并尝试挖矿和交易</li>
