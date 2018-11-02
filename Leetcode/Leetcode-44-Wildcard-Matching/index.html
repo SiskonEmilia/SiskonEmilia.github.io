@@ -7,21 +7,21 @@
   
   <title>Leetcode 44. Wildcard Matching | Coding.Siskon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="题目44. Wildcard Matching Difficulty: Hard Total Accepted: 144.11K Total Submissions: 665.07K  Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for ‘?’ and ‘">
+  <meta name="description" content="题目44. Wildcard Matching Difficulty: Hard Total Accepted: 144.11K Total Submissions: 665.07K">
 <meta name="keywords" content="Algorithm,Leetcode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leetcode 44. Wildcard Matching">
 <meta property="og:url" content="https://siskonemilia.github.io/Leetcode/Leetcode-44-Wildcard-Matching/index.html">
 <meta property="og:site_name" content="Coding.Siskon">
-<meta property="og:description" content="题目44. Wildcard Matching Difficulty: Hard Total Accepted: 144.11K Total Submissions: 665.07K  Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for ‘?’ and ‘">
+<meta property="og:description" content="题目44. Wildcard Matching Difficulty: Hard Total Accepted: 144.11K Total Submissions: 665.07K">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://siskonemilia.github.io/Leetcode/Leetcode-44-Wildcard-Matching/final.png">
 <meta property="og:image" content="https://siskonemilia.github.io/Leetcode/Leetcode-44-Wildcard-Matching/TLE.png">
 <meta property="og:image" content="https://siskonemilia.github.io/Leetcode/Leetcode-44-Wildcard-Matching/final.png">
-<meta property="og:updated_time" content="2018-10-18T09:20:25.303Z">
+<meta property="og:updated_time" content="2018-11-02T06:37:12.547Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode 44. Wildcard Matching">
-<meta name="twitter:description" content="题目44. Wildcard Matching Difficulty: Hard Total Accepted: 144.11K Total Submissions: 665.07K  Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for ‘?’ and ‘">
+<meta name="twitter:description" content="题目44. Wildcard Matching Difficulty: Hard Total Accepted: 144.11K Total Submissions: 665.07K">
 <meta name="twitter:image" content="https://siskonemilia.github.io/Leetcode/Leetcode-44-Wildcard-Matching/final.png">
   
     <link rel="alternate" href="/atom.xml" title="Coding.Siskon" type="application/atom+xml">
@@ -109,6 +109,7 @@
 <li><strong>Total Accepted:</strong> 144.11K</li>
 <li><strong>Total Submissions:</strong> 665.07K</li>
 </ul>
+<a id="more"></a>
 <p>Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for ‘?’ and ‘*’.</p>
 <pre><code>&apos;?&apos; Matches any single character.
 &apos;*&apos; Matches any sequence of characters (including the empty sequence).
@@ -148,7 +149,7 @@ s = &quot;acdcb&quot;
 p = &quot;a*c?b&quot;
 Output: false
 </code></pre><h2 id="解题报告"><a href="#解题报告" class="headerlink" title="解题报告"></a>解题报告</h2><h3 id="AC-截图"><a href="#AC-截图" class="headerlink" title="AC 截图"></a>AC 截图</h3><img src="/Leetcode/Leetcode-44-Wildcard-Matching/final.png" title="FinalResult">
-<a id="more"></a>
+<!--more-->
 <h3 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h3><p>本题实际上是一个正则表达式的匹配问题，旨在检查字符串是否满足给定的正则表达式。正则表达式支持 <code>?</code> 和 <code>*</code> 通配符，前者为单个字符的通配符，后者为任意字符序列（含空串）的通配符。</p>
 <h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>对于此类状态转换，最暴力的做法自然是直接 DFS/BFS 扫描一遍看是否满足即可，但是这样的方法有很大的风险造成 TLE：</p>
 <h3 id="TLE-解"><a href="#TLE-解" class="headerlink" title="TLE 解"></a>TLE 解</h3><h4 id="AC-截图-1"><a href="#AC-截图-1" class="headerlink" title="AC 截图"></a>AC 截图</h4><img src="/Leetcode/Leetcode-44-Wildcard-Matching/TLE.png" title="FinalResult">

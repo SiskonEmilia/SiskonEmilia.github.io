@@ -281,45 +281,6 @@
 <li><strong>Total Accepted:</strong> 144.11K</li>
 <li><strong>Total Submissions:</strong> 665.07K</li>
 </ul>
-<p>Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for ‘?’ and ‘*’.</p>
-<pre><code>&apos;?&apos; Matches any single character.
-&apos;*&apos; Matches any sequence of characters (including the empty sequence).
-</code></pre><p>The matching should cover the entire input string (not partial).</p>
-<p><strong>Note:</strong></p>
-<ul>
-<li><code>s</code> could be empty and contains only lowercase letters a-z.</li>
-<li><code>p</code> could be empty and contains only lowercase letters a-z, and characters like <code>?</code> or <code>*</code>.</li>
-</ul>
-<p><strong>Example 1:</strong></p>
-<pre><code>Input:
-s = &quot;aa&quot;
-p = &quot;a&quot;
-Output: false
-Explanation: &quot;a&quot; does not match the entire string &quot;aa&quot;.
-</code></pre><p><strong>Example 2:</strong></p>
-<pre><code>Input:
-s = &quot;aa&quot;
-p = &quot;*&quot;
-Output: true
-Explanation: &apos;*&apos; matches any sequence.
-</code></pre><p><strong>Example 3:</strong></p>
-<pre><code>Input:
-s = &quot;cb&quot;
-p = &quot;?a&quot;
-Output: false
-Explanation: &apos;?&apos; matches &apos;c&apos;, but the second letter is &apos;a&apos;, which does not match &apos;b&apos;.
-</code></pre><p><strong>Example 4:</strong></p>
-<pre><code>Input:
-s = &quot;adceb&quot;
-p = &quot;*a*b&quot;
-Output: true
-Explanation: The first &apos;*&apos; matches the empty sequence, while the second &apos;*&apos; matches the substring &quot;dce&quot;.
-</code></pre><p><strong>Example 5:</strong></p>
-<pre><code>Input:
-s = &quot;acdcb&quot;
-p = &quot;a*c?b&quot;
-Output: false
-</code></pre><h2 id="解题报告"><a href="#解题报告" class="headerlink" title="解题报告"></a>解题报告</h2><h3 id="AC-截图"><a href="#AC-截图" class="headerlink" title="AC 截图"></a>AC 截图</h3><img src="/Leetcode/Leetcode-44-Wildcard-Matching/final.png" title="FinalResult">
         
           <p class="article-more-link">
             <a href="/Leetcode/Leetcode-44-Wildcard-Matching/#more">Read More</a>
