@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Let&#39;s have a cup of Gin.go | Coding.Siskon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最终制品：CloudGo-IO，是一个在 CloudGo 的基础上开发的基于 Gin 框架开发的简单的 WEB 服务程序，支持静态文件服务、JavaScript 请求响应、模板输出、表单处理等功能。具体来讲，我们实现了一个拥有美观界面的支持用户注册和信息查看的网页。用户可以在其上登录他们的信息，然后通过相应的页面查看（表格太丑，做了些样式）。支持多个用户信息的存储和访问。支持用户查重、信息查重、信">
+<meta name="keywords" content="Service Computing,Golang">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Let&#39;s have a cup of Gin.go">
+<meta property="og:url" content="https://siskonemilia.github.io/Service-Computing/Let-s-have-a-cup-of-Gin-go/index.html">
+<meta property="og:site_name" content="Coding.Siskon">
+<meta property="og:description" content="最终制品：CloudGo-IO，是一个在 CloudGo 的基础上开发的基于 Gin 框架开发的简单的 WEB 服务程序，支持静态文件服务、JavaScript 请求响应、模板输出、表单处理等功能。具体来讲，我们实现了一个拥有美观界面的支持用户注册和信息查看的网页。用户可以在其上登录他们的信息，然后通过相应的页面查看（表格太丑，做了些样式）。支持多个用户信息的存储和访问。支持用户查重、信息查重、信">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://siskonemilia.github.io/Service-Computing/Let-s-have-a-cup-of-Gin-go/preview.png">
+<meta property="og:updated_time" content="2018-11-14T15:48:42.473Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Let&#39;s have a cup of Gin.go">
+<meta name="twitter:description" content="最终制品：CloudGo-IO，是一个在 CloudGo 的基础上开发的基于 Gin 框架开发的简单的 WEB 服务程序，支持静态文件服务、JavaScript 请求响应、模板输出、表单处理等功能。具体来讲，我们实现了一个拥有美观界面的支持用户注册和信息查看的网页。用户可以在其上登录他们的信息，然后通过相应的页面查看（表格太丑，做了些样式）。支持多个用户信息的存储和访问。支持用户查重、信息查重、信">
+<meta name="twitter:image" content="https://siskonemilia.github.io/Service-Computing/Let-s-have-a-cup-of-Gin-go/preview.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Coding.Siskon" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Coding.Siskon</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Simple Blog of SiskonEmilia</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://siskonemilia.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Let-s-have-a-cup-of-Gin-go" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/Service-Computing/Let-s-have-a-cup-of-Gin-go/" class="article-date">
+  <time datetime="2018-11-14T15:45:52.000Z" itemprop="datePublished">2018-11-14</time>
+  
+    <span id="busuanzi_container_page_pv">
+        | Views: <span id="busuanzi_value_page_pv">loading...</span>
+    </span>
+  
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Service-Computing/">Service Computing</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Let&#39;s have a cup of Gin.go
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最终制品：<a href="https://github.com/siskonemilia/CloudGo-IO" target="_blank" rel="noopener">CloudGo-IO</a>，是一个在 <a href="https://github.com/siskonemilia/CloudGo" target="_blank" rel="noopener">CloudGo</a> 的基础上开发的基于 Gin 框架开发的简单的 WEB 服务程序，支持静态文件服务、JavaScript 请求响应、模板输出、表单处理等功能。具体来讲，我们实现了一个拥有美观界面的支持用户注册和信息查看的网页。用户可以在其上登录他们的信息，然后通过相应的页面查看（表格太丑，做了些样式）。支持多个用户信息的存储和访问。支持用户查重、信息查重、信息格式查错。</p>
+<img src="/Service-Computing/Let-s-have-a-cup-of-Gin-go/preview.png" title="Preview">
+<p>下面我将带你走进 Gin 的神奇世界！</p>
+<a id="more"></a>
+<h2 id="使用-CloudGo-IO"><a href="#使用-CloudGo-IO" class="headerlink" title="使用 CloudGo-IO"></a>使用 CloudGo-IO</h2><p>配置好 Golang 环境的前提下，运行以下命令安装并使用 CloudGo-IO：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/siskonemilia/CloudGo-IO</span><br><span class="line">go install github.com/siskonemilia/CloudGo-IO</span><br><span class="line">CloudGo-IO [-h/--hostname hostname] [-p/--port port]</span><br></pre></td></tr></table></figure>
+<p>然后你就可以访问 <code>http://hostname:port</code> 了，比如默认的 <a href="http://localhost:8000" target="_blank" rel="noopener">http://localhost:8000</a>，来使用功能了。一开始你会看到的是一个注册界面，在注册完成后你会自动跳转到信息页面。在知道其他用户的用户名的前提下，你也可以通过 <code>http://hostname:port/detail?username=username</code> 来查看其他用户的信息。</p>
+<h2 id="Gin-框架基本用法"><a href="#Gin-框架基本用法" class="headerlink" title="Gin 框架基本用法"></a>Gin 框架基本用法</h2><p>首先引用 Gin，然后我们就可以开始我们的开发之路了：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>(</span><br><span class="line">  <span class="string">"github.com/gin-gonic/gin"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>Gin 框架非常类似于我之前在 Node.js 开发时使用过的服务端框架：Express.js。他们都是实例化一个路由器（Router），然后对这个 Router 添加各种 Route 规则（也就是把特定路径的请求导向特定的处理函数）。如下例：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">router := gin.Default()</span><br><span class="line">router.GET(<span class="string">"/getPath"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">  c.JSON(http.StatusOK, gin.H&#123;</span><br><span class="line">    <span class="string">"key"</span>: <span class="string">"value"</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line">router.Run(<span class="string">"127.0.0.1:8000"</span>)</span><br></pre></td></tr></table></figure>
+<p>该例中，我们实例化了一个 Gin 的默认路由器，并且指定对于 /getPath 路径发起的 GET 方法将会由后面的处理函数接管。这个处理函数接受一个 *gin.Context 对象（其中包含了 Request 和 Response），并且完成所有的输入和输出的处理。在这里，它没有理会客户端发来的内容，而是简单地发挥了一个状态码为 200 的 JSON 响应。在最后，我们将服务器设置在了 127.0.0.1:8000 上，运行之后，客户端就可以访问 <a href="http://127.0.0.1:8000/getPath" target="_blank" rel="noopener">http://127.0.0.1:8000/getPath</a> 来查看结果了。</p>
+<p>类似于上面的例子，Gin 还支持 POST、DELETE 等所有的 HTTP 请求，提供了多种预制的返回格式（HTML、XML等），使用起来非常方便，并且性能比语法相似的马天尼框架好大约 10 倍。</p>
+<h2 id="静态文件服务"><a href="#静态文件服务" class="headerlink" title="静态文件服务"></a>静态文件服务</h2><p>在 Gin 中，静态文件服务的搭建是简单的。我们只需要为路由器指定一个 Static Route 即可：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">router.Static(<span class="string">"/public"</span>, <span class="string">"public"</span>)</span><br><span class="line"><span class="comment">// Now all visit towards /public will be served with</span></span><br><span class="line"><span class="comment">// the target file in ./public.</span></span><br></pre></td></tr></table></figure>
+<h2 id="JavaScript-请求响应-amp-表单处理"><a href="#JavaScript-请求响应-amp-表单处理" class="headerlink" title="JavaScript 请求响应 &amp; 表单处理"></a>JavaScript 请求响应 &amp; 表单处理</h2><p>以 POST 方法的 Ajax 为例。当客户端试图通过 Ajax 的 POST 方法向服务端发起请求时，它实际上是向服务端发送了一个 POST 方法的表单数据。因而，我们实际上是处理一个表单数据，gin 也为我们提供了完备的支持：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// This type is used to bind data sent to</span></span><br><span class="line"><span class="comment">// the server side.</span></span><br><span class="line"><span class="keyword">type</span> registerJSON <span class="keyword">struct</span> &#123;</span><br><span class="line">	Username <span class="keyword">string</span> <span class="string">`form:"username" binding:"required"`</span></span><br><span class="line">	Stuid    <span class="keyword">string</span> <span class="string">`form:"stuid" binding:"required"`</span></span><br><span class="line">	Tel      <span class="keyword">string</span> <span class="string">`form:"tel" binding:"required"`</span></span><br><span class="line">	Email    <span class="keyword">string</span> <span class="string">`form:"email" binding:"required"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create an instance of that type to bind data</span></span><br><span class="line"><span class="keyword">var</span> user registerJSON</span><br><span class="line"><span class="comment">// Try to bind the data sent from client side</span></span><br><span class="line"><span class="keyword">if</span> err := c.Bind(&amp;user); err != <span class="literal">nil</span> &#123;</span><br><span class="line">  c.JSON(http.StatusBadRequest, gin.H&#123;</span><br><span class="line">    <span class="string">"code"</span>:    <span class="string">"BAD_REQUEST"</span>,</span><br><span class="line">    <span class="string">"message"</span>: <span class="string">"Something wrong with the server"</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">  fmt.Println(err.Error())</span><br><span class="line">  <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这段代码中，我们首先定义了一个用于绑定数据的类型，并且为其指定了字段。所谓的「绑定数据」指的是我们将会把 request.body 中的数据按字段填入到这个类型的实例中。在上面的示例代码中，我们为其分配了表单中的字段，从而使它可以去解析一个 POST 表单。进而进行进一步的逻辑处理。通过 Bind 方法，我们就能将请求中的数据悉数传入到给定的绑定实例上，而如果有任何问题发生，一个 err 将会被返回给你。</p>
+<h2 id="模板输出"><a href="#模板输出" class="headerlink" title="模板输出"></a>模板输出</h2><p>Gin 支持众多的模板，但是简单起见，我们这里就使用最简单的 HTML 模板来做示例。那么，我们首先说说如何创建一个 HTML 模板吧。这种模板和普通的 HTML 区别不大，我们这里需要使用到的就是它的「变量」特性。在 HTML 模板中，所有的变量被标识为 <code>{.VariableName}</code> 的格式，这些被称为变量的字符串可以在渲染阶段被服务端轻易而统一地替换为有意义的字段。最后，我们把 <code>.html</code> 的后缀改为 <code>.tmpl</code> 即可。</p>
+<p>为了加载一个 HTML 模板，我们需要使用 <code>LoadHTMLGlob</code> 或是 <code>LoadHTMLFiles</code> 方法：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">router.LoadHTMLBlob(<span class="string">"views/*"</span>)</span><br><span class="line"><span class="comment">// Load all files in folder views</span></span><br></pre></td></tr></table></figure>
+<p>之后，我们就可以在需要的地方这样子使用模板渲染一个 HTML 返回给用户了：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">c.HTML(http.StatusOK, <span class="string">"ATemplate.tmpl"</span>, gin.H&#123;</span><br><span class="line">  <span class="string">"variable1"</span>: value1,</span><br><span class="line">  <span class="string">"variable2"</span>: value2,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这样，用户收到的将会是一个变量被替换为对应值的 HTML。</p>
+<h2 id="「未实现」与-404"><a href="#「未实现」与-404" class="headerlink" title="「未实现」与 404"></a>「未实现」与 404</h2><p>对于 <code>/unknown</code> 的「未实现」报错，我们也可以简单地通过最基本的语法实现：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">router.GET(<span class="string">"/unknown"</span>, <span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">  c.JSON(http.StatusNotImplemented, gin.H&#123;</span><br><span class="line">    <span class="string">"code"</span>:    <span class="string">"NOT_IMPLEMENTED"</span>,</span><br><span class="line">    <span class="string">"message"</span>: <span class="string">"This page has not been implemented."</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>而对于 404 问题，Gin 提供了非常贴心的 NoRoute 方法，他可以捕获所有未能通过 Route 方法指定处理函数的请求，并且分配处理函数：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// PAGE_NOT_FOUND page for all paths without routing</span></span><br><span class="line">router.NoRoute(<span class="function"><span class="keyword">func</span><span class="params">(c *gin.Context)</span></span> &#123;</span><br><span class="line">  c.JSON(http.StatusNotFound, gin.H&#123;</span><br><span class="line">    <span class="string">"code"</span>:    <span class="string">"PAGE_NOT_FOUND"</span>,</span><br><span class="line">    <span class="string">"message"</span>: <span class="string">"Target page not found."</span>,</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这样用户就知道「服务器没有挂掉，只是我的网址写错了」啦。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://siskonemilia.github.io/Service-Computing/Let-s-have-a-cup-of-Gin-go/" data-id="cjohcbbgn000rl0bmd3rj4mqv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Service-Computing/">Service Computing</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/Leetcode/Leetcode-140-Word-Break/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Leetcode 140. Word Break</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: 'Let&#39;s have a cup of Gin.go',
+  owner: 'siskonemilia',
+  repo: 'PageComment',
+  oauth: {
+    client_id: '154bdf960b5615033ebe',
+    client_secret: '254826ff682d5d9b21138e53a7efe4867f2c5c77',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Ethereum/">Ethereum</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Leetcode/">Leetcode</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Others/">Others</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Service-Computing/">Service Computing</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tips/">Tips</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Unity3D/">Unity3D</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/WEB-Assignments/">WEB Assignments</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blockchain/">Blockchain</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cloud-Service/">Cloud Service</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ethereum/">Ethereum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github-Pages/">Github Pages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gitment/">Gitment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Golang/">Golang</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Remote-Floder/">Remote Floder</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Service-Computing/">Service Computing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity3D/">Unity3D</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VPS-server/">VPS server</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/">WEB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 20px;">Algorithm</a> <a href="/tags/Blockchain/" style="font-size: 10px;">Blockchain</a> <a href="/tags/Cloud-Service/" style="font-size: 10px;">Cloud Service</a> <a href="/tags/Ethereum/" style="font-size: 10px;">Ethereum</a> <a href="/tags/Github-Pages/" style="font-size: 10px;">Github Pages</a> <a href="/tags/Gitment/" style="font-size: 10px;">Gitment</a> <a href="/tags/Golang/" style="font-size: 12px;">Golang</a> <a href="/tags/JavaScript/" style="font-size: 14px;">JavaScript</a> <a href="/tags/Leetcode/" style="font-size: 20px;">Leetcode</a> <a href="/tags/Remote-Floder/" style="font-size: 10px;">Remote Floder</a> <a href="/tags/Service-Computing/" style="font-size: 14px;">Service Computing</a> <a href="/tags/Unity3D/" style="font-size: 18px;">Unity3D</a> <a href="/tags/VPS-server/" style="font-size: 10px;">VPS server</a> <a href="/tags/WEB/" style="font-size: 16px;">WEB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/Service-Computing/Let-s-have-a-cup-of-Gin-go/">Let&#39;s have a cup of Gin.go</a>
+          </li>
+        
+          <li>
+            <a href="/Leetcode/Leetcode-140-Word-Break/">Leetcode 140. Word Break</a>
+          </li>
+        
+          <li>
+            <a href="/Leetcode/Leetcode-32-Longest-Valid-Parentheses/">Leetcode 32. Longest Valid Parentheses</a>
+          </li>
+        
+          <li>
+            <a href="/Ethereum/Setup-ethereum-on-your-Mac/">Setup ethereum on your Mac</a>
+          </li>
+        
+          <li>
+            <a href="/Leetcode/Leetcode-135-Candy/">Leetcode 135. Candy</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Emilia<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a><br>
+      <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      <span id="busuanzi_container_site_uv"> 
+          Visitors: <span id="busuanzi_value_site_uv">loading...</span>
+      </span>
+    </div>
+  </div>
+  
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
