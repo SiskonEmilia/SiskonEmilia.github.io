@@ -16,7 +16,7 @@
 <meta property="og:description" content="最终制品：CloudGo-IO，是一个在 CloudGo 的基础上开发的基于 Gin 框架开发的简单的 WEB 服务程序，支持静态文件服务、JavaScript 请求响应、模板输出、表单处理等功能。具体来讲，我们实现了一个拥有美观界面的支持用户注册和信息查看的网页。用户可以在其上登录他们的信息，然后通过相应的页面查看（表格太丑，做了些样式）。支持多个用户信息的存储和访问。支持用户查重、信息查重、信">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://siskonemilia.github.io/Service-Computing/Let-s-have-a-cup-of-Gin-go/preview.png">
-<meta property="og:updated_time" content="2018-11-14T15:48:42.473Z">
+<meta property="og:updated_time" content="2018-11-15T02:06:23.557Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Let&#39;s have a cup of Gin.go">
 <meta name="twitter:description" content="最终制品：CloudGo-IO，是一个在 CloudGo 的基础上开发的基于 Gin 框架开发的简单的 WEB 服务程序，支持静态文件服务、JavaScript 请求响应、模板输出、表单处理等功能。具体来讲，我们实现了一个拥有美观界面的支持用户注册和信息查看的网页。用户可以在其上登录他们的信息，然后通过相应的页面查看（表格太丑，做了些样式）。支持多个用户信息的存储和访问。支持用户查重、信息查重、信">
@@ -109,6 +109,7 @@
 <h2 id="使用-CloudGo-IO"><a href="#使用-CloudGo-IO" class="headerlink" title="使用 CloudGo-IO"></a>使用 CloudGo-IO</h2><p>配置好 Golang 环境的前提下，运行以下命令安装并使用 CloudGo-IO：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">go get github.com/siskonemilia/CloudGo-IO</span><br><span class="line">go install github.com/siskonemilia/CloudGo-IO</span><br><span class="line">CloudGo-IO [-h/--hostname hostname] [-p/--port port]</span><br></pre></td></tr></table></figure>
 <p>然后你就可以访问 <code>http://hostname:port</code> 了，比如默认的 <a href="http://localhost:8000" target="_blank" rel="noopener">http://localhost:8000</a>，来使用功能了。一开始你会看到的是一个注册界面，在注册完成后你会自动跳转到信息页面。在知道其他用户的用户名的前提下，你也可以通过 <code>http://hostname:port/detail?username=username</code> 来查看其他用户的信息。</p>
+<h2 id="什么是-Gin？"><a href="#什么是-Gin？" class="headerlink" title="什么是 Gin？"></a>什么是 Gin？</h2><p><a href="https://github.com/gin-gonic/gin" target="_blank" rel="noopener">Gin</a> 是一个开源的，高性能的 Golang WEB 框架，是目前 Golang 开发中最受欢迎的 WEB 框架之一。<a href="https://github.com/mingrammer/go-web-framework-stars" target="_blank" rel="noopener">Go WEB Framework Stars</a> 是 Github 上整理流行 Go WEB 框架的仓库。在这个仓库给出的列表中，Gin 雄踞榜首。作为一个易于使用的框架，Gin 还拥有其他框架无法比拟的超强性能，这一切都造就了它作为 Go WEB 框架王者的身份。顺带一提，Gin 的名字来源于鸡尾酒的基酒「Gin 金酒」，因为他的 API 是类似于另一个有名的 Go WEB 框架：「Martini 马天尼」（一种著名的，以金酒为唯一基酒的古典鸡尾酒饮品）。</p>
 <h2 id="Gin-框架基本用法"><a href="#Gin-框架基本用法" class="headerlink" title="Gin 框架基本用法"></a>Gin 框架基本用法</h2><p>首先引用 Gin，然后我们就可以开始我们的开发之路了：</p>
 <figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>(</span><br><span class="line">  <span class="string">"github.com/gin-gonic/gin"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <p>Gin 框架非常类似于我之前在 Node.js 开发时使用过的服务端框架：Express.js。他们都是实例化一个路由器（Router），然后对这个 Router 添加各种 Route 规则（也就是把特定路径的请求导向特定的处理函数）。如下例：</p>
