@@ -66,6 +66,95 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Golang-CLI-Program-Selpg" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/Service-Computing/Golang-CLI-Program-Selpg/" class="article-date">
+  <time datetime="2018-10-07T15:23:48.000Z" itemprop="datePublished">2018-10-07</time>
+  
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Service-Computing/">Service Computing</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/Service-Computing/Golang-CLI-Program-Selpg/">Service Computing 02 - Golang CLI Program - Selpg</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#设计说明">设计说明</a><ul>
+<li><a href="#包引用">包引用</a></li>
+<li><a href="#初始化">初始化</a></li>
+<li><a href="#标识参数预处理">标识、参数预处理</a></li>
+<li><a href="#接受输入数据">接受输入数据</a></li>
+<li><a href="#数据处理">数据处理</a></li>
+<li><a href="#输出结果">输出结果</a></li>
+</ul>
+</li>
+<li><a href="#使用方法">使用方法</a><ul>
+<li><a href="#安装程序">安装程序</a></li>
+<li><a href="#使用范例和参数说明">使用范例和参数说明</a><ul>
+<li><a href="#必需参数-snumber-enumber">必需参数：-sNumber，-eNumber</a></li>
+<li><a href="#互斥的可选参数-lnumber-f">互斥的可选参数：-lNumber，-f</a></li>
+<li><a href="#可选参数-ddestination">可选参数：-dDestination</a></li>
+<li><a href="#可选参数file_name">可选参数：file_name</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#测试">测试</a><ul>
+<li><a href="#生成测试文件">生成测试文件</a></li>
+<li><a href="#测试与结果">测试与结果</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h2 id="设计说明"><a href="#设计说明" class="headerlink" title="设计说明"></a>设计说明</h2><p>本程序参照 <a href="https://www.ibm.com/developerworks/cn/linux/shell/clutil/index.html" target="_blank" rel="noopener">开发 Linux 命令行实用程序</a> 的设计，以 go 语言替代 C 语言构建。下面我们分版块来讲解实现。<a href="https://github.com/SiskonEmilia/Selpg/blob/master/selpg.go" target="_blank" rel="noopener">完整源代码</a></p>
+<h3 id="包引用"><a href="#包引用" class="headerlink" title="包引用"></a>包引用</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"bufio"</span></span><br><span class="line">	<span class="string">"io"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">	<span class="string">"os"</span></span><br><span class="line">	<span class="string">"os/exec"</span></span><br><span class="line">	<span class="string">"strings"</span></span><br><span class="line"></span><br><span class="line">	flag <span class="string">"github.com/spf13/pflag"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>在这一部分，我们声明了程序所要用到的所有包：</p>
+<ul>
+<li><code>bufio</code>：用于从标准输入流获取数据和将数据写入到标准输出流</li>
+<li><code>io</code>：用于引用 <code>io.EOF</code> 来判断错误是否是文件尾导致</li>
+<li><code>log</code>：用于将错误信息写入到标准错误流</li>
+<li><code>os</code>：用于打开文件和异常退出时发送状态码</li>
+<li><code>os/exec</code>：用于开启 <code>lp</code> 子进程</li>
+<li><code>strings</code>：用于划分、拼接字符串</li>
+<li><code>github.com/spf13/pflag</code>：用于获取程序运行时用户输入的参数和标识</li>
+</ul>
+        
+          <p class="article-more-link">
+            <a href="/Service-Computing/Golang-CLI-Program-Selpg/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://siskonemilia.github.io/Service-Computing/Golang-CLI-Program-Selpg/" data-id="cjpdzynso0043u9xmpnqrm3rz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Service-Computing/">Service Computing</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Leetcode-839-Similar-String-Groups" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/Leetcode/Leetcode-839-Similar-String-Groups/" class="article-date">
@@ -106,7 +195,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-839-Similar-String-Groups/" data-id="cjpdp72wa0046i2xmlzl40pl5" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-839-Similar-String-Groups/" data-id="cjpdzynsv004iu9xm7pcpukko" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -159,7 +248,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-685-Redundant-Connection-II/" data-id="cjpdp72we0049i2xmx14pmxrq" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-685-Redundant-Connection-II/" data-id="cjpdzynsu004fu9xm2gnnomcp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -208,7 +297,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Tips/Make-Full-Use-of-Your-VPS-Server/" data-id="cjpdp72to001fi2xmg1a3jthf" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Tips/Make-Full-Use-of-Your-VPS-Server/" data-id="cjpdzynrg000xu9xmqlqlq3uf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VPS-server/">VPS server</a></li></ul>
@@ -261,7 +350,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-124-Binary-Tree-Maximum-Path-Sum/" data-id="cjpdp72t00006i2xm9qqw992v" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-124-Binary-Tree-Maximum-Path-Sum/" data-id="cjpdzynr7000eu9xm1uhb88et" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -314,7 +403,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-4-Median-of-Two-Sorted-Arrays/" data-id="cjpdp72w20040i2xmfgv6bocq" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-4-Median-of-Two-Sorted-Arrays/" data-id="cjpdzynsr0049u9xmbgd6istr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -364,7 +453,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Service-Computing/Service-Computing-01-Private-Cloud-Service/" data-id="cjpdp72wk004ci2xmtauswf44" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Service-Computing/Service-Computing-01-Private-Cloud-Service/" data-id="cjpdzynsw004lu9xmxkd55z3g" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cloud-Service/">Cloud Service</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Service-Computing/">Service Computing</a></li></ul>
@@ -417,7 +506,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-41-First-Missing-Positive/" data-id="cjpdp72vp003ui2xm56imnogs" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-41-First-Missing-Positive/" data-id="cjpdzynst004cu9xmcbdyznb4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -467,7 +556,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-8/" data-id="cjpdp72w50043i2xmav7nh61t" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-8/" data-id="cjpdzynsn0040u9xm0b326swz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
@@ -518,59 +607,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-7/" data-id="cjpdp72vi003ri2xmk4jumwnw" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Get-Started-with-Unity3D-6" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/Unity3D/Get-Started-with-Unity3D-6/" class="article-date">
-  <time datetime="2018-06-05T16:33:14.000Z" itemprop="datePublished">2018-06-06</time>
-  
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Unity3D/">Unity3D</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/Unity3D/Get-Started-with-Unity3D-6/">Get Started with Unity3D - 6</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="天色天歌天音-Unity-换装游戏"><a href="#天色天歌天音-Unity-换装游戏" class="headerlink" title="天色天歌天音 - Unity 换装游戏"></a>天色天歌天音 - Unity 换装游戏</h2><p><a href="https://www.bilibili.com/video/av24432762/" target="_blank" rel="noopener">B站视频</a></p>
-<p>注：视频有声音，请开大音量食用。</p>
-<p>游戏预览：</p>
-<img src="/Unity3D/Get-Started-with-Unity3D-6/GIF.gif" title="preview">
-        
-          <p class="article-more-link">
-            <a href="/Unity3D/Get-Started-with-Unity3D-6/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-6/" data-id="cjpdp72sx0005i2xmvkrvk64g" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-7/" data-id="cjpdzynsl003xu9xmwv2fit7y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity3D/">Unity3D</a></li></ul>
@@ -640,6 +677,10 @@
       <ul>
         
           <li>
+            <a href="/Leetcode/Leetcode-945-Minimum-Increment-to-Make-Array-Unique/">Leetcode 945. Minimum Increment to Make Array Unique</a>
+          </li>
+        
+          <li>
             <a href="/Leetcode/Leetcode-948-Bag-of-Tokens/">Leetcode 948. Bag of Tokens</a>
           </li>
         
@@ -653,10 +694,6 @@
         
           <li>
             <a href="/Leetcode/Leetcode-140-Word-Break/">Leetcode 140. Word Break</a>
-          </li>
-        
-          <li>
-            <a href="/Leetcode/Leetcode-32-Longest-Valid-Parentheses/">Leetcode 32. Longest Valid Parentheses</a>
           </li>
         
       </ul>
