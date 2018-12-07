@@ -98,28 +98,15 @@
 <li><strong>Total Accepted:</strong> 5,139</li>
 <li><strong>Total Submissions:</strong> 12,879</li>
 </ul>
-<p>Given an array of integers A, a move consists of choosing any A[i], and incrementing it by 1.</p>
-<p>Return the least number of moves to make every value in A unique.</p>
-<p><strong>Example 1:</strong></p>
-<pre><code>Input: [1,2,2]
-Output: 1
-Explanation:  After 1 move, the array could be [1, 2, 3].
-</code></pre><p><strong>Example 2:</strong></p>
-<pre><code>Input: [3,2,1,2,1,7]
-Output: 6
-Explanation:  After 6 moves, the array could be [3, 4, 1, 2, 5, 7].
-It can be shown with 5 or less moves that it is impossible for the array to have all unique values.
-</code></pre><p><strong>Note:</strong></p>
-<p>0 &lt;= <code>A.length</code> &lt;= 40000<br>0 &lt;= <code>A[i]</code> &lt; 40000</p>
-<h2 id="解题报告"><a href="#解题报告" class="headerlink" title="解题报告"></a>解题报告</h2><h3 id="AC-截图"><a href="#AC-截图" class="headerlink" title="AC 截图"></a>AC 截图</h3><img src="/Leetcode/Leetcode-945-Minimum-Increment-to-Make-Array-Unique/solve.png" title="Preview">
-<h3 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h3><p>我们有一个可能有重复数字的数组，并且我们可以通过令某些元素 += 1 数次来消除重复。那么这样的操作最少需要多少次呢？</p>
-<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>由于题目给定了数组的长度和数组的最大长度，我们可以创建一个固定的，满足最大大小的数组，来统计每个数字出现的次数，然后当一个数字出现多次时，我们保留其中的一个，令剩余元素 += 1，如此递归，便能得到最终的解。</p>
-<h3 id="题解（最优解）"><a href="#题解（最优解）" class="headerlink" title="题解（最优解）"></a>题解（最优解）</h3><h4 id="结果截图"><a href="#结果截图" class="headerlink" title="结果截图"></a>结果截图</h4><img src="/Leetcode/Leetcode-945-Minimum-Increment-to-Make-Array-Unique/solve.png" title="Preview">
-<h4 id="C-代码"><a href="#C-代码" class="headerlink" title="C++ 代码"></a>C++ 代码</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">auto</span> runfirst = []() &#123;</span><br><span class="line">    <span class="built_in">std</span>::ios::sync_with_stdio(<span class="literal">false</span>);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cin</span>.tie(<span class="literal">nullptr</span>);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>.tie(<span class="literal">nullptr</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">&#125;();</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">short</span> A[<span class="number">40000</span>];</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minIncrementForUnique</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; As)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">memset</span>(A, <span class="number">0</span>, <span class="number">40000</span> * <span class="keyword">sizeof</span>(<span class="keyword">short</span>));</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>, maxEle = <span class="number">0</span>, minEle = <span class="number">40000</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;ele : As) &#123;</span><br><span class="line">            ++A[ele];</span><br><span class="line">            maxEle = max(maxEle, ele);</span><br><span class="line">            minEle = min(minEle, ele);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = minEle; i &lt; maxEle; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (A[i] &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                A[i + <span class="number">1</span>] += A[i] - <span class="number">1</span>;</span><br><span class="line">                result += A[i] - <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (A[maxEle] &gt; <span class="number">1</span>) result += (A[maxEle]) * (A[maxEle] - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/Leetcode/Leetcode-945-Minimum-Increment-to-Make-Array-Unique/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-945-Minimum-Increment-to-Make-Array-Unique/" data-id="cjpdzynrd000ru9xmzzhctsxc" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-945-Minimum-Increment-to-Make-Array-Unique/" data-id="cjpdzz25p000rv2xmpv0ab8ky" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -172,7 +159,7 @@ It can be shown with 5 or less moves that it is impossible for the array to have
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-948-Bag-of-Tokens/" data-id="cjpdzynre000tu9xmangujdqn" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-948-Bag-of-Tokens/" data-id="cjpdzz25q000tv2xmi1kg33hc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -236,7 +223,7 @@ It can be shown with 5 or less moves that it is impossible for the array to have
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-188-Best-Time-to-Buy-and-Sell-Stock/" data-id="cjpdzynsq0046u9xmm36tk9te" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-188-Best-Time-to-Buy-and-Sell-Stock/" data-id="cjpdzz27a0046v2xm7d73658b" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -287,7 +274,7 @@ It can be shown with 5 or less moves that it is impossible for the array to have
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Service-Computing/Let-s-have-a-cup-of-Gin-go/" data-id="cjpdzynrg000zu9xmfw186i0g" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Service-Computing/Let-s-have-a-cup-of-Gin-go/" data-id="cjpdzz25r000xv2xm7dktw730" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Golang/">Golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Service-Computing/">Service Computing</a></li></ul>
@@ -357,7 +344,7 @@ Output: false
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-140-Word-Break/" data-id="cjpdzynr5000au9xmveu9sbwo" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-140-Word-Break/" data-id="cjpdzz25f000ev2xmc343b5ve" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -410,7 +397,7 @@ Output: false
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-32-Longest-Valid-Parentheses/" data-id="cjpdzynra000gu9xm8xxhyflo" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-32-Longest-Valid-Parentheses/" data-id="cjpdzz25k000gv2xmcz6sbnkp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -494,7 +481,7 @@ Output: false
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Ethereum/Setup-ethereum-on-your-Mac/" data-id="cjpdzynwm0053u9xmknnoyepl" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Ethereum/Setup-ethereum-on-your-Mac/" data-id="cjpdzz2as0053v2xmismy5fky" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Blockchain/">Blockchain</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ethereum/">Ethereum</a></li></ul>
@@ -547,7 +534,7 @@ Output: false
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-135-Candy/" data-id="cjpdzynr30009u9xm053kzbfl" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-135-Candy/" data-id="cjpdzz25b000av2xm2n0psfdz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -600,7 +587,7 @@ Output: false
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-44-Wildcard-Matching/" data-id="cjpdzynrb000lu9xmaxyw9a27" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-44-Wildcard-Matching/" data-id="cjpdzz25m000lv2xmrwesao27" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
@@ -653,7 +640,7 @@ Output: false
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-65-Valid-Number/" data-id="cjpdzynrc000nu9xmkybeieqr" class="article-share-link">Share</a>
+      <a data-url="https://siskonemilia.github.io/Leetcode/Leetcode-65-Valid-Number/" data-id="cjpdzz25n000nv2xmsq0lt4qk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Leetcode/">Leetcode</a></li></ul>
