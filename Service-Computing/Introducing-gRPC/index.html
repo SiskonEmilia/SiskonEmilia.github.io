@@ -5,15 +5,20 @@
   
 
   
-  <title>Archives: 2017 | Coding.Siskon</title>
+  <title>Introducing gRPC | Coding.Siskon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Coding.Siskon">
-<meta property="og:url" content="https://siskonemilia.github.io/archives/2017/index.html">
+  <meta name="description" content="何为 RPCRPC（Remote Procedure Call），远程过程调用，它是一种通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的协议。RPC 协议假定某些传输协议的存在，如 TCP 或 UDP，为通信程序之间携带信息数据。在 OSI 网络通信模型中，RPC 跨越了传输层和应用层。RPC 使得开发包括网络分布式多程序在内的应用程序更加容易。">
+<meta name="keywords" content="Service Computing,Cloud Service">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Introducing gRPC">
+<meta property="og:url" content="https://siskonemilia.github.io/Service-Computing/Introducing-gRPC/index.html">
 <meta property="og:site_name" content="Coding.Siskon">
+<meta property="og:description" content="何为 RPCRPC（Remote Procedure Call），远程过程调用，它是一种通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的协议。RPC 协议假定某些传输协议的存在，如 TCP 或 UDP，为通信程序之间携带信息数据。在 OSI 网络通信模型中，RPC 跨越了传输层和应用层。RPC 使得开发包括网络分布式多程序在内的应用程序更加容易。">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-01-20T03:02:17.644Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Coding.Siskon">
+<meta name="twitter:title" content="Introducing gRPC">
+<meta name="twitter:description" content="何为 RPCRPC（Remote Procedure Call），远程过程调用，它是一种通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的协议。RPC 协议假定某些传输协议的存在，如 TCP 或 UDP，为通信程序之间携带信息数据。在 OSI 网络通信模型中，RPC 跨越了传输层和应用层。RPC 使得开发包括网络分布式多程序在内的应用程序更加容易。">
   
     <link rel="alternate" href="/atom.xml" title="Coding.Siskon" type="application/atom+xml">
   
@@ -64,161 +69,96 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
+        <section id="main"><article id="post-Introducing-gRPC" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/Service-Computing/Introducing-gRPC/" class="article-date">
+  <time datetime="2019-01-20T02:00:25.000Z" itemprop="datePublished">2019-01-20</time>
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/Hexo/Comment-on-Github-Page-with-Gitment/" class="archive-article-date">
-  <time datetime="2017-12-31T04:19:31.000Z" itemprop="datePublished">Dec 31</time>
+    <span id="busuanzi_container_page_pv">
+        | Views: <span id="busuanzi_value_page_pv">loading...</span>
+    </span>
   
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Service-Computing/">Service Computing</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Hexo/Comment-on-Github-Page-with-Gitment/">Comment on Github Page with Gitment</a>
+    <h1 class="article-title" itemprop="name">
+      Introducing gRPC
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/Others/Remote-Floder-for-Your-Parents/" class="archive-article-date">
-  <time datetime="2017-12-30T03:38:04.000Z" itemprop="datePublished">Dec 30</time>
-  
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Others/Remote-Floder-for-Your-Parents/">Remote Floder for Your Parents</a>
-    </h1>
-  
+        <h2 id="何为-RPC"><a href="#何为-RPC" class="headerlink" title="何为 RPC"></a>何为 RPC</h2><p>RPC（Remote Procedure Call），远程过程调用，它是一种通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的协议。RPC 协议假定某些传输协议的存在，如 TCP 或 UDP，为通信程序之间携带信息数据。在 OSI 网络通信模型中，RPC 跨越了传输层和应用层。RPC 使得开发包括网络分布式多程序在内的应用程序更加容易。</p>
+<a id="more"></a>
+<h3 id="gRPC"><a href="#gRPC" class="headerlink" title="gRPC"></a>gRPC</h3><p>gRPC 是由 Google 牵头开发，语言中立、平台中立、开源的远程过程调用系统。其遵循一般的 RPC 系统的特点设计：即定义一个服务，指定其能够被远程调用的方法（包含参数和返回类型）。在服务端实现这个接口，并运行一个 gRPC 服务器来处理客户端调用。在客户端拥有一个存根能够像服务端一样的方法。</p>
+<h2 id="安装与测试运行"><a href="#安装与测试运行" class="headerlink" title="安装与测试运行"></a>安装与测试运行</h2><h3 id="开始之前…"><a href="#开始之前…" class="headerlink" title="开始之前…"></a>开始之前…</h3><p>在安装和使用 gRPC 之前，我们首先需要安装 Protocol Buffers，它是Google 开发的一种数据描述语言，类似于XML能够将结构化数据序列化，可用于数据存储、通信协议等方面。gRPC 依靠 Protocol Buffers 来定义服务。</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>通过如下命令即可安装 Protocol Buffers 和 gRPC：（由于引用了 Google 的 Golang 库，您可能需要代理运行）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go get -u github.com/golang/protobuf/protoc-gen-go</span><br><span class="line">go get -u google.golang.org/grpc</span><br></pre></td></tr></table></figure>
+<p>代理运行的方式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http_proxy=http://address:port go get ...</span><br></pre></td></tr></table></figure>
+<h2 id="运行样例"><a href="#运行样例" class="headerlink" title="运行样例"></a>运行样例</h2><p>在我们刚才安装时获取的文件中，gRPC 为我们附带了其的运行样例，这个样例存储于 <code>$GOPATH/src/google.golang.org/grpc/examples</code>，下面我们以其中的 <code>helloworld</code> 为例进行讲解：</p>
+<h3 id="编译和运行"><a href="#编译和运行" class="headerlink" title="编译和运行"></a>编译和运行</h3><p>首先，我们进入样例工作目录。注意，请确保您已经正确配置了 <code>GOPATH</code> 环境变量。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="variable">$GOPATH</span>/src/google.golang.org/grpc/examples/helloworld</span><br></pre></td></tr></table></figure>
+<p>在样例中，我们的文件都已经被正确编译为了 <code>.pb.go</code> 文件，实际上，这个文件是由服务定义文件 <code>.proto</code> 编译而来的。如果您想要自己编译，请使用我们通过 <code>protoc-gen-go</code> 引入的 protoc 编译器（请确保您的环境变量包含 <code>\$GOPATH/bin</code>）。</p>
+<p>接下来，我们编译并运行生成的服务端和客户端 go 文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Run on terminal 1: Server side</span></span><br><span class="line">go run greeter_server/main.go</span><br><span class="line"><span class="comment"># Run on terminal 2: Client side</span></span><br><span class="line">go run greeter_client/main.go</span><br></pre></td></tr></table></figure>
+<p>您会看到在客户端的终端界面中出现了 <code>Greeting: Hello world</code>，这表示我们的安装配置已经成功。<br>&lt;!– </p>
+<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><p>gRPC 是如何实现通过 go 语言满足我们在 proto 中定义的服务呢，我们可以通过分析生成的 go 语言代码来初步了解：</p>
+<p>虽然我们通过 –&gt;</p>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/WEB-Assignments/WEB-Assignment-4/" class="archive-article-date">
-  <time datetime="2017-12-29T01:37:36.000Z" itemprop="datePublished">Dec 29</time>
-  
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/WEB-Assignments/WEB-Assignment-4/">WEB Assignment 4</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/WEB-Assignments/WEB-Assignment-3/" class="archive-article-date">
-  <time datetime="2017-12-27T04:20:59.000Z" itemprop="datePublished">Dec 27</time>
-  
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://siskonemilia.github.io/Service-Computing/Introducing-gRPC/" data-id="cjr4bghlq0006vlxmsb4h47xb" class="article-share-link">Share</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/WEB-Assignments/WEB-Assignment-3/">WEB Assignment 3</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/WEB-Assignments/WEB-Assignment-2/" class="archive-article-date">
-  <time datetime="2017-12-26T02:11:56.000Z" itemprop="datePublished">Dec 26</time>
-  
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/WEB-Assignments/WEB-Assignment-2/">WEB Assignment 2</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cloud-Service/">Cloud Service</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Service-Computing/">Service Computing</a></li></ul>
 
-    </header>
+    </footer>
   </div>
-</article>
   
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/WEB-Assignments/WEB-Assignment-1/" class="archive-article-date">
-  <time datetime="2017-12-25T12:16:55.000Z" itemprop="datePublished">Dec 25</time>
+<nav id="article-nav">
   
-</a>
-      
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/WEB-Assignments/WEB-Assignment-1/">WEB Assignment 1</a>
-    </h1>
+    <a href="/Algorithm/Capacitated-Facility-Location-Problem/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Capacitated Facility Location Problem</div>
+    </a>
   
+</nav>
 
-    </header>
-  </div>
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/Hexo/First-Article/" class="archive-article-date">
-  <time datetime="2017-12-25T12:16:11.000Z" itemprop="datePublished">Dec 25</time>
-  
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/Hexo/First-Article/">First Article</a>
-    </h1>
-  
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: 'Introducing gRPC',
+  owner: 'siskonemilia',
+  repo: 'PageComment',
+  oauth: {
+    client_id: '154bdf960b5615033ebe',
+    client_secret: '254826ff682d5d9b21138e53a7efe4867f2c5c77',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
 
 </section>
         
