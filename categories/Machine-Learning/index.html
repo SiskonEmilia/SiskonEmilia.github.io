@@ -172,7 +172,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    11 minutes read (About 1685 words)
+                    11 minutes read (About 1693 words)
                 </span>
                 
                 
@@ -200,9 +200,9 @@
 <h2 id="熵：更进一步"><a href="#熵：更进一步" class="headerlink" title="熵：更进一步"></a>熵：更进一步</h2><h3 id="为什么是「熵」？"><a href="#为什么是「熵」？" class="headerlink" title="为什么是「熵」？"></a>为什么是「熵」？</h3><p>熵并不是 Andrew 教授生造的概念，而是一个热力学中表征物质状态的参量。在物理上，熵是体系混乱程度的度量。直观地来讲，一个系统越混乱，其包含的信息就越多。例如一块100%纯净的有序晶体，要描述它的构造，我们只需要晶胞的构造式和数量即可；而要描述一块路边的碎石，我们则需要描述其内复合的各种物质，以及他们之间的结合关系——这是由混乱带来的信息量增长，也就是信息熵的本质。</p>
 <p>而之后我们将要讲到的决策树将这种混乱称为“杂质”，它期望的是将通过将充满杂质的碎石通过某种规则“纯化”为数个有序晶体，并将这个学习到的规则应用到更广泛的样本中来达到回归或分类的效果。</p>
 <h3 id="条件熵（Conditional-Entropy）"><a href="#条件熵（Conditional-Entropy）" class="headerlink" title="条件熵（Conditional Entropy）"></a>条件熵（Conditional Entropy）</h3><p><strong>条件熵（Conditional Entropy）</strong>用于量化在随机变量 $X$ 已知的前提下，描述随机变量 $Y$ 所需的信息量，记作 $Y(Y|X)$。也就是，在 $X$ 的基础上，我们需要多少额外的信息才能完整描述 $Y$。这个值越大，意味着两个随机变量间的关系越小。根据熵的定义，我们能够得到条件熵的定义式：</p>
-<p>$$H(Y|X)=\sum_jH(Y|x=v_j)p(x=v_j)\<br>H(Y|X)=\int_xH(Y|x)p(x)dx$$</p>
+<p>$$<br>\begin{aligned}<br>H(Y|X)=\sum_jH(Y|x=v_j)p(x=v_j)\<br>H(Y|X)=\int_xH(Y|x)p(x)dx<br>\end{aligned}<br>$$</p>
 <p>同时，由于对于熵的定义是基于概率的，通过条件概率的性质，我们也能得到关于条件熵的公式：</p>
-<p>$$P(X,Y)=P(Y|X)*P(X)\<br>H(X,Y)=H(Y|X)+H(X)$$</p>
+<p>$$<br>\begin{aligned}P(X,Y)=P(Y|X)*P(X)\<br>H(X,Y)=H(Y|X)+H(X)<br>\end{aligned}$$</p>
 <h3 id="信息增益（Information-Gain）"><a href="#信息增益（Information-Gain）" class="headerlink" title="信息增益（Information Gain）"></a>信息增益（Information Gain）</h3><p>继续跟随我们刚才的逻辑，我们已经知道，$H(Y|X)$ 是为了表达 $Y$，我们需要在 $X$ 上额外增加的信息量，或者说是在引入 $X$ 后 $Y$ 中仍不确定的信息量。考虑 $H(Y)$ 为随机变量 Y 所携带的信息量，令它减去 $H(Y|X)$，得到的 $H(Y)-H(Y|X)$ 就是“通过引入 $X$ 所确定的信息量”。在信息论中，我们称之为<strong>信息增益（Kullback–Leibler divergence，或 Information Gain）</strong>：</p>
 <p>$$IG = H(Y) - H(Y|X)$$</p>
 <p>一个直观的认识是，当 $X$ 和 $Y$ 具有某种联系的时候，通过确定 $X$ 的信息，我们就能一定程度上了解 $Y$ 的信息，从而降低了 $Y$ 的信息熵，减少的这部分就是引入 $X$ 所带来的信息增益。决策树算法的主要理论依据正是信息增益。</p>
