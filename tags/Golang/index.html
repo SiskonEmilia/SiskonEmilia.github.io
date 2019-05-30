@@ -180,6 +180,7 @@
         <div class="content">
             <p>最终制品：<a href="https://github.com/siskonemilia/CloudGo-IO" target="_blank" rel="noopener">CloudGo-IO</a>，是一个在 <a href="https://github.com/siskonemilia/CloudGo" target="_blank" rel="noopener">CloudGo</a> 的基础上开发的基于 Gin 框架开发的简单的 WEB 服务程序，支持静态文件服务、JavaScript 请求响应、模板输出、表单处理等功能。具体来讲，我们实现了一个拥有美观界面的支持用户注册和信息查看的网页。用户可以在其上登录他们的信息，然后通过相应的页面查看（表格太丑，做了些样式）。支持多个用户信息的存储和访问。支持用户查重、信息查重、信息格式查错。</p>
 <img src="/Service-Computing/Let-s-have-a-cup-of-Gin-go/preview.png" title="Preview">
+
 <p>下面我将带你走进 Gin 的神奇世界！</p>
         </div>
         
@@ -233,6 +234,7 @@
         </h1>
         <div class="content">
             <!-- TOC -->
+
 <ul>
 <li><a href="#设计说明">设计说明</a><ul>
 <li><a href="#包引用">包引用</a></li>
@@ -261,8 +263,10 @@
 </li>
 </ul>
 <!-- /TOC -->
+
 <h2 id="设计说明"><a href="#设计说明" class="headerlink" title="设计说明"></a>设计说明</h2><p>本程序参照 <a href="https://www.ibm.com/developerworks/cn/linux/shell/clutil/index.html" target="_blank" rel="noopener">开发 Linux 命令行实用程序</a> 的设计，以 go 语言替代 C 语言构建。下面我们分版块来讲解实现。<a href="https://github.com/SiskonEmilia/Selpg/blob/master/selpg.go" target="_blank" rel="noopener">完整源代码</a></p>
-<h3 id="包引用"><a href="#包引用" class="headerlink" title="包引用"></a>包引用</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"bufio"</span></span><br><span class="line">	<span class="string">"io"</span></span><br><span class="line">	<span class="string">"log"</span></span><br><span class="line">	<span class="string">"os"</span></span><br><span class="line">	<span class="string">"os/exec"</span></span><br><span class="line">	<span class="string">"strings"</span></span><br><span class="line"></span><br><span class="line">	flag <span class="string">"github.com/spf13/pflag"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="包引用"><a href="#包引用" class="headerlink" title="包引用"></a>包引用</h3><figure class="highlight go hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> (</span><br><span class="line">	<span class="hljs-string">"bufio"</span></span><br><span class="line">	<span class="hljs-string">"io"</span></span><br><span class="line">	<span class="hljs-string">"log"</span></span><br><span class="line">	<span class="hljs-string">"os"</span></span><br><span class="line">	<span class="hljs-string">"os/exec"</span></span><br><span class="line">	<span class="hljs-string">"strings"</span></span><br><span class="line"></span><br><span class="line">	flag <span class="hljs-string">"github.com/spf13/pflag"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
 <p>在这一部分，我们声明了程序所要用到的所有包：</p>
 <ul>
 <li><code>bufio</code>：用于从标准输入流获取数据和将数据写入到标准输出流</li>

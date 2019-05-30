@@ -179,7 +179,9 @@
         <div class="content">
             <p>由于作者水平有限，<strong>内容可能存在错漏，若有发现，还望您在评论区指出。</strong> 本博客内容仅适用于 VMWare Workstation，Virtual Box 上的操作可能有所不同。</p>
 <h1 id="使用-VMWare-Workstation-让-PC-提供云桌面服务"><a href="#使用-VMWare-Workstation-让-PC-提供云桌面服务" class="headerlink" title="使用 VMWare Workstation 让 PC 提供云桌面服务"></a>使用 VMWare Workstation 让 PC 提供云桌面服务</h1><a id="more"></a>
+
 <!-- TOC -->
+
 <ul>
 <li><a href="#1-当我们搭建云桌面服务的时候我们到底在做什么">1. 当我们搭建云桌面服务的时候，我们到底在做什么？</a></li>
 <li><a href="#2-从安装虚拟机开始">2. 从安装虚拟机开始</a><ul>
@@ -196,37 +198,39 @@
 </li>
 </ul>
 <!-- /TOC -->
+
 <h1 id="1-当我们搭建云桌面服务的时候，我们到底在做什么？"><a href="#1-当我们搭建云桌面服务的时候，我们到底在做什么？" class="headerlink" title="1. 当我们搭建云桌面服务的时候，我们到底在做什么？"></a>1. 当我们搭建云桌面服务的时候，我们到底在做什么？</h1><p>桌面云这个东西相信大家都不陌生，比较诸如阿里、腾讯，亦或是 Vultr，都在提供类似的服务（VPS）。对于使用者而言，我们就是拿到了一个 IP 地址，一个账号，一个密码，然后就可以通过各种方式远程控制一台电脑了。我们这次的作业就是要实现一个类似的东西。</p>
 <p>那么，我们是不是只需要安装一个 Linux 虚拟机，然后令其访问公网就好了呢？可是为什么这次的操作指南如此冗长呢？</p>
 <p>答案当然是“不是”了。作为一个云服务的提供商，我们要做的不仅仅是让虚拟机能被外部网络访问。为了方便管理所有的 VPS 实例（也就是每个虚拟机），我们需要建立一个子网来连接所有的虚拟机。用图来说会比较直观：</p>
 <img src="/Service-Computing/Service-Computing-01-Private-Cloud-Service/sample1.png" title="sample">
+
 <p>对于非 VPS 的云桌面来说，每一个系统都是真正独立的计算机，因而其架构图如上。每个计算机直接与 Internet 相连（有些服务商可能是通过端口映射和 Internet 相连），同时，每台计算机与一台路由或者交换机相连，构建一个局域网，方便服务商的管理。</p>
 <p>而对于 VPS 的桌面云系统来说，其架构图如下：</p>
 <img src="/Service-Computing/Service-Computing-01-Private-Cloud-Service/sample2.png" title="sample">
+
 <p>每个服务器中存在有多个虚拟系统，如此将一台服务器分割成多个虚拟专享服务器，来充分分割细化服务器资源。每个虚拟机通过桥接模式参与到 Internet 连接中，再通过仅主机模式构成一个子网。同时服务器之间通过连接路由器/交换机构成子网，虚拟机通过端口映射连入其中，方便服务提供商管理。</p>
 <p>那么我们这次作业想要搭建的是怎样的呢？</p>
 <img src="/Service-Computing/Service-Computing-01-Private-Cloud-Service/sample3.png" title="sample">
+
 <p>我们为主机创建了两张虚拟网卡，它们分别构建了一个子网络。其中 NAT 模式的虚拟网卡使得子网内的所有虚拟机可以共享主机的物理网络，而仅主机模式的虚拟网卡则仅作为局域网的 DHCP 服务器使用。</p>
 <h1 id="2-从安装虚拟机开始"><a href="#2-从安装虚拟机开始" class="headerlink" title="2. 从安装虚拟机开始"></a>2. 从安装虚拟机开始</h1><p>推荐从各个大学的 FTP 站点下载光盘映像文件，可以享受校园网的超高带宽。推荐您下载 CentOS7，其自带的浙江大学源能让你的 yum 也享受到校园网内联的舒爽。</p>
 <p>关于 CPU 之类的设置看老师的指南就好，下面来说说网卡的配置。</p>
 <h2 id="2-1-恼人的网卡"><a href="#2-1-恼人的网卡" class="headerlink" title="2.1. 恼人的网卡"></a>2.1. 恼人的网卡</h2><p>在前面一节我们说了我们要为 <strong>主机</strong> 创建两张虚拟网卡，不过在 VMWare 中，这两张网卡实际上已经创建好了，你可以在 编辑-&gt;虚拟网络编辑器 中找到他们。其中，仅主机模式的是 VMnet1，NAT 模式的是 VMnet8。剩下的工作，就是为 <strong>虚拟机</strong> 创建两张网卡，来分别连接到这两个虚拟网络适配器上。</p>
 <p>在 虚拟机-&gt;设置 中，我们可以添加虚拟机的设备，选择网络适配器，添加两张网卡。其中一张是 <strong>NAT 模式</strong>，它会自动地通过 VMnet1 来共享主机的网络连接。另一张，我们选择 <strong>仅主机模式</strong>，他则会连接到 VMnet8 来接入到这个局域网中。</p>
 <p>如此设置完成并安装虚拟机后，进入虚拟机，我们会惊喜地发现——依旧不能上网。冷静一下……这并不是因为你没有进行正确的设置，而是 CentOS7 默认不会启用你为他配置的两张网卡而已。通过如下命令可以启用：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/sysconfig/network-scripts/</span><br><span class="line">ls <span class="comment"># 查看有哪些网卡，找到你创建的那两张，比如 cfg-ens33</span></span><br><span class="line">vi cfg-ens33</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">cd</span> /etc/sysconfig/network-scripts/</span><br><span class="line">ls <span class="hljs-comment"># 查看有哪些网卡，找到你创建的那两张，比如 cfg-ens33</span></span><br><span class="line">vi cfg-ens33</span><br></pre></td></tr></table></figure>
+
 <p>修改 ONBOOT=yes 后，保存并退出。然后执行以下命令重启网络服务即可：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service network restart</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service network restart</span><br></pre></td></tr></table></figure>
+
 <h2 id="2-2-关于-yum-源"><a href="#2-2-关于-yum-源" class="headerlink" title="2.2. 关于 yum 源"></a>2.2. 关于 yum 源</h2><p>实际上 CentOS7 自带的有浙江大学的镜像源，能够利用高速的教育网来完成 yum 的包安装和更新。不过如果你需要更换源，可以按如下操作：</p>
 <p>备份/etc/yum.repos.d/CentOS-Base.repo</p>
-<pre><code>mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
-</code></pre><p>下载相应的repo文件，然后放入/etc/yum.repos.d/</p>
-<pre><code>mv yourfile /etc/yum.repos.d/CentOS-Base.repo
-</code></pre><p>重新生成 yum 缓存</p>
+<pre><code>mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</code></pre><p>下载相应的repo文件，然后放入/etc/yum.repos.d/</p>
+<pre><code>mv yourfile /etc/yum.repos.d/CentOS-Base.repo</code></pre><p>重新生成 yum 缓存</p>
 <pre><code>yum clean all
-yum makecache
-</code></pre><p>如此即可。</p>
+yum makecache</code></pre><p>如此即可。</p>
 <p>注：如果不清楚工具在哪个 yum 包中，可以使用如下命令查找：</p>
-<pre><code>yum whatprovides [tool name]
-</code></pre><h2 id="2-3-关于复制虚拟机"><a href="#2-3-关于复制虚拟机" class="headerlink" title="2.3. 关于复制虚拟机"></a>2.3. 关于复制虚拟机</h2><p>云服务的提供商通常不会止步于单个系统，那么如何批量生产这些满足要求的系统就是个问题了。复制虚拟机便是一个不错的方案。在 VMWare Workstation 中，该操作首先会创建一个当前虚拟机的快照（可以理解为当前状态的完整记录），然后用快照生成一个与原虚拟机独立的系统。</p>
+<pre><code>yum whatprovides [tool name]</code></pre><h2 id="2-3-关于复制虚拟机"><a href="#2-3-关于复制虚拟机" class="headerlink" title="2.3. 关于复制虚拟机"></a>2.3. 关于复制虚拟机</h2><p>云服务的提供商通常不会止步于单个系统，那么如何批量生产这些满足要求的系统就是个问题了。复制虚拟机便是一个不错的方案。在 VMWare Workstation 中，该操作首先会创建一个当前虚拟机的快照（可以理解为当前状态的完整记录），然后用快照生成一个与原虚拟机独立的系统。</p>
 <p>在这里 VM 和 VB 都提供了两种不同的复制方式：<strong>链接复制</strong> 和 <strong>完整复制</strong>。其中，链接复制的虚拟机虽然和原虚拟机在运行上是独立的，但是仍旧使用原来系统的磁盘空间，而所有对于原虚拟机快照中文件的修改将会被存储在一个“差量磁盘”上。这种方法的好处是省去了创建新虚拟磁盘的时间，使得两个虚拟机共享一套快照文件，节约磁盘空间。坏处是二者不能完全独立，仍旧共用磁盘空间。而后者则是单独开辟虚拟磁盘，并在之上创建虚拟机。</p>
 <p>你可以在 虚拟机-&gt;管理-&gt;克隆 中进行相关操作。需要注意的是，虚拟机中网卡的 MAC 地址必须不同（可以在虚拟机的设置中重新生成），而 IP 地址则无需担心，因为我们配置的主机虚拟网卡均配置了 DHCP 服务，子网中的设备会自动获得不冲突的 IP 地址。</p>
 <h2 id="2-4-关于虚拟机环境配置"><a href="#2-4-关于虚拟机环境配置" class="headerlink" title="2.4. 关于虚拟机环境配置"></a>2.4. 关于虚拟机环境配置</h2><ul>
@@ -235,8 +239,7 @@ yum makecache
 </li>
 <li><p>Kernel Headers</p>
 <p>其实是内核的头文件。部分开发软件（CUDA，PSXE）会需要。直接</p>
-<pre><code>yum install kernel-devel
-</code></pre><p>即可安装</p>
+<pre><code>yum install kernel-devel</code></pre><p>即可安装</p>
 </li>
 <li><p>远程连接（ssh）</p>
 <p>CentOS 7 原生支持 ssh，只需要在客户机上面使用命令</p>
@@ -244,41 +247,29 @@ yum makecache
 <p>即可连接到虚拟机的终端。</p>
 <p>但是这里引入了一个问题：虽然虚拟机可以访问外网，但是外部网络如何访问虚拟机呢？</p>
 <p>进入 编辑-&gt;虚拟网络编辑器，在虚拟机中使用 ifconfig 找到虚拟机的 ip 地址（NAT 模式网卡的）。然后在主机的 NAT 模式的虚拟网卡下为虚拟机的地址设置一个端口映射即可。然后我们就可以通过</p>
-<pre><code>ssh username@hostip:setport
-</code></pre><p>访问到虚拟机了。</p>
+<pre><code>ssh username@hostip:setport</code></pre><p>访问到虚拟机了。</p>
 </li>
 </ul>
 <h2 id="2-5-远程桌面"><a href="#2-5-远程桌面" class="headerlink" title="2.5. 远程桌面"></a>2.5. 远程桌面</h2><p>我们之前完成了 <code>ssh</code> 的配置，可以让外部用户通过这个工具方便地连接到 Linux 终端。但是 CLI 毕竟是极客们的狂欢，我们还得为普通用户准备一个 GUI 的方案……</p>
 <h3 id="配置-CentOS-的图形化桌面"><a href="#配置-CentOS-的图形化桌面" class="headerlink" title="配置 CentOS 的图形化桌面"></a>配置 CentOS 的图形化桌面</h3><p>安装图形化桌面组件（如果没有在系统安装时就加载的话）：</p>
-<pre><code>yum groupinstall &quot;GNOME Desktop&quot;
-</code></pre><p>设置图形化组建为启动目标</p>
-<pre><code>ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
-</code></pre><p>重新启动</p>
-<pre><code>shutdown -r now
-</code></pre><p>你可以看到我们的 CentOS 已经具有了图形化界面。</p>
+<pre><code>yum groupinstall &quot;GNOME Desktop&quot;</code></pre><p>设置图形化组建为启动目标</p>
+<pre><code>ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target</code></pre><p>重新启动</p>
+<pre><code>shutdown -r now</code></pre><p>你可以看到我们的 CentOS 已经具有了图形化界面。</p>
 <h3 id="配置-Xrdp-远程桌面环境"><a href="#配置-Xrdp-远程桌面环境" class="headerlink" title="配置 Xrdp 远程桌面环境"></a>配置 Xrdp 远程桌面环境</h3><p>Windows 自带的远程桌面使用的是 <code>rdp</code> 协议，而 Linux 中需要通过额外的组件 <code>Xrdp</code> 来支持这种协议的远程桌面。首先，我们需要配置 EPEL 源，这是对于 CentOS 原生 yum 源的补充。</p>
 <p>首先：</p>
-<pre><code>yum search epel
-</code></pre><p>结果里会有</p>
-<pre><code>epel-release-latest.noarch
-</code></pre><p>安装 EPEL 源</p>
-<pre><code>yum install -y epel-release-latest.noarch
-</code></pre><p>然后就可以安装 Xrdp 组件啦：</p>
-<pre><code>yum install xrdp tigervnc-server
-</code></pre><p>安装完成之后，该服务默认并为启动，我们启动它，并且为他添加开机启动</p>
+<pre><code>yum search epel</code></pre><p>结果里会有</p>
+<pre><code>epel-release-latest.noarch</code></pre><p>安装 EPEL 源</p>
+<pre><code>yum install -y epel-release-latest.noarch</code></pre><p>然后就可以安装 Xrdp 组件啦：</p>
+<pre><code>yum install xrdp tigervnc-server</code></pre><p>安装完成之后，该服务默认并为启动，我们启动它，并且为他添加开机启动</p>
 <pre><code>systemctl start xrdp
-systemctl enable xrdp
-</code></pre><p>之后，我们可以看看现在系统的端口调用：</p>
-<pre><code>netstat -antup | grep xrdp
-</code></pre><p>不出意外的话，你应该能看到：</p>
+systemctl enable xrdp</code></pre><p>之后，我们可以看看现在系统的端口调用：</p>
+<pre><code>netstat -antup | grep xrdp</code></pre><p>不出意外的话，你应该能看到：</p>
 <pre><code>tcp        0      0 0.0.0.0:3389            0.0.0.0:*               LISTEN      1508/xrdp
-tcp        0      0 127.0.0.1:3350          0.0.0.0:*               LISTEN      1507/xrdp-sesman
-</code></pre><p>3389 端口就是 Xrdp 用来监听 rdp 请求的端口。不过为了让 rdp 正常使用，我们还需要配置防火墙（控制网络入口）和 SELinux（控制程序访问权限）：</p>
+tcp        0      0 127.0.0.1:3350          0.0.0.0:*               LISTEN      1507/xrdp-sesman</code></pre><p>3389 端口就是 Xrdp 用来监听 rdp 请求的端口。不过为了让 rdp 正常使用，我们还需要配置防火墙（控制网络入口）和 SELinux（控制程序访问权限）：</p>
 <pre><code>firewall-cmd --permanent --add-port=3389/tcp
 firewall-cmd --reload
 chcon --type=bin_t /usr/sbin/xrdp
-chcon --type=bin_t /usr/sbin/xrdp-sesman
-</code></pre><p>配置到此全部完成，试试用 Windows 自带的远程桌面连接虚拟机吧～初始化耗时可能较久，请耐心等待哦～</p>
+chcon --type=bin_t /usr/sbin/xrdp-sesman</code></pre><p>配置到此全部完成，试试用 Windows 自带的远程桌面连接虚拟机吧～初始化耗时可能较久，请耐心等待哦～</p>
 
         </div>
         

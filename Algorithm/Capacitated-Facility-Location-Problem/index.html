@@ -182,6 +182,7 @@
 <p>在本次项目中，我们选择了 <strong>爬山算法（Hill Climbing Algorithm））</strong> 和 <strong>遗传算法（Genetic Algorithm）</strong> 作为我们的代码实现，并通过对比来寻求二者间的差异。</p>
 <p><a href="https://github.com/siskonemilia/CFLP" target="_blank" rel="noopener">代码仓库</a></p>
 <a id="more"></a>
+
 <h2 id="为什么选择-HC-和-GA？"><a href="#为什么选择-HC-和-GA？" class="headerlink" title="为什么选择 HC 和 GA？"></a>为什么选择 HC 和 GA？</h2><p>HC 和 GA 是启发式算法的两大代表。其中前者是普通的启发式算法，通过不断寻求临域中的最优解来不断迭代，最后爬上“山峰”（即最优解）。但是这种算法存在严重的问题，它没有任何能力来避开局部最优解，因而当其收敛时，其到达的一般只是众多山峰中的一个较小的山峰（局部最优解）。与之相对，GA 作为一种经典的元启发式算法，有着一定的脱离局部最优陷阱的能力，因而通常能够在最后获得一个比 HC 更好的解。</p>
 <h2 id="Hill-Climbing-爬山算法"><a href="#Hill-Climbing-爬山算法" class="headerlink" title="Hill Climbing 爬山算法"></a>Hill Climbing 爬山算法</h2><p>爬山算法正如之前所说，是选择领域解池内估价最高的一个解来作为下一跳的起点。更数学化地来说，理想的爬山算法是在函数曲线（面）上的一个点，向着函数梯度方向爬升（下降）。因而如何在离散解集中生成梯度方向的解是爬山算法中的关键。</p>
 <p>在本项目中，我们在每个解集输入时记录每个顾客的最低 Assign Cost 和其对应的工厂。然后，我们在生成一个解后，依次替换解中每个顾客的选择为其最低 Cost 值，再从之中选择最优值。如此迭代，最后能取得非常优秀的解（对于 P1，该方法可以收敛到 9300 的总 Cost）。并且得益于非常小的临域空间和无随机干扰（收敛条件可以设置为两次迭代间最优数值没有变化，而不需要继续迭代数次确保收敛）的缘故，其运行速度极快（对于所有测试数据集，算法运行时间均不超过 1 秒（在 MacBook Pro 2017 上测试，使用 g++ 编译））。</p>
@@ -195,30 +196,28 @@
 <table>
 <thead>
 <tr>
-<th style="text-align:center">算例</th>
-<th style="text-align:center">爬山算法结果</th>
-<th style="text-align:center">遗传算法结果</th>
-<th style="text-align:center">爬山算法耗时</th>
-<th style="text-align:center">遗传算法耗时</th>
+<th align="center">算例</th>
+<th align="center">爬山算法结果</th>
+<th align="center">遗传算法结果</th>
+<th align="center">爬山算法耗时</th>
+<th align="center">遗传算法耗时</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">p1</td>
-<td style="text-align:center">9327</td>
-<td style="text-align:center">9033(-294, -3%)</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">3(+3, +&gt;1000%)</td>
+<tbody><tr>
+<td align="center">p1</td>
+<td align="center">9327</td>
+<td align="center">9033(-294, -3%)</td>
+<td align="center">0</td>
+<td align="center">3(+3, +&gt;1000%)</td>
 </tr>
 <tr>
-<td style="text-align:center">p59</td>
-<td style="text-align:center">39121</td>
-<td style="text-align:center">37423(-1698, -4%)</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">9(+9, +&gt;1000%)</td>
+<td align="center">p59</td>
+<td align="center">39121</td>
+<td align="center">37423(-1698, -4%)</td>
+<td align="center">0</td>
+<td align="center">9(+9, +&gt;1000%)</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>正如我们上面讲的一样，爬山算法的优势在于梯度下降，速度极快，它很快地收敛到了一个局部最优解，而遗传算法在其上更进一步，虽然速度比爬山算法慢了非常多，但是也在较短时间内收敛到了一个优秀解。更重要的是，这个解普遍比爬山算法优秀一些，尤其是在算例规模较大的情况下，这得益于其随机扰动带来的走出局部最优的可能性。但相应的，庞大的解空间为其带来了不小的困扰。</p>
 <p>但值得一提的是，这个结果并不能完全显示两者的差距。在遗传算法中，我几乎不需要考虑原本的估价函数的影响因素，也不需要担心生成新解的函数是否能够让解沿梯度下降方向前进——我只需要让种群自己进化，为他们提供交流基因和改变基因的可能就好了。在设计速度上，遗传算法要远胜爬山算法。而在执行效果上也是如此，尤其是对于那些估价函数性质不明显，影响因素不确定的问题，爬山算法可能同样需要面对一个巨大的临域空间，从而难以找到梯度方向，最终得到一个更差的结果，且消耗更久的时间。</p>
 <p>在这个特殊 CFLP 中，爬山算法的优点被发挥到了极致，但纵然如此，它也不过是和遗传算法互有胜负。因而我们认为，在更复杂、一般的问题中，遗传算法通常会是一个更好的选择。</p>

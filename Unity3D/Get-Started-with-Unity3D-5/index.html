@@ -181,15 +181,18 @@
 <p><strong>和Unity酱逃出生天第二弹！</strong> 这次Unity酱来到了精灵森林，在本次游戏中，你将看到环绕着Unity酱上下飞舞的光精灵，在森林中驻足的水精灵和火精灵……以及动听的背景音乐！</p>
 <p>效果预览：</p>
 <img src="/Unity3D/Get-Started-with-Unity3D-5/1.gif" title="preview"><a id="more"></a>
+
 <h3 id="精灵制作"><a href="#精灵制作" class="headerlink" title="精灵制作"></a>精灵制作</h3><p>因为基本按照<a href="http://www.cnblogs.com/CaomaoUnity3d/p/5983730.html" target="_blank" rel="noopener">大神博客</a>制作，因而此处不再赘述精灵的基本制作方法，我们将着重讲讲不一样的地方～</p>
 <p>精灵效果预览：</p>
 <img src="/Unity3D/Get-Started-with-Unity3D-5/elf.png" title="elf">
+
 <ul>
 <li><p>首先：如何产生精灵「闪耀的效果」呢？</p>
 <p>通过 Start Lifetime 结合 Emission 的 Rate over Time 实现～因为在按照博客设置后，粒子有 Size over Lifetime 属性，这使得每个粒子首先出现时变大，然后在消失时变小。从而，错开的发射时间和消失时间能够使由多个粒子叠加出来的光晕产生忽大忽小的「闪耀的效果」。当然～给它添加一个点光源也是它闪闪发亮的一大原因～</p>
 </li>
 <li><p>接下来：如何让精灵有一条闪光的，徐徐下降的尾巴呢？</p>
 <img src="/Unity3D/Get-Started-with-Unity3D-5/trail.png" title="trail">
+
 <p>在博客中的设置应用后，我们能够得到的是所有掉落的“星星”都会跟随精灵的效果。这是因为我们将子粒子系统的 Simulation Space 设置为了 local，在这个情况下，粒子会跟随发射器的坐标系运动。那么如何让它摆脱束缚呢？简单地将它设置为 World 就好啦～同时，为了达成「徐徐下降」这一效果，我们将 Gravity Modifier 设置为了一个不为 0 的较小值。这样以后，你就能看到那条美丽的尾巴了。</p>
 </li>
 <li><p>最后：如何让精灵环绕角色上下飞舞呢？</p>
