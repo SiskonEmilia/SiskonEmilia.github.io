@@ -2,25 +2,25 @@
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>Get Started with Unity3D Series - Coding.Siskon</title>
+<title>从零开始的随机森林（2）：决策树 - Coding.Siskon</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="简介该系列主要记录Unity3D编程设计课程作业，亦会记录一些学习过程中的心得">
-<meta name="keywords" content="Unity3D">
+    <meta name="description" content="Attention: This blog is a reading note of Tree - Decision Tree with sklearn source code in Chinese, which is written in English. As missing or misunderstanding might be included, please reference the">
+<meta name="keywords" content="Machine Learning,Decision Tree,Ensemble Learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Get Started with Unity3D Series">
-<meta property="og:url" content="https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-Series/index.html">
+<meta property="og:title" content="从零开始的随机森林（2）：决策树">
+<meta property="og:url" content="https://siskonemilia.github.io/Machine-Learning/从零开始的随机森林（2）：决策树/index.html">
 <meta property="og:site_name" content="Coding.Siskon">
-<meta property="og:description" content="简介该系列主要记录Unity3D编程设计课程作业，亦会记录一些学习过程中的心得">
+<meta property="og:description" content="Attention: This blog is a reading note of Tree - Decision Tree with sklearn source code in Chinese, which is written in English. As missing or misunderstanding might be included, please reference the">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://siskonemilia.github.io/images/og_image.png">
-<meta property="og:updated_time" content="2018-04-10T09:13:37.000Z">
+<meta property="og:image" content="https://siskonemilia.github.io/thumbnails/title.jpg">
+<meta property="og:updated_time" content="2019-06-13T09:55:02.084Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Get Started with Unity3D Series">
-<meta name="twitter:description" content="简介该系列主要记录Unity3D编程设计课程作业，亦会记录一些学习过程中的心得">
-<meta name="twitter:image" content="https://siskonemilia.github.io/images/og_image.png">
+<meta name="twitter:title" content="从零开始的随机森林（2）：决策树">
+<meta name="twitter:description" content="Attention: This blog is a reading note of Tree - Decision Tree with sklearn source code in Chinese, which is written in English. As missing or misunderstanding might be included, please reference the">
+<meta name="twitter:image" content="https://siskonemilia.github.io/thumbnails/title.jpg">
 
 
 
@@ -98,7 +98,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="Get Started with Unity3D Series" height="28">
+                <img src="/images/logo.svg" alt="从零开始的随机森林（2）：决策树" height="28">
             
             </a>
         </div>
@@ -145,21 +145,27 @@
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
     
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/thumbnails/title.jpg" alt="从零开始的随机森林（2）：决策树">
+        </span>
+    </div>
+    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-03-27T03:30:28.000Z">2018-03-27</time>
+                <time class="level-item has-text-grey" datetime="2019-05-31T01:50:48.000Z">2019-05-31</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Unity3D/">Unity3D</a>
+                <a class="has-link-grey -link" href="/categories/Machine-Learning/">Machine Learning</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    a few seconds read (About 107 words)
+                    10 minutes read (About 1573 words)
                 </span>
                 
                 
@@ -173,16 +179,28 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                Get Started with Unity3D Series
+                从零开始的随机森林（2）：决策树
             
         </h1>
         <div class="content">
-            <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>该系列主要记录Unity3D编程设计课程作业，亦会记录一些学习过程中的心得<a id="more"></a></p>
-<h2 id="导航"><a href="#导航" class="headerlink" title="导航"></a>导航</h2><ol>
-<li><a href="../Get-Started-with-Unity3D-1/">Get Started with Unity3D - 1</a>: 主要就是第一周的作业啦</li>
-<li><a href="../Get-Started-with-Unity3D-2/">Get Started with Unity3D - 2</a>: 第二周作业～</li>
-<li><a href="../Get-Started-with-Unity3D-3/">Get Started with Unity3D - 3</a>: 分离动作版的牧师与魔鬼，增加了Skybox和动态水面效果</li>
-</ol>
+            <p><em>Attention: This blog is a reading note of <a href="https://www.cnblogs.com/gogoSandy/p/9131208.html" target="_blank" rel="noopener">Tree - Decision Tree with sklearn source code</a> in Chinese, which is written in English. As missing or misunderstanding might be included, please reference the original text if needed. We believe that the original text containing some misunderstandings on information theory itself, and we correct it in our version.</em></p>
+<p>在<a href="https://siskonemilia.github.io/Machine-Learning/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97%EF%BC%881%EF%BC%89%EF%BC%9A%E4%BF%A1%E6%81%AF%E8%AE%BA/">上一篇博客</a>中，我们介绍了有关信息论的原理和一些直观的理解，这是构建决策树（Decision Tree）算法的基础。在本篇中，我们将介绍分类决策树和回归决策树，以及在 Scikit-learn 开源库中其<a href="https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/tree/tree.py" target="_blank" rel="noopener">对应的实现</a>。由于 sk-learn 使用 CART 算法构建决策树，我们也将主要聚焦于这个算法，同时会提及另外两种常用算法：ID3 和 C4.5 算法的原理和优劣。</p>
+<a id="more"></a>
+
+<h2 id="构建决策树"><a href="#构建决策树" class="headerlink" title="构建决策树"></a>构建决策树</h2><p>开始之前，我们稍微回顾一下决策树的定义。决策树是，<em>一种树形结构，其中每个内部节点表示一个属性上的测试，每个分支代表一个测试输出，每个叶节点代表一种类别</em>。在实际运行中，一组数据自决策树根结点出发，在每个内部节点通过测试后，最后归结到相应的叶节点，从而被判定为叶节点的类别，或者被赋予叶节点的常数值（回归树）。对于一颗理想的决策树，其叶节点应只包含一种类别的数据（分类树）或者一个常数值（回归树）。尽管我们通常不能（也不会）达到理想状态，但这是我们训练模型的方向。训练过程的本质是通过节点数据的分裂，使得子节点中同类数据（分类树）或同值（或近似值）数据（回归树）的比例增加，这也就是我们在前一篇中所说的“纯度增加”。最终在叶子节点中（由于不是理想树，其中样本仍可能由不同值和不同类构成），取样本最多的类（分类树）或平均值（回归树）为所有节点内样本的预测值。</p>
+<h3 id="分裂标准（Criterion）"><a href="#分裂标准（Criterion）" class="headerlink" title="分裂标准（Criterion）"></a>分裂标准（Criterion）</h3><p>在前面我们讲到了如何使用一个构建好的决策树进行预测，为了构建一颗决策树，我们需要解决的一个核心问题是：怎么样决定每个节点的数据如何被分到数个子节点上呢？</p>
+<p>对于<strong>分类树</strong>而言，我们需要回忆一下前一篇所提到的熵的概念。在决策树中，我们希望通过分裂节点来“纯化”数据，最小化数据的“不纯度”（其实就是熵）。在前一篇，我们通过“信息增益”来衡量引入一个新的随机变量（此处为基于数据的特征的分裂）所确定（即纯化）的信息量。由于在信息增益公式 $IG=H(Y)-H(Y|X)$ 中，$H(Y)$ 是一个不变量，所以 Ross 教授在 1986 年提出的经典算法：<strong>ID3</strong>，在决策树中实际上使用的是条件熵 $H(Y|X)$ 来衡量引入一个（基于特征 $X$ 的）分裂所带来的数据纯化效果，其中对字段概率 $p$ 的估计为：</p>
+<p>$$\hat{p}_{k}=\frac{1}{N}\sum I(y_i=k)$$</p>
+<p>即节点中类 k 数据的比例，N 为节点内数据总量。在每个分裂子问题中，我们的目标就是找到：</p>
+<p>$$\begin{aligned}<br>\underset{X}{argmax}(IG(Y, X))&amp;=\underset{X}{argmax}(-H(Y|X))\\<br>&amp;=\underset{X,\ x\in X}{argmin}(\sum_jH(Y|x=v_j)p(x=v_j))<br>\end{aligned}$$</p>
+<p>这个公式也隐式地指出了，ID3 的分支数量由 $X$ 的可能取值数量决定。而这可能导致 ID3 会优先选择分支较多的特征，而这种特征有可能是实际上无意义的（比如用户 ID，其信息增益最大并非因为其和分类在意义上相关，仅仅只是分支众多）。为了避免这种情况，Ross 又在 1993 年提出了 <strong>C4.5 算法</strong>。</p>
+<p>C4.5 算法是对 ID3 的改进，其引入了一个新的标准：信息增益比率（Gain Ratio），这个标准通过分裂信息（Split Information）来惩罚拥有过多分支的项的得分，来达到权衡分支数量和纯化效果的效果：</p>
+<p>$$SplitInformation(Y, A) = -\sum_{i=1}^{n_A}\frac{Y_i}{Y}log\frac{Y_i}{Y}$$</p>
+<p>$$GainRatio=\frac{IG(Y, X)}{SplitInformation(Y, A)}$$</p>
+<p>其中，$n_A$ 是 A 的可能取值数量，$Y_i$ 是第 i 个分支内的样本数。这样一来，当分支数量过大时，由于 $SplitInformation$ 的增加，尽管 $IG(Y, X)$ 会增长，但是最终评判标准 $GainRatio$ 却可能降低，从而实现了对于过大数目分支的抑制。虽然 C4.5 解决了分支数量问题，但是大大增加了计算复杂度，导致算法运行缓慢。作为修正，在 1984 年，L.Breiman 等人提出了 <strong>CART 算法</strong>。</p>
+<p>相比于 ID3 或者 C4.5，CART 的两个重要改进分别是该用基尼（Gini）系数作为评判标准，以及只构建二叉决策树。其中，一个节点的基尼系数的定义如下：</p>
+<p>$$Gini(Y)=\sum_{i=1}^{n}\frac{Y_i}{Y}（1-\frac{Y_i}{Y}）$$</p>
+<p>取 $n=2$，并通过选取特征（划分方法）使得基尼系数增益（即父节点和子节点的基尼系数之差）最大，并如此迭代到算法终止条件，可得 CART 二叉决策树。在该算法中，基尼系数实际上是对于</p>
 
         </div>
         
@@ -190,7 +208,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/Unity3D/">Unity3D</a>
+                    <a class="has-link-grey -link" href="/tags/Decision-Tree/">Decision Tree</a>, <a class="has-link-grey -link" href="/tags/Ensemble-Learning/">Ensemble Learning</a>, <a class="has-link-grey -link" href="/tags/Machine-Learning/">Machine Learning</a>
                 </div>
             </div>
         </div>
@@ -207,17 +225,10 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/Unity3D/Get-Started-with-Unity3D-1/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">Get Started with Unity3D - 1</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/WEB-Assignments/WEB-Assignment-5/">
-                <span class="level-item">WEB Assignment 5</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/Machine-Learning/从零开始的随机森林（1）：信息论/">
+                <span class="level-item">从零开始的随机森林（1）：信息论</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -1347,7 +1358,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="Get Started with Unity3D Series" height="28">
+                    <img src="/images/logo.svg" alt="从零开始的随机森林（2）：决策树" height="28">
                 
                 </a>
                 <p class="is-size-7">

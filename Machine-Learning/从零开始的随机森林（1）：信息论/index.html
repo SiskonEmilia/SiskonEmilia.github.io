@@ -16,7 +16,7 @@
 <meta property="og:description" content="Attention: This blog is a reading note of Tree - Information Theory in Chinese, which is written in English. As missing or misunderstanding might be included, please reference the original text if nee">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://siskonemilia.github.io/thumbnails/umi.jpg">
-<meta property="og:updated_time" content="2019-05-30T11:14:18.099Z">
+<meta property="og:updated_time" content="2019-06-14T16:32:15.410Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从零开始的随机森林（1）：信息论">
 <meta name="twitter:description" content="Attention: This blog is a reading note of Tree - Information Theory in Chinese, which is written in English. As missing or misunderstanding might be included, please reference the original text if nee">
@@ -165,7 +165,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    11 minutes read (About 1685 words)
+                    13 minutes read (About 2024 words)
                 </span>
                 
                 
@@ -183,9 +183,11 @@
             
         </h1>
         <div class="content">
-            <p><em>Attention: This blog is a reading note of <a href="https://www.cnblogs.com/gogoSandy/p/9075664.html" target="_blank" rel="noopener">Tree - Information Theory</a> in Chinese, which is written in English. As missing or misunderstanding might be included, please reference the original text if needed.</em></p>
+            <p><em>Attention: This blog is a reading note of <a href="https://www.cnblogs.com/gogoSandy/p/9075664.html" target="_blank" rel="noopener">Tree - Information Theory</a> in Chinese, which is written in English. As missing or misunderstanding might be included, please reference the original text if needed. We believe that the original text containing some misunderstandings on information theory itself, and we correct it in our version.</em></p>
 <p>近年来，基于决策树的集成算法在机器学习和数据挖掘界被广泛应用，并受到了大多数人的好评和欢迎。随机森林（Random Forest）是这批算法中的佼佼者，其拥有很高的准确率，同时兼具很高的运行效率和对于异常数据与过拟合的鲁棒性。因而，我们撰写了这一系列的博客，希望能够系统地介绍随机森林的原理和实现的方法。</p>
 <p>随机森林的本质是决策树的集成，我们需要先阐述决策树背后的原理。而在此之前，我们需要先了解他们共同依赖的理论基础：信息论。（注意：本篇仅涉及对于其理论的直观认识，如需要严格的数学论证，请参阅原论文）</p>
+<a id="more"></a>
+
 <h2 id="何为信息"><a href="#何为信息" class="headerlink" title="何为信息"></a>何为信息</h2><p>如果我们希望传输一个由四个字符构成的字符串，例如 ACABBDAA，我们需要多少比特？一种常见的想法是通过一个定长的比特串来表达每个字符，也就是令 A = 00, B = 01, C = 10, D = 11，那么我们可以得到我们的答案：2 * 8 = 16 位比特。</p>
 <p>那么我们可以使用更少的比特来表达相同的信息吗？答案是肯定的。首先，我们刚才的问题抽象为公式可以表达为：</p>
 <p>$$E(N)=\sum_{k\in A,B,C,D}n_k* p(x=k)$$</p>
@@ -197,13 +199,25 @@
 <p>这在某种意义上可以代表信息的量。在信息论中，我们称之为<strong>信息熵（Information Entropy）</strong>，或者简称为熵（Entropy），并用来衡量信息的多少（对于连续量，该值为 $H(X)=-\int_xp(x)*log_2p(x)dx$）。</p>
 <h2 id="熵：更进一步"><a href="#熵：更进一步" class="headerlink" title="熵：更进一步"></a>熵：更进一步</h2><h3 id="为什么是「熵」？"><a href="#为什么是「熵」？" class="headerlink" title="为什么是「熵」？"></a>为什么是「熵」？</h3><p>熵并不是 Andrew 教授生造的概念，而是一个热力学中表征物质状态的参量。在物理上，熵是体系混乱程度的度量。直观地来讲，一个系统越混乱，其包含的信息就越多。例如一块100%纯净的有序晶体，要描述它的构造，我们只需要晶胞的构造式和数量即可；而要描述一块路边的碎石，我们则需要描述其内复合的各种物质，以及他们之间的结合关系——这是由混乱带来的信息量增长，也就是信息熵的本质。</p>
 <p>而之后我们将要讲到的决策树将这种混乱称为“杂质”，它期望的是将通过将充满杂质的碎石通过某种规则“纯化”为数个有序晶体，并将这个学习到的规则应用到更广泛的样本中来达到回归或分类的效果。</p>
-<h3 id="条件熵（Conditional-Entropy）"><a href="#条件熵（Conditional-Entropy）" class="headerlink" title="条件熵（Conditional Entropy）"></a>条件熵（Conditional Entropy）</h3><p><strong>条件熵（Conditional Entropy）</strong>用于量化在随机变量 $X$ 已知的前提下，描述随机变量 $Y$ 所需的信息量，记作 $Y(Y|X)$。也就是，在 $X$ 的基础上，我们需要多少额外的信息才能完整描述 $Y$。这个值越大，意味着两个随机变量间的关系越小。根据熵的定义，我们能够得到条件熵的定义式：</p>
-<p>$$H(Y|X)=\sum_jH(Y|x=v_j)p(x=v_j)$$</p>
-<p>$$H(Y|X)=\int_xH(Y|x)p(x)dx$$</p>
-<p>同时，由于对于熵的定义是基于概率的，通过条件概率的性质，我们也能得到关于条件熵的公式：</p>
-<p>$$P(X,Y)=P(Y|X)*P(X)$$<br>$$H(X,Y)=H(Y|X)+H(X)$$</p>
-<h3 id="信息增益（Information-Gain）"><a href="#信息增益（Information-Gain）" class="headerlink" title="信息增益（Information Gain）"></a>信息增益（Information Gain）</h3><p>继续跟随我们刚才的逻辑，我们已经知道，$H(Y|X)$ 是为了表达 $Y$，我们需要在 $X$ 上额外增加的信息量，或者说是在引入 $X$ 后 $Y$ 中仍不确定的信息量。考虑 $H(Y)$ 为随机变量 Y 所携带的信息量，令它减去 $H(Y|X)$，得到的 $H(Y)-H(Y|X)$ 就是“通过引入 $X$ 所确定的信息量”。在信息论中，我们称之为<strong>信息增益（Kullback–Leibler divergence，或 Information Gain）</strong>：</p>
-<p>$$IG = H(Y) - H(Y|X)$$</p>
+<!-- ### 条件熵（Conditional Entropy）
+
+**条件熵（Conditional Entropy）**用于量化在随机变量 $X$ 已知的前提下，描述随机变量 $Y$ 所需的信息量，记作 $Y(Y|X)$。也就是，在 $X$ 的基础上，我们需要多少额外的信息才能完整描述 $Y$。这个值越大，意味着两个随机变量间的关系越小。根据熵的定义，我们能够得到条件熵的定义式：
+
+$$H(Y|X)=\sum_jH(Y|x=v_j)p(x=v_j)$$
+
+$$H(Y|X)=\int_xH(Y|x)p(x)dx$$
+
+同时，由于对于熵的定义是基于概率的，通过条件概率的性质，我们也能得到关于条件熵的公式：
+
+$$P(X,Y)=P(Y|X)*P(X)$$
+$$H(X,Y)=H(Y|X)+H(X)$$ -->
+
+<h3 id="交叉熵（Cross-Entropy）"><a href="#交叉熵（Cross-Entropy）" class="headerlink" title="交叉熵（Cross Entropy）"></a>交叉熵（Cross Entropy）</h3><p><strong>交叉熵（Cross Entropy）</strong> 用于描述两个在同一数据集上的概率分布的信息差。更直观地来说，交叉熵是对同一组对象的两个信息之间的“歧义”，讨论的对象是一个“目标”信息和一个“当前”信息，这个信息可以是规则（如决策树的分类规则），数据等等。其研究的是两个信息之间的差距。或者说使用当前的信息，需要多少 bit 才能描述目标信息。基于前面的叙述，令 $p$ 为目标信息分布，$q$ 为当前信息分布，那么交叉熵的公式是直观的：</p>
+<p>$$H(p, q)=-\sum_{x\in\mathcal{X}}p(x)\ log\ q(x)$$</p>
+<p>从压缩的角度来说，它表示一个压缩模式 $q$ 对于真实模式 $p$ 的效果，或者说使用 $q$ 来表示 $p$ 内信息所需要的平均比特数量。</p>
+<h3 id="信息增益（Information-Gain）"><a href="#信息增益（Information-Gain）" class="headerlink" title="信息增益（Information Gain）"></a>信息增益（Information Gain）</h3><p>继续跟随我们刚才的逻辑，我们已经知道，$H(Y,X)$ 是在引入了信息 $X$ 后，与 $Y$ 信息之间的差距，或者说歧义。也可以说是在引入 $X$ 后 $Y$ 中仍不确定的信息量。考虑 $H(Y)$ 为随机变量 Y 所携带的信息量，令它减去 $H(Y,X)$，得到的 $H(Y)-H(Y,X)$ 就是“通过引入 $X$ 所确定的信息量”。在信息论中，我们称之为<strong>信息增益（Information Gain）</strong>：</p>
+<p>$$IG = H(Y) - H(Y,X)$$</p>
+<p><em>注意：在某些文献中，Information Gain 被认为与 Kullback–Leibler divergence 同义，而实际上后者的定义式为 $D_{KL}(Y||X)=\sum_{x\in\mathcal{X}}Y(x)log(\frac{Y(x)}{X(x)})=H(Y|X)-H(Y)$</em></p>
 <p>一个直观的认识是，当 $X$ 和 $Y$ 具有某种联系的时候，通过确定 $X$ 的信息，我们就能一定程度上了解 $Y$ 的信息，从而降低了 $Y$ 的信息熵，减少的这部分就是引入 $X$ 所带来的信息增益。决策树算法的主要理论依据正是信息增益。</p>
 
         </div>
@@ -228,6 +242,13 @@
 
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/Machine-Learning/从零开始的随机森林（2）：决策树/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">从零开始的随机森林（2）：决策树</span>
+            </a>
+        </div>
         
         
         <div class="level-end">
@@ -286,7 +307,7 @@
                         Posts
                     </p>
                     <p class="title has-text-weight-normal">
-                        45
+                        46
                     </p>
                 </div>
             </div>
@@ -417,7 +438,7 @@
                 <span class="level-item">Machine Learning</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/Others/">
@@ -479,7 +500,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/Algorithm/" style="font-size: 20px;">Algorithm</a> <a href="/tags/Assignment/" style="font-size: 15px;">Assignment</a> <a href="/tags/Blockchain/" style="font-size: 10px;">Blockchain</a> <a href="/tags/Cloud-Service/" style="font-size: 11.25px;">Cloud Service</a> <a href="/tags/Decision-Tree/" style="font-size: 10px;">Decision Tree</a> <a href="/tags/Ensemble-Learning/" style="font-size: 10px;">Ensemble Learning</a> <a href="/tags/Ethereum/" style="font-size: 10px;">Ethereum</a> <a href="/tags/Github-Pages/" style="font-size: 10px;">Github Pages</a> <a href="/tags/Gitment/" style="font-size: 10px;">Gitment</a> <a href="/tags/Golang/" style="font-size: 11.25px;">Golang</a> <a href="/tags/JavaScript/" style="font-size: 12.5px;">JavaScript</a> <a href="/tags/Leetcode/" style="font-size: 18.75px;">Leetcode</a> <a href="/tags/Machine-Learning/" style="font-size: 10px;">Machine Learning</a> <a href="/tags/Remote-Floder/" style="font-size: 10px;">Remote Floder</a> <a href="/tags/SSAD/" style="font-size: 15px;">SSAD</a> <a href="/tags/Service-Computing/" style="font-size: 13.75px;">Service Computing</a> <a href="/tags/Unity3D/" style="font-size: 17.5px;">Unity3D</a> <a href="/tags/VPS-server/" style="font-size: 10px;">VPS server</a> <a href="/tags/WEB/" style="font-size: 16.25px;">WEB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a>
+        <a href="/tags/Algorithm/" style="font-size: 20px;">Algorithm</a> <a href="/tags/Assignment/" style="font-size: 15px;">Assignment</a> <a href="/tags/Blockchain/" style="font-size: 10px;">Blockchain</a> <a href="/tags/Cloud-Service/" style="font-size: 11.25px;">Cloud Service</a> <a href="/tags/Decision-Tree/" style="font-size: 11.25px;">Decision Tree</a> <a href="/tags/Ensemble-Learning/" style="font-size: 11.25px;">Ensemble Learning</a> <a href="/tags/Ethereum/" style="font-size: 10px;">Ethereum</a> <a href="/tags/Github-Pages/" style="font-size: 10px;">Github Pages</a> <a href="/tags/Gitment/" style="font-size: 10px;">Gitment</a> <a href="/tags/Golang/" style="font-size: 11.25px;">Golang</a> <a href="/tags/JavaScript/" style="font-size: 12.5px;">JavaScript</a> <a href="/tags/Leetcode/" style="font-size: 18.75px;">Leetcode</a> <a href="/tags/Machine-Learning/" style="font-size: 11.25px;">Machine Learning</a> <a href="/tags/Remote-Floder/" style="font-size: 10px;">Remote Floder</a> <a href="/tags/SSAD/" style="font-size: 15px;">SSAD</a> <a href="/tags/Service-Computing/" style="font-size: 13.75px;">Service Computing</a> <a href="/tags/Unity3D/" style="font-size: 17.5px;">Unity3D</a> <a href="/tags/VPS-server/" style="font-size: 10px;">VPS server</a> <a href="/tags/WEB/" style="font-size: 16.25px;">WEB</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a>
     </div>
 </div>
 
@@ -493,6 +514,25 @@
         <h3 class="menu-label">
             Recent
         </h3>
+        
+        <article class="media">
+            
+            <a href="/Machine-Learning/从零开始的随机森林（2）：决策树/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/title.jpg" alt="从零开始的随机森林（2）：决策树">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-31T01:50:48.000Z">2019-05-31</time></div>
+                    <a href="/Machine-Learning/从零开始的随机森林（2）：决策树/" class="has-link-black-ter is-size-6">从零开始的随机森林（2）：决策树</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Machine-Learning/">Machine Learning</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -570,25 +610,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/SSAD/Software-System-Analysis-and-Design-Assignment-2/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Software System Analysis and Design Assignment 2">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-03-17T16:33:07.000Z">2019-03-18</time></div>
-                    <a href="/SSAD/Software-System-Analysis-and-Design-Assignment-2/" class="has-link-black-ter is-size-6">Software System Analysis and Design Assignment 2</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/SSAD/">SSAD</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -607,7 +628,7 @@
                     <span class="level-item">May 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -799,14 +820,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Decision-Tree/">
                         <span class="tag">Decision Tree</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Ensemble-Learning/">
                         <span class="tag">Ensemble Learning</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -855,7 +876,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Machine-Learning/">
                         <span class="tag">Machine Learning</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -933,6 +954,25 @@
         
         <article class="media">
             
+            <a href="/Machine-Learning/从零开始的随机森林（2）：决策树/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/title.jpg" alt="从零开始的随机森林（2）：决策树">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-05-31T01:50:48.000Z">2019-05-31</time></div>
+                    <a href="/Machine-Learning/从零开始的随机森林（2）：决策树/" class="has-link-black-ter is-size-6">从零开始的随机森林（2）：决策树</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Machine-Learning/">Machine Learning</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/Machine-Learning/从零开始的随机森林（1）：信息论/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/thumbnails/umi.jpg" alt="从零开始的随机森林（1）：信息论">
@@ -1007,25 +1047,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/SSAD/Software-System-Analysis-and-Design-Assignment-2/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Software System Analysis and Design Assignment 2">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-03-17T16:33:07.000Z">2019-03-18</time></div>
-                    <a href="/SSAD/Software-System-Analysis-and-Design-Assignment-2/" class="has-link-black-ter is-size-6">Software System Analysis and Design Assignment 2</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/SSAD/">SSAD</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1044,7 +1065,7 @@
                     <span class="level-item">May 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -1236,14 +1257,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Decision-Tree/">
                         <span class="tag">Decision Tree</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Ensemble-Learning/">
                         <span class="tag">Ensemble Learning</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1292,7 +1313,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Machine-Learning/">
                         <span class="tag">Machine Learning</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
