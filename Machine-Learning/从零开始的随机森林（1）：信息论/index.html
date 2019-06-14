@@ -16,7 +16,7 @@
 <meta property="og:description" content="Attention: This blog is a reading note of Tree - Information Theory in Chinese, which is written in English. As missing or misunderstanding might be included, please reference the original text if nee">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://siskonemilia.github.io/thumbnails/umi.jpg">
-<meta property="og:updated_time" content="2019-06-14T16:32:15.410Z">
+<meta property="og:updated_time" content="2019-06-14T16:35:29.715Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从零开始的随机森林（1）：信息论">
 <meta name="twitter:description" content="Attention: This blog is a reading note of Tree - Information Theory in Chinese, which is written in English. As missing or misunderstanding might be included, please reference the original text if nee">
@@ -217,7 +217,7 @@ $$H(X,Y)=H(Y|X)+H(X)$$ -->
 <p>从压缩的角度来说，它表示一个压缩模式 $q$ 对于真实模式 $p$ 的效果，或者说使用 $q$ 来表示 $p$ 内信息所需要的平均比特数量。</p>
 <h3 id="信息增益（Information-Gain）"><a href="#信息增益（Information-Gain）" class="headerlink" title="信息增益（Information Gain）"></a>信息增益（Information Gain）</h3><p>继续跟随我们刚才的逻辑，我们已经知道，$H(Y,X)$ 是在引入了信息 $X$ 后，与 $Y$ 信息之间的差距，或者说歧义。也可以说是在引入 $X$ 后 $Y$ 中仍不确定的信息量。考虑 $H(Y)$ 为随机变量 Y 所携带的信息量，令它减去 $H(Y,X)$，得到的 $H(Y)-H(Y,X)$ 就是“通过引入 $X$ 所确定的信息量”。在信息论中，我们称之为<strong>信息增益（Information Gain）</strong>：</p>
 <p>$$IG = H(Y) - H(Y,X)$$</p>
-<p><em>注意：在某些文献中，Information Gain 被认为与 Kullback–Leibler divergence 同义，而实际上后者的定义式为 $D_{KL}(Y||X)=\sum_{x\in\mathcal{X}}Y(x)log(\frac{Y(x)}{X(x)})=H(Y|X)-H(Y)$</em></p>
+<p><em>注意：在某些文献中，Information Gain 被认为与 Kullback–Leibler divergence 同义，而实际上后者的定义式为 $D_{KL}(Y||X)=\sum_{x\in\mathcal{X}}Y(x)log(\frac{Y(x)}{X(x)})=H(Y,X)-H(Y)$</em></p>
 <p>一个直观的认识是，当 $X$ 和 $Y$ 具有某种联系的时候，通过确定 $X$ 的信息，我们就能一定程度上了解 $Y$ 的信息，从而降低了 $Y$ 的信息熵，减少的这部分就是引入 $X$ 所带来的信息增益。决策树算法的主要理论依据正是信息增益。</p>
 
         </div>
