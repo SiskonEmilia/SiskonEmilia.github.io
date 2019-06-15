@@ -16,7 +16,7 @@
 <meta property="og:description" content="Attention: This blog is a reading note of Tree - Decision Tree with sklearn source code in Chinese, which is written in English. As missing or misunderstanding might be included, please reference the">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://siskonemilia.github.io/thumbnails/title.jpg">
-<meta property="og:updated_time" content="2019-06-15T09:03:22.173Z">
+<meta property="og:updated_time" content="2019-06-15T16:41:18.539Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从零开始的随机森林（2）：决策树">
 <meta name="twitter:description" content="Attention: This blog is a reading note of Tree - Decision Tree with sklearn source code in Chinese, which is written in English. As missing or misunderstanding might be included, please reference the">
@@ -165,7 +165,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    13 minutes read (About 2021 words)
+                    15 minutes read (About 2300 words)
                 </span>
                 
                 
@@ -206,8 +206,15 @@
 <p>上面我们均在讨论决策树用于分类问题的情况，但决策树实际上也可用于回归问题，此时我们又称其为<strong>回归树</strong>。回归树与分类树最大的区别在于其评判标准。需要注意的是，我们<strong>不能单纯地使用交叉熵或者基尼系数的连续形式来评判连续量</strong>从而实现回归树，因为他们需要我们对于信息分布具有完全的了解，而在实际问题中，我们实际获得的信息只有连续量的离散取值而已。因为上面诸多限制，CART 算法引入了 <strong>方差减益（Variance Reduction）</strong> 来作为回归树的分裂标准。直观地讲，其通过计算子节点和根节点的均方差（但实际上没有用到均值差平方和）来衡量一个分裂的好坏。因为我们的回归树的理想目标是使得每个节点的信息纯度最大，方差越小的数据拥有越高的纯度。公式为：</p>
 <p>$$<br>\begin{aligned}<br>V(S)=\frac{1}{|S|^2}\sum_{i\in S}\sum_{j\in S}\frac12(x_i-x_j)^2\\<br>I_V(N) = V(S) - (V(S_L) + V(S_R))<br>\end{aligned}<br>$$</p>
 <p>其中 $S,\ S_L,\ S_R$ 分别为当前节点、左子节点、右子节点的样本集合。该算法有较高的计算时间复杂度。</p>
-<h3 id="Sk-learn-源码中的-Criterion"><a href="#Sk-learn-源码中的-Criterion" class="headerlink" title="Sk-learn 源码中的 Criterion"></a>Sk-learn 源码中的 Criterion</h3><p>在 Sk-learn 中，对于分类决策树，开发者们实现了基尼系数和交叉熵两种方法，而对于回归树，开发者们则选择了……</p>
-<p>未完待续…</p>
+<h3 id="Sk-learn-源码中的-Criterion"><a href="#Sk-learn-源码中的-Criterion" class="headerlink" title="Sk-learn 源码中的 Criterion"></a>Sk-learn 源码中的 Criterion</h3><p>在 Sk-learn 中，对于分类决策树，开发者们实现了基尼系数和交叉熵两种方法，而对于回归树，开发者们则选择了 <strong>平均平方误差</strong>，又称 <strong>均方差（Mean Square Error, MSE）</strong>，来作为评判标准（以此减少计算的时间复杂度）。均方差公式如下：</p>
+<p>$$\frac 1{|S|}(\sum_{i\in S_L}(y_i-\overline y_L)^2+\sum_{i\in S_R}(y_i - \overline y_R)^2)$$</p>
+<p>同样处于时间复杂度的考虑，Sk-learn 将上面的公式进一步简化：</p>
+<p>$$\frac 1{|S|}\sum(y_i-\overline y)^2 \approx \frac{\sum y^2}{|S|}-\overline y^2$$</p>
+<p>最终呈现在代码上，是如下的两个片段：</p>
+<figure class="highlight py hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># ./sklearn/tree/_criterion.pyx</span></span><br><span class="line"><span class="hljs-comment"># @Lines: 765-777</span></span><br><span class="line"><span class="hljs-comment"># In class: RegressionCriterion</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> range(start, end):</span><br><span class="line">  i = samples[p]</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">if</span> sample_weight != NULL:</span><br><span class="line">      w = sample_weight[i]</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> range(self.n_outputs):</span><br><span class="line">      y_ik = self.y[i, k]</span><br><span class="line">      w_y_ik = w * y_ik</span><br><span class="line">      self.sum_total[k] += w_y_ik</span><br><span class="line">      self.sq_sum_total += w_y_ik * y_ik</span><br><span class="line"></span><br><span class="line">  self.weighted_n_node_samples += w</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># @Lines: 893-895</span></span><br><span class="line"><span class="hljs-comment"># In class: MSE</span></span><br><span class="line"></span><br><span class="line">impurity = self.sq_sum_total / self.weighted_n_node_samples</span><br><span class="line"><span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> range(self.n_outputs):</span><br><span class="line">    impurity -= (sum_total[k] / self.weighted_n_node_samples)**<span class="hljs-number">2.0</span></span><br></pre></td></tr></table></figure>
+
+<p>除开算法之外，Sk-learn 还通过 Cython 实现并复用样本数组达到了更高的执行效率（减少了解释开销和分配内存开销）。</p>
+<h2 id="分裂（Split）"><a href="#分裂（Split）" class="headerlink" title="分裂（Split）"></a>分裂（Split）</h2><p>未完待续…</p>
 
         </div>
         
