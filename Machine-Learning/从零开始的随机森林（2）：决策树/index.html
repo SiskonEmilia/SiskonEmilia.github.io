@@ -16,7 +16,7 @@
 <meta property="og:description" content="Attention: This blog is a reading note of Tree - Decision Tree with sklearn source code in Chinese, which is written in English. As missing or misunderstanding might be included, please reference the">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://siskonemilia.github.io/thumbnails/title.jpg">
-<meta property="og:updated_time" content="2019-06-17T16:34:24.206Z">
+<meta property="og:updated_time" content="2019-06-27T01:25:52.252Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从零开始的随机森林（2）：决策树">
 <meta name="twitter:description" content="Attention: This blog is a reading note of Tree - Decision Tree with sklearn source code in Chinese, which is written in English. As missing or misunderstanding might be included, please reference the">
@@ -165,7 +165,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    16 minutes read (About 2410 words)
+                    17 minutes read (About 2554 words)
                 </span>
                 
                 
@@ -214,7 +214,7 @@
 <figure class="highlight py hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># ./sklearn/tree/_criterion.pyx</span></span><br><span class="line"><span class="hljs-comment"># @Lines: 765-777</span></span><br><span class="line"><span class="hljs-comment"># In class: RegressionCriterion</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> range(start, end):</span><br><span class="line">  i = samples[p]</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">if</span> sample_weight != NULL:</span><br><span class="line">      w = sample_weight[i]</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> range(self.n_outputs):</span><br><span class="line">      y_ik = self.y[i, k]</span><br><span class="line">      w_y_ik = w * y_ik</span><br><span class="line">      self.sum_total[k] += w_y_ik</span><br><span class="line">      self.sq_sum_total += w_y_ik * y_ik</span><br><span class="line"></span><br><span class="line">  self.weighted_n_node_samples += w</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment"># @Lines: 893-895</span></span><br><span class="line"><span class="hljs-comment"># In class: MSE</span></span><br><span class="line"></span><br><span class="line">impurity = self.sq_sum_total / self.weighted_n_node_samples</span><br><span class="line"><span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> range(self.n_outputs):</span><br><span class="line">    impurity -= (sum_total[k] / self.weighted_n_node_samples)**<span class="hljs-number">2.0</span></span><br></pre></td></tr></table></figure>
 
 <p>除开算法之外，Sk-learn 还通过 Cython 实现并复用样本数组达到了更高的执行效率（减少了解释开销和分配内存开销）。</p>
-<h2 id="分裂（Split）"><a href="#分裂（Split）" class="headerlink" title="分裂（Split）"></a>分裂（Split）</h2><p>按我们前面所述，你可能会发现一个问题：如果我们每次都通过 Criterion 来选择一个最优分裂策略（Sk-learn 称之为 best-splitter），在数据量大的情况下，尤其是在回归树中，可能是一个难以完成甚至无法完成的任务。另一方面，一个最优的分裂策略以为着很大可能的过拟合，</p>
+<h2 id="分裂（Split）"><a href="#分裂（Split）" class="headerlink" title="分裂（Split）"></a>分裂（Split）</h2><p>按我们前面所述，你可能会发现一个问题：如果我们每次都通过 Criterion 来选择一个最优分裂策略（Sk-learn 称之为 best-splitter），在数据量大的情况下，尤其是在回归树中，可能是一个难以完成甚至无法完成的任务。另一方面，一个最优的分裂策略以为着很大可能的过拟合。针对这些问题，研究者们提出了数种解决方案：限制叶节点的最小样本数、限制最大使用的特征数、限制决策树的最大深度，以及「随机分裂」（在 sk-learn 中也有相应的实现，主要是并非选择最佳的分裂策略，而是带有随机性地选择相对较好的策略，此处不加以赘述）和 <strong>「随机森林」</strong>。下一章，我们将一起探访随机森林的世界。</p>
 
         </div>
         
